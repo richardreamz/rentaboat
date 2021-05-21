@@ -1,0 +1,16 @@
+        //if (Convert.IsDBNull(InputValue))
+        if (string.IsNullOrEmpty(InputValue))
+
+        cmd.Parameters.Append(cmd.CreateParameter("@p_in_marinaID", adInteger, adParamInput, 4, 0));
+        cmd.Parameters["@p_in_marinaID"].Value = Convert.ToInt32(txt_marinaID); 
+        cmd.Parameters.Append(cmd.CreateParameter("@p_in_boatID", adInteger, adParamInput, 4, 0));
+        cmd.Parameters["@p_in_boatID"].Value = Convert.ToInt32(txt_BoatID);
+        cmd.Parameters.Append(cmd.CreateParameter("@P_VC_NANE", adVarChar, adParamInput, 4, 0));
+        cmd.Parameters["@P_VC_NAME"].Value = txt_Name;
+
+    con = System.Configuration.ConfigurationManager.AppSettings.Get("connectionstringDATA");
+    Response.Expires = 0;
+    oConn = new Connection();
+    oConn.ConnectionString = con;
+    oConn.ConnectionTimeout = 500;
+    oConn.Open(null);

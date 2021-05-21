@@ -1,0 +1,259 @@
+body {
+	font-family: arial, verdana, sans-serif;
+	font-size: 8pt;
+	padding: 0px;
+	margin: 0px;
+	background: #EFF4FD;
+	}
+
+#container {
+	width: 100%;
+	}
+
+#top_bar {
+	height: 78px;
+	background: url(images/top_logo.gif) top left no-repeat #6699CC;
+	/*border-bottom: 1px solid #369;*/
+	}
+
+#menu {
+	height: 16px;
+	width: 100%;
+	margin: 0px;
+	padding-left: 10px;
+	background-color: #69c;
+	/*background-color: #369;*/
+	}
+
+#menu ul {
+	margin: 0px;
+	padding: 0px;
+	list-style:none;
+	}
+
+#menu ul li{
+	float: left;
+	padding: 0px;
+	margin: 0px;
+	}
+
+#menu ul li a{
+	display: block;
+	width: 80px;
+	text-align: center;
+	/*background-color: #ccc;*/
+	background-color: #BDCBDA;
+	/*color: #666;*/
+	color: #506274;
+	border-style: solid;
+	/*border-color: #369;*/
+	border-color: #69c;
+	border-width: 0px 1px 1px 0px;
+	border-top: 1px solid #69c;
+	text-decoration: none;
+	font-weight: bold;
+	}
+	
+#menu ul li a:hover {
+	background-color: #F93;
+	color: #630;
+	border-top: 1px solid #69c;
+	}
+
+#menu #current a{
+	color: #369;
+	background-color: #EFF4FD;
+	border-bottom: 1px solid #EFF4FD;
+	border-top: 1px solid #EFF4FD;
+	}
+	
+.button {
+	float: left;
+	margin-left: 30px;
+	display: block;
+	background-color: #6699CC;
+	border-style: solid;
+	border-color: #369;
+	border-width: 0px 1px 1px 0px;
+	border-top: 1px solid white;
+	border-left: 1px solid white;
+	color: white;
+	width: 5em;
+	text-align: center;
+	text-decoration: none;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: bold;
+	}
+
+a.button {
+	display: inline;
+	}
+
+a.button:hover {
+	background-color: #FF9933;
+	border-color: #CC6633;
+	border-top: 1px solid white;
+	border-left: 1px solid white;
+	color: white;
+	}
+
+#table_div {
+	padding-top: 10px;
+	padding-left: 0px;
+	padding-right: 0px;
+	width: 90%;
+
+
+	}
+
+#link {
+	margin-left: 100px;
+	margin-top: 25px;
+	text-align: center;
+	}
+
+#link_new_user {
+	margin-left: 300px;
+	margin-top: 25px;
+	text-align: center;
+	}
+	
+	#link_out {
+
+     margin-left: 750px;
+	text-align: right;
+	}
+h1 {
+	margin-top: 10px;
+	font-size: 1.8em;
+	font-weight: bold;
+	color: #336699;
+	}
+
+.hilite {
+	color: #F93;
+	font-weight: bold;
+	font-size: 10pt;
+	}
+
+.hilite_explain {
+	color: #F93;
+	font-size: 8pt;
+	}
+
+/*   ***FORMS*** */
+
+.contact_name {
+	width: 140px;
+	}
+
+.business_name {
+	width: 140px;
+	}
+
+.facility_name {
+	width: 140px;
+	}
+
+.address_line1 {
+	width: 140px;
+	}
+
+.address_line2 {
+	width: 140px;
+	}
+
+.city {
+	width: 140px;
+	}
+
+.state {
+	width: 140px;
+	}
+
+.zipcode {
+	width: 50px;
+	}
+
+.country {
+	width: 140px;
+	}
+
+.body_of_water {
+	width: 140px;
+	}
+
+.phone_number {
+	width: 100px;
+	}
+
+.fax {
+	width: 100px;
+	}
+	
+.email {
+	width: 100px;
+	}
+
+.multiple_locations {
+	width: 55px;
+	}
+
+.accomodations {
+	width: 55px;
+	}
+
+.accomodations_explain {
+	width: 140px;
+	}
+
+.user_name {
+	width: 140px;
+	}
+	
+.password {
+	width: 140px;
+	}
+	
+.deposit {
+	width: 100px;
+	}
+.tax {
+	width: 100px;
+	}
+.MaxPassengers {
+	width: 100px;
+	}
+.boat_type {
+	width: 140px;
+	}		
+		
+/* ****TABLE**** */
+.white {
+	background-color: white;
+	
+	}
+
+#search_results {
+	width: 96%;
+	}
+
+#search_results th {
+	color: #369;
+	margin: 0px;
+	padding: 0px;
+	text-align: left;
+	}
+
+#search_results td {
+	margin: 0px;
+	padding-left: 7px;
+	text-align: left;
+	}
+td {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+
+}

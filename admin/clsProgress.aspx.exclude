@@ -1,0 +1,221 @@
+<script language="C#" runat="server">
+
+    public class clsProgress
+    {
+        private HttpRequest Request = HttpContext.Current.Request;
+        private HttpServerUtility Server = HttpContext.Current.Server;
+        //------------------------------------------------------------------------------
+        public long TotalBytes = 0;
+        //Number of bytes client sent to server
+        public long BytesReceived = 0;
+        //Number of bytes received by server
+        public string UploadStarted = "";
+        //Time on server when upload started
+        public string UploadCompleted = "";
+        //Time on server when upload was completed
+        public string LastActive = "";
+        //Time on server when upload was last active
+        private string FileName = "";
+        //Name of temporary file holding progress information
+        private nce.scripting.FileSystemObject FSO = null;
+        //File System Object
+        private bool Enabled = false;
+        //Determines if progress class is enabled
+        //------------------------------------------------------------------------------
+        public bool Load() 
+        {
+            bool Load = false;
+            //don't do anything if disabled
+            if (!Enabled)
+            {
+                return Load;
+            }
+            string Data = "";
+            //raw data about progress
+            string[] Lines = null;
+            //Array of lines within data
+            string Line = "";
+            //Individual line of name/value pair
+            string[] Pair = null;
+            //Property array containing name and value
+            //Initialize default values
+            TotalBytes = 0;
+            BytesReceived = 0;
+            UploadStarted = "";
+            LastActive = "";
+            UploadCompleted = "";
+            //Retrieve information
+            Data = ProgressData;
+            //If information is empty
+            if (Data == "")
+            {
+                //Instruct caller that method failed
+                Load = false;
+                return Load;
+            }
+            //Load session data, split into an array by
+            //finding carriage returns
+            Lines = Strings.Split(Data, "\r\n", -1 , CompareMethod.Binary);
+            //Loop through each line
+            foreach(string __each1 in Lines)
+            {
+                Line = __each1;
+                //parse loaded session
+                //name=value
+                Pair = Strings.Split(Line, "=", 2, CompareMethod.Binary);
+                //If pair has 2 indexes
+                if (Information.UBound(Pair, 1) == 1)
+                {
+                    //Determine action based on first index
+                    //(attribute name)
+                    switch (Pair[0]) {
+                        case "TotalBytes":
+                            TotalBytes = Convert.ToInt64(Pair[1]);
+                            break;
+                        case "BytesReceived":
+                            BytesReceived = Convert.ToInt64(Pair[1]);
+                            break;
+                        case "UploadStarted":
+                            if (Information.IsDate(Pair[1]))
+                            {
+                                UploadStarted = Convert.ToString(Convert.ToDateTime(Pair[1]));
+                            }
+                            break;
+                        case "LastActive":
+                            if (Information.IsDate(Pair[1]))
+                            {
+                                LastActive = Convert.ToString(Convert.ToDateTime(Pair[1]));
+                            }
+                            break;
+                        case "UploadCompleted":
+                            if (Information.IsDate(Pair[1]))
+                            {
+                                UploadCompleted = Convert.ToString(Convert.ToDateTime(Pair[1]));
+                            }
+                            break;
+                    }
+                }
+            }
+            //Return success
+            Load = true;
+            return Load;
+        }
+
+        //------------------------------------------------------------------------------
+        public void Save() 
+        {
+            //don't do anything if disabled
+            if (!Enabled)
+            {
+                return ;
+            }
+            string Data = "";
+            //save data into Info string
+            Data = Data + "TotalBytes=" + Convert.ToString(TotalBytes) + "\r\n";
+            Data = Data + "BytesReceived=" + Convert.ToString(BytesReceived) + "\r\n";
+            Data = Data + "UploadStarted=" + UploadStarted + "\r\n";
+            Data = Data + "LastActive=" + LastActive + "\r\n";
+            Data = Data + "UploadCompleted=" + UploadCompleted + "\r\n";
+            //save the information
+            ProgressData = Data;
+        }
+
+        //------------------------------------------------------------------------------
+        public clsProgress() :base() 
+        {
+            //Declare FSO Constants
+            const int WindowsFolder = 0;
+            const int SystemFolder = 1;
+            const int TemporaryFolder = 2;
+            string Folder = "";
+            //Only enable class if session ID was received
+            Enabled = !(Request.QueryString["Session"] == "");
+            //Are we allowed to interact with FileSystemObject?
+            if (!((FileSystemObjectEnabled || Convert.ToString(FileSystemObjectEnabled) == "")))
+            {
+                Enabled = false;
+            }
+            //don't do anything if disabled
+            if (!Enabled)
+            {
+                return ;
+            }
+            //Instantiate File System Objec
+            FSO = new FileSystemObject();
+            //Build path to information file in temporary folder
+            Folder = FSO.GetSpecialFolder(TemporaryFolder).Path;
+            FileName = "AspUpload_" + Request.QueryString["Session"] + ".tmp";
+            FileName = Folder + "\\" + FileName;
+        }
+
+        //------------------------------------------------------------------------------
+        ~clsProgress() 
+        {
+            //don't do anything if disabled
+            if (!Enabled)
+            {
+                return ;
+            }
+            //Garbage Collection
+            FSO = null;
+        }
+
+        public string ProgressData
+        {
+        //------------------------------------------------------------------------------
+          get 
+          {
+
+            //don't do anything if disabled
+            if (!Enabled)
+            {
+                return "";
+            }
+            TextStream File = null;
+            //If file does not yet exist, don't do anything
+            if (!(FSO.FileExists(FileName)))
+            {
+                return "";
+            }
+            //Get the file
+            File = FSO.OpenTextFile(FileName);
+            //if the file has information
+            if (!(File.AtEndOfStream))
+            {
+                //Read all the information
+            }
+            //Close the connection to the file
+            File.Close();
+            //Garbage collection
+            File = null;
+            return File.ReadAll();
+          }
+
+        //------------------------------------------------------------------------------
+          set { 
+
+            //don't do anything if disabled
+            if (!Enabled)
+            {
+                return ;
+            }
+            //Declare Constants
+            const int ForReading = 1;
+            const int ForWriting = 2;
+            const int ForAppending = 8;
+            TextStream File = null;
+            //Open the text file
+            //* Create if it doesn't exist
+            //* Open for writing
+            File = FSO.OpenTextFile(FileName, ForWriting, true);
+            //Write the information to the file
+            File.Write(Convert.ToString(value));
+            //Close the connection to the file
+            File.Close();
+            //Garbage collection
+            File = null;
+          }
+
+        }
+    }
+</script>

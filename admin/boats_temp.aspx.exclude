@@ -1,0 +1,281 @@
+<%@ Page language="C#" CodeFile="boats_temp.aspx.cs" Inherits="BoatRenting.boats_temp_aspx_cs" %>
+<%@ Import Namespace = "Microsoft.VisualBasic" %>
+<%@ Import Namespace = "nce.scripting" %>
+<%@ Import Namespace = "nce.adosql" %>
+<%@ Import Namespace = "System" %>
+<%@ Import Namespace = "System.Web" %>
+<%@ Import Namespace = "System.Web.SessionState" %>
+
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<%
+    objUpload = new clsUpload();
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        chk_captain = .value;
+    }
+    else
+    {
+        chk_captain = "";
+    }
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        chk_Is_boat_sale = .value;
+    }
+    else
+    {
+        chk_Is_boat_sale = "";
+    }
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        chk_fullday = .value;
+    }
+    else
+    {
+        chk_fullday = "";
+    }
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        chk_halfdayam = .value;
+    }
+    else
+    {
+        chk_halfdayam = "";
+    }
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        chk_halfdaypm = .value;
+    }
+    else
+    {
+        chk_halfdaypm = "";
+    }
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        chk_hourly = .value;
+    }
+    else
+    {
+        chk_hourly = "";
+    }
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        txt_weekday1 = .value;
+    }
+    else
+    {
+        txt_weekday1 = "";
+    }
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        txt_weekend1 = .value;
+    }
+    else
+    {
+        txt_weekend1 = "";
+    }
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        txt_holiday1 = .value;
+    }
+    else
+    {
+        txt_holiday1 = "";
+    }
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        txt_weekday2 = .value;
+    }
+    else
+    {
+        txt_weekday2 = "";
+    }
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        txt_weekend2 = .value;
+    }
+    else
+    {
+        txt_weekend2 = "";
+    }
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        txt_holiday2 = .value;
+    }
+    else
+    {
+        txt_holiday2 = "";
+    }
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        txt_weekday3 = .value;
+    }
+    else
+    {
+        txt_weekday3 = "";
+    }
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        txt_weekend3 = .value;
+    }
+    else
+    {
+        txt_weekend3 = "";
+    }
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        txt_holiday3 = .value;
+    }
+    else
+    {
+        txt_holiday3 = "";
+    }
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        txt_weekday4 = .value;
+    }
+    else
+    {
+        txt_weekday4 = "";
+    }
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        txt_weekend4 = .value;
+    }
+    else
+    {
+        txt_weekend4 = "";
+    }
+    if (((Convert.ToString(.value)).Trim()).Length > 0)
+    {
+        txt_holiday4 = .value;
+    }
+    else
+    {
+        txt_holiday4 = "";
+    }
+%>
+<body>
+<form name="frm_tempo" method="post" action="boats_mant.aspx">
+<input type="hidden" name="hdn_Action" value="<%= hdn_Action %>">
+<input type="hidden" name="BoatID" value="<%= BoatID %>">
+<input type="hidden" name="txt_Name" value="<%= txt_Name %>">
+<input type="hidden" name="txt_Description" value="<%= txt_Description %>">
+<input type="hidden" name="txt_Make" value="<%= txt_Make %>">
+<input type="hidden" name="txt_Model" value="<%= txt_Model %>">
+<input type="hidden" name="txt_Year" value="<%= txt_Year %>">
+<input type="hidden" name="txt_size" value="<%= txt_size %>">
+
+<input type="hidden" name="txt_boat_sale_amount" value="<%= txt_boat_sale_amount %>">
+
+
+
+<!--input type="hidden" name="txt_city" value="<%
+    //=objUpload.Form("txt_city").value
+%>
+">
+<input type="hidden" name="cbo_State" value="<%
+    //=objUpload.Form("cbo_State").value
+%>
+">
+<input type="hidden" name="cbo_Country" value="<%
+    //=objUpload.Form("cbo_Country").value
+%>
+"-->
+<input type="hidden" name="cbo_BoatType" value="<%= cbo_BoatType %>">
+<input type="hidden" name="cbo_SubBoatType" value="<%= cbo_SubBoatType %>">
+<!--input type="hidden" name="txt_phone" value="<%
+    //=objUpload.Form("txt_phone").value
+%>
+"-->
+<input type="hidden" name="txt_MaxPassengers" value="<%= txt_MaxPassengers %>">
+<input type="hidden" name="txt_deposit" value="<%= txt_deposit %>">
+<input type="hidden" name="txt_reservation" value="<%= txt_reservation %>">
+<!--input type="hidden" name="txt_tax" value="<%
+    //=objUpload.Form("txt_tax").value
+%>
+"-->
+<input type="hidden" name="txt_requirements" value="<%= txt_requirements %>">
+<input type="hidden" name="txt_weekday1" value="<%= txt_weekday1 %>">
+<input type="hidden" name="txt_weekend1" value="<%= txt_weekend1 %>">
+<input type="hidden" name="txt_holiday1" value="<%= txt_holiday1 %>">
+<input type="hidden" name="txt_weekday2" value="<%= txt_weekday2 %>">
+<input type="hidden" name="txt_weekend2" value="<%= txt_weekend2 %>">
+<input type="hidden" name="txt_holiday2" value="<%= txt_holiday2 %>">
+<input type="hidden" name="txt_weekday3" value="<%= txt_weekday3 %>">
+<input type="hidden" name="txt_weekend3" value="<%= txt_weekend3 %>">
+<input type="hidden" name="txt_holiday3" value="<%= txt_holiday3 %>">
+<input type="hidden" name="txt_weekday4" value="<%= txt_weekday4 %>">
+<input type="hidden" name="txt_weekend4" value="<%= txt_weekend4 %>">
+<input type="hidden" name="txt_holiday4" value="<%= txt_holiday4 %>">
+
+<input type="hidden" name="txt_hoursfrom1" value="<%= txt_hoursfrom1 %>">
+<input type="hidden" name="txt_hoursto1" value="<%= txt_hoursto1 %>">
+
+<input type="hidden" name="txt_hoursfrom2" value="<%= txt_hoursfrom2 %>">
+<input type="hidden" name="txt_hoursto2" value="<%= txt_hoursto2 %>">
+
+<input type="hidden" name="txt_hoursfrom3" value="<%= txt_hoursfrom3 %>">
+<input type="hidden" name="txt_hoursto3" value="<%= txt_hoursto3 %>">
+
+<input type="hidden" name="txt_hoursfrom4" value="<%= txt_hoursfrom4 %>">
+<input type="hidden" name="txt_hoursto4" value="<%= txt_hoursto4 %>">
+
+
+<input type="hidden" name="txt_resultName" value="<%= txt_resultName %>">
+<input type="hidden" name="txt_resultDesc" value="<%= txt_resultDesc %>">
+<input type="hidden" name="txt_resultOld" value="<%= txt_resultOld %>">
+<input type="hidden" name="txt_detailName" value="<%= txt_detailName %>">
+<input type="hidden" name="txt_detailDesc" value="<%= txt_detailDesc %>">
+<input type="hidden" name="txt_detailOld" value="<%= txt_detailOld %>">
+<input type="hidden" name="txt_other2Name" value="<%= txt_other2Name %>">
+<input type="hidden" name="txt_other2Desc" value="<%= txt_other2Desc %>">
+<input type="hidden" name="txt_other2Old" value="<%= txt_other2Old %>">
+<input type="hidden" name="txt_other1Name" value="<%= txt_other1Name %>">
+<input type="hidden" name="txt_other1Desc" value="<%= txt_other1Desc %>">
+<input type="hidden" name="txt_other1Old" value="<%= txt_other1Old %>">
+
+
+
+
+<input type="hidden" name="txt_other3Name" value="<%= txt_other3Name %>">
+<input type="hidden" name="txt_other3Desc" value="<%= txt_other3Desc %>">
+<input type="hidden" name="txt_other3Old" value="<%= txt_other3Old %>">
+
+<input type="hidden" name="txt_other4Name" value="<%= txt_other4Name %>">
+<input type="hidden" name="txt_other4Desc" value="<%= txt_other4Desc %>">
+<input type="hidden" name="txt_other4Old" value="<%= txt_other4Old %>">
+
+<input type="hidden" name="txt_BoatVideoName" value="<%= txt_BoatVideoName %>">
+<input type="hidden" name="txt_BoatVideoDesc" value="<%= txt_BoatVideoDesc %>">
+<input type="hidden" name="txt_BoatVideoOld" value="<%= txt_BoatVideoOld %>">
+
+
+
+
+
+
+<input type="hidden" name="chk_fullday" value="<%= chk_fullday %>">
+<input type="hidden" name="chk_halfdayam" value="<%= chk_halfdayam %>">
+<input type="hidden" name="chk_halfdaypm" value="<%= chk_halfdaypm %>">
+<input type="hidden" name="chk_hourly" value="<%= chk_hourly %>">
+
+<input type="hidden" name="chk_captain" value="<%= chk_captain %>">
+
+<input type="hidden" name="chk_Is_boat_sale" value="<%= chk_Is_boat_sale %>">
+
+
+
+
+<input type="hidden" name="hdn_ReCall" value="1">
+</form>
+
+<script>
+
+	document.frm_tempo.submit();
+</script>
+</body>
+</html>

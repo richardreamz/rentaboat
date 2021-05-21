@@ -1,0 +1,145 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace BoatRenting
+
+{ 
+public partial class admin_Availability : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+    }
+
+        protected void calStartDate_VisibleMonthChanged(object sender, MonthChangedEventArgs e)
+        {
+            calStartDate.SelectedDate = e.NewDate;
+
+            RenderUnavailableDates(calStartDate);
+
+        }
+        protected void calStartDate_DayRender(object sender, DayRenderEventArgs e)
+        {
+            //  string cddd = calStartDate.VisibleDate.Month.ToString();
+
+            //  e.Cell.BackColor = System.Drawing.ColorTranslator.FromHtml("#93d13f");
+            //  e.Cell.ForeColor = System.Drawing.ColorTranslator.FromHtml("#fff");
+
+            //   e.Cell.Attributes.Add("class", "calPickupDropOff");
+
+
+            // This is selected date color
+
+            if (Session[Util.Session_Selected_PickupDate] != null && IsStartDateSelected && e.Day.Date == (DateTime)Session[Util.Session_Selected_PickupDate])
+            {
+
+                // e.Cell.BackColor = Color.Yellow;
+                e.Cell.BackColor = System.Drawing.ColorTranslator.FromHtml("#f7df57");
+                e.Cell.ForeColor = System.Drawing.ColorTranslator.FromHtml("#000");
+                e.Cell.Attributes.Add("class", "calPickupDropOff");
+                return;
+            }
+
+
+            if (e.Day.Date.AddDays(1) < DateTime.Now)
+            {
+                e.Day.IsSelectable = false;
+                // e.Cell.Font.Strikeout = true;
+                e.Cell.ToolTip = "This day is not available";
+
+                e.Cell.BackColor = System.Drawing.ColorTranslator.FromHtml("#fff");
+                e.Cell.ForeColor = System.Drawing.ColorTranslator.FromHtml("#999");
+
+                e.Cell.Attributes.Add("class", "calPickupDropOff");
+                //e.Cell.Attributes.Add("class", "tooltip");
+
+                //e.Cell.Attributes.Add("title", "This day is not available");
+
+
+
+            }
+            else if (unAvailableDates.Contains(e.Day.Date))
+            {
+
+
+                e.Cell.Attributes.Add("class", "calPickupDropOff");
+
+                e.Day.IsSelectable = false;
+                // e.Cell.Font.Strikeout = true;
+                e.Cell.ToolTip = "This day is not available";
+
+                e.Cell.BackColor = System.Drawing.ColorTranslator.FromHtml("#fff");
+                e.Cell.ForeColor = System.Drawing.ColorTranslator.FromHtml("#999");
+
+                // Check if full day is selected half day am or pm available
+
+                if (ddRentOption.Items.FindByValue("2") != null && ddRentOption.SelectedItem.Value == "1" && !unAvailableDatesHalfDayAM.Contains(e.Day.Date)) // Available am
+                {
+                    e.Cell.BackColor = System.Drawing.ColorTranslator.FromHtml("#F77D06");
+                    e.Cell.ForeColor = System.Drawing.ColorTranslator.FromHtml("#fff");
+
+
+                    e.Cell.ToolTip = "Select a Pick Up Date - Half Day AM is available";
+
+                    e.Cell.Attributes.Add("onclick", e.SelectUrl);
+                    e.Cell.Attributes.Add("onmouseover", "this.style.cursor='pointer'");
+                    e.Cell.Attributes.Add("onmouseout", "this.style.cursor='default'");
+
+                    e.Cell.Attributes.Add("class", "calPickupDropOff");
+                }
+
+                else if (ddRentOption.Items.FindByValue("3") != null && ddRentOption.SelectedItem.Value == "1" && !unAvailableDatesHalfDayPM.Contains(e.Day.Date)) // Available pm
+                {
+                    e.Cell.BackColor = System.Drawing.ColorTranslator.FromHtml("#2DA9E5");
+                    e.Cell.ForeColor = System.Drawing.ColorTranslator.FromHtml("#fff");
+
+
+                    e.Cell.ToolTip = "Select a Pick Up Date - Half Day PM is available";
+
+                    e.Cell.Attributes.Add("onclick", e.SelectUrl);
+                    e.Cell.Attributes.Add("onmouseover", "this.style.cursor='pointer'");
+                    e.Cell.Attributes.Add("onmouseout", "this.style.cursor='default'");
+
+                    e.Cell.Attributes.Add("class", "calPickupDropOff");
+                }
+
+            }
+
+            else
+            {
+                e.Cell.BackColor = System.Drawing.ColorTranslator.FromHtml("#93d13f");
+                e.Cell.ForeColor = System.Drawing.ColorTranslator.FromHtml("#fff");
+
+
+                e.Cell.ToolTip = "Select a Pick Up Date";
+
+                e.Cell.Attributes.Add("onclick", e.SelectUrl);
+                e.Cell.Attributes.Add("onmouseover", "this.style.cursor='pointer'");
+                e.Cell.Attributes.Add("onmouseout", "this.style.cursor='default'");
+
+                e.Cell.Attributes.Add("class", "calPickupDropOff");
+            }
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+}

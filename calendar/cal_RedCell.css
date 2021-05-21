@@ -1,0 +1,132 @@
+// Popup Calendar Styles
+.head {
+	font-family: arial;
+	font-size: 12px;
+	font-weight: normal;
+}
+.text {
+	font-family: arial;
+	font-size: 12px;
+	font-weight: normal;
+	padding: 2px;
+}
+#popupcalendar {
+	width: 185px;
+	height:130px;
+	left: 0px;
+	top: 0px;
+	background-color: white;
+	position: absolute;
+	visibility: hidden;
+}
+a.scrollmonth {
+    font-family: Verdana,  Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: normal;
+    text-decoration: none;
+    color: Black;
+    background-color: transparent;
+}
+a.scrollmonth:hover {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: transparent;
+    color: blue;
+}
+a.scrollmonth:active {
+   font-family: Verdana,  Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: normal;
+    text-decoration: none;
+    background-color: transparent;
+    color: #0066FF;
+}
+a.cal-DayLink {
+    font-family: Verdana,  Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: normal;
+    text-decoration: none;
+    color: #5F5947;
+    background-color: transparent;
+}
+a.cal-DayLink:hover {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: transparent;
+    color: Red /*#408080;*/
+}
+a.cal-DayLink:active {
+   font-family: Verdana,  Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: normal;
+    text-decoration: none;
+    background-color: transparent;
+    color: #0066FF;
+}
+.cal-TextBox{
+    color: Black;
+    font-family: Verdana,  Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: normal;
+    background-color: White;
+}
+a.cal-TodayLink {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: bold;
+    text-decoration: none;
+    color: red;
+    background-color: transparent;
+}
+a.cal-TodayLink:hover {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: transparent;
+    color: Blue;
+}
+a.cal-TodayLink:active {
+    font-family: Verdana,  Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: transparent;
+    color: #009933;
+}
+.cal-GreyDate {
+    font-family: Verdana,  Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: normal;
+    text-decoration: none;
+	background-color: #F2F2F2;
+    color: #999999;
+}
+.cal-GreyInvalidDate {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: normal;
+    text-decoration: line-through;
+	background-color: #33FF00;
+    color: #999999;
+}
+.cal-DayCell {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: normal;
+	background-color:#E9E4CF;
+	color:black;
+}
+.cal-HeadCell {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: bold;
+	background-color: #F7F4EB;
+	color:#7B745E;
+}
+.cal-Table {border: #D0C89B; border-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px}
+}

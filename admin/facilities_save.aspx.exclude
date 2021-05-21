@@ -1,0 +1,153 @@
+<%@ Page language="C#" CodeFile="facilities_save.aspx.cs" Inherits="BoatRenting.facilities_save_aspx_cs" %>
+<%@ Import Namespace = "nce.adosql" %>
+<!--#include file="__functions.aspx"-->
+<!--#include file="__validateSession.aspx"-->
+<%
+    hdn_Action = Request["hdn_Action"];
+    txt_MarinaID = NVL(Request["hdn_MarinaID"], 0);
+    Session.Add("userID", 1);
+    txt_ContactName = NVL(Request.Form["txt_ContactName"], "");
+    txt_BusinessName = NVL(Request.Form["txt_BusinessName"], "");
+    txt_marinaName = NVL(Request.Form["txt_marinaName"], "");
+    txt_addressLine1 = NVL(Request.Form["txt_addressLine1"], "");
+    txt_addressLine2 = NVL(Request.Form["txt_addressLine2"], "");
+    txt_city = NVL(Request.Form["txt_city"], "");
+    cbo_State = NVL(Request.Form["cbo_State"], 0);
+    txt_zip = NVL(Request.Form["txt_zip"], "");
+    cbo_Country = NVL(Request.Form["cbo_Country"], 0);
+    cbo_BodyWater = NVL(Request.Form["cbo_BodyWater"], "");
+    txt_phone = NVL(Request.Form["txt_phone"], "");
+    txt_fax = NVL(Request.Form["txt_fax"], "");
+    txt_tax = NVL(Request.Form["txt_tax"], 0);
+    txt_email = NVL(Request.Form["txt_email"], "");
+    cbo_multipleLocations = NVL(Request.Form["cbo_multipleLocations"], "");
+    cbo_accomodations = NVL(Request.Form["cbo_accomodations"], "");
+    txt_usser = NVL(Request.Form["txt_usser"], "");
+    txt_pass = NVL(Request.Form["txt_pass"], "");
+    //txt_explain = NVL(Request.Form("txt_explain"),"")
+    //cbo_securityDeposit = NVL(Request.Form("cbo_securityDeposit"),"")
+    txta_depositPolicy = NVL(Request.Form["txta_depositPolicy"], "");
+    cbo_captain = NVL(Request.Form["cbo_captain"], 0);
+    txta_facilityDirections = NVL(Request.Form["txta_facilityDirections"], "");
+    txta_facilityArea = NVL(Request.Form["txta_facilityArea"], "");
+    txt_start = NVL(Request.Form["txt_start"], "");
+    txt_end = NVL(Request.Form["txt_end"], "");
+    txt_feeType = Request.Form["rdo_fee"];
+    if (txt_feeType == "1")
+    {
+        txt_fee = Request.Form["txt_fee"];
+    }
+    else if( txt_feeType == "2")
+    {
+        txt_fee = Request.Form["txt_fee2"];
+    }
+    else
+    {
+        txt_fee = Request.Form["txt_fee3"];
+    }
+    txt_rating = NVL(Request.Form["txt_rating"], 0);
+    txt_facilitywebsite = NVL(Request.Form["txt_facilityWebsite"], "");
+    txt_displayadlandingpage = NVL(Request.Form["txt_displayadlandingpage"], "");
+    txt_displayadtype = NVL(Request.Form["txt_displayadtype"], "");
+    //response.Write(Request("hdn_Action") & "<br>")
+    //response.Write(Request("txt_ContactName") & "<br>")
+    //response.Write(Request("txt_BusinessName") & "<br>")
+    //response.Write(Request("txt_marinaName") & "<br>")
+    //response.Write(Request("txt_addressLine1") & "<br>")
+    //response.Write(Request("txt_addressLine2") & "<br>")
+    //response.Write(Request("txt_city") & "<br>")
+    //response.Write(Request("cbo_State") & "<br>")
+    //response.Write(Request("txt_zip") & "<br>")
+    //response.Write(Request("cbo_Country") & "<br>")
+    //response.Write(Request("cbo_BodyWater") & "<br>")
+    //response.Write(Request("txt_phone") & "<br>")
+    //response.Write(Request("txt_fax") & "<br>")
+    //response.Write(Request("txt_email1") & "<br>")
+    //response.Write(Request("cbo_multipleLocations") & "<br>")
+    //response.Write(Request("cbo_accomodations") & "<br>")
+    //response.Write(Request("txt_explain") & "<br>")
+    //response.Write(Request("cbo_securityDeposit") & "<br>")
+    //response.Write(Request("txta_depositPolicy") & "<br>")
+    //response.Write(Request("txta_facilityDirections") & "<br>")
+    //response.Write(Request("txta_facilityArea") & "<br>")
+    //response.Write(txt_tax)
+    //response.Write(txt_fee)
+    //response.End
+    cmd = new Command();
+    cmd.ActiveConnection = oConn;
+    cmd.CommandText = "SP_BR_MARINA_SAVE";
+    cmd.CommandType = adCmdStoredProc;
+    cmd.Parameters[1] = hdn_Action;
+    cmd.Parameters[2] = txt_MarinaID;
+    cmd.Parameters[3] = txt_ContactName;
+    cmd.Parameters[4] = txt_BusinessName;
+    cmd.Parameters[5] = txt_marinaName;
+    cmd.Parameters[6] = txt_addressLine1;
+    cmd.Parameters[7] = txt_addressLine2;
+    cmd.Parameters[8] = txt_city;
+    cmd.Parameters[9] = Convert.ToInt32(cbo_State);
+    cmd.Parameters[10] = txt_zip;
+    cmd.Parameters[11] = Convert.ToInt32(cbo_Country);
+    cmd.Parameters[12] = cbo_BodyWater;
+    cmd.Parameters[13] = txt_phone;
+    cmd.Parameters[14] = txt_fax;
+    cmd.Parameters[15] = cbo_multipleLocations;
+    cmd.Parameters[16] = cbo_accomodations;
+    cmd.Parameters[17] = cbo_captain;
+    //.Parameters(18)=txt_explain
+    cmd.Parameters[18] = Convert.ToInt32(Session["userID"]);
+    //.Parameters(20)=cbo_securityDeposit
+    cmd.Parameters[19] = txta_depositPolicy.Substring(0, 1000);
+    cmd.Parameters[20] = txta_facilityDirections.Substring(0, 1000);
+    cmd.Parameters[21] = txta_facilityArea.Substring(0, 1000);
+    cmd.Parameters[22] = txt_tax;
+    cmd.Parameters[23] = txt_email;
+    cmd.Parameters[24] = txt_start;
+    cmd.Parameters[25] = txt_end;
+    cmd.Parameters[26] = txt_fee;
+    cmd.Parameters[27] = txt_feeType;
+    cmd.Parameters[28] = txt_rating;
+    cmd.Parameters[29] = txt_facilitywebsite;
+    cmd.Parameters[30] = txt_displayadtype;
+    cmd.Parameters[31] = txt_displayadlandingpage;
+    cmd.Execute();
+%>
+<script>
+function redirect()
+{
+alert("The information was saved ");
+document.frm.action="facilities_list.aspx";
+//history.go(-2);
+document.frm.submit();
+}
+
+function redirect2()
+{
+alert("The information was saved ");
+document.frm.action="boats_list.aspx";
+//history.go(-2);
+document.frm.submit();
+}
+
+</script>
+<form name="frm" method="post">
+<%
+    if (Request["hdn_Redirect"] == "")
+    {
+%>
+<script language="javascript">
+   redirect();
+</script>
+<%
+    }
+    else
+    {
+%>
+<script language="javascript">
+   redirect2();
+</script>
+<%
+    }
+%>
+
+</form>

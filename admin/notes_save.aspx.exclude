@@ -1,0 +1,57 @@
+<%@ Page language="C#" CodeFile="notes_save.aspx.cs" Inherits="BoatRenting.notes_save_aspx_cs" %>
+<%@ Import Namespace = "nce.adosql" %>
+<!--#include file="__dbConnection.aspx"-->
+<!--#include file="__functions.aspx"-->
+<!--#include file="__validateSession.aspx"-->
+<%
+    txt_MarinaID = NVL(Request["hdn_MarinaID"], 0);
+    Session.Add("userID", 1);
+    txta_notes = NVL(Request.Form["txta_notes"], "");
+    //response.End
+    cmd = new Command();
+    cmd.ActiveConnection = oConn;
+    cmd.CommandText = "SP_BR_MARINA_NOTES_SAVE";
+    cmd.CommandType = adCmdStoredProc;
+    cmd.Parameters[1] = txt_MarinaID;
+    cmd.Parameters[2] = txta_notes;
+    cmd.Execute();
+%>
+<script>
+function redirect()
+{
+alert("The information was saved ");
+document.frm.action="facilities_list.aspx";
+//history.go(-2);
+document.frm.submit();
+}
+
+function redirect2()
+{
+alert("The information was saved ");
+document.frm.action="boats_list.aspx";
+//history.go(-2);
+document.frm.submit();
+}
+
+</script>
+<form name="frm" method="post">
+<%
+    if (Request["hdn_Redirect"] == "")
+    {
+%>
+<script language="javascript">
+   redirect();
+</script>
+<%
+    }
+    else
+    {
+%>
+<script language="javascript">
+   redirect2();
+</script>
+<%
+    }
+%>
+
+</form>

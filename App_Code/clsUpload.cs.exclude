@@ -1,0 +1,1047 @@
+//<%--<%@ Page language="c#" %>--%>
+//<%@ Import Namespace = "Microsoft.VisualBasic" %>
+//<%@ Import Namespace = "nce.scripting" %>
+//<%@ Import Namespace = "nce.adosql" %>
+//<!--#include file="clsField.aspx"-->
+//<!--#include file="clsProgress.aspx"-->
+using System;
+using System.Web;
+using System.Web.SessionState;
+using Microsoft.VisualBasic;
+using nce.scripting;
+using nce.adosql;
+
+namespace BoatRenting {
+
+  //const bool FileSystemObjectEnabled = false;
+    //If your ISP does not allow the File System Object to
+    //be used, then set this value to false.  Some features
+    //will be disabled such as verifying folders exist,
+    //Assigning unique names to files, displaying progress,
+    //and interacting with existing files (Move, Copy, Delete,
+    //Rename)
+  //const int BufferSize = 0x10000;
+    //Changing buffer size may change the length of time
+    //it takes to upload a file.  You may want to begin
+    //with 64KB and go from there to find the optimal
+    //number for your website.
+    //Since the Progress Information class writes to
+    //a file each itteration, this can degrade performance
+    //a lot when using small buffers.
+    //Do not go below 100 bytes, or you will begin to risk
+    //not being able to parse boundaries.  Data may not upload
+    //properly.
+    //For your reference:
+    //1 KB		1024		&H400
+    //2 KB		2048		&H800
+    //4 KB		4096		&H1000
+    //8 KB		8192		&H2000
+    //16 KB		16384		&H4000
+    //32 KB		32768		&H8000
+    //64 KB		65536		&H10000
+    //128 KB	131072		&H20000
+    //256 KB	262144		&H40000
+    //------------------------------------------------------------------------------
+    //Author:		Lewis Moten
+    //Email:		Lewis@Moten.com
+    //URL:		http://www.lewismoten.com
+    //Date:		September 1, 2003
+    //------------------------------------------------------------------------------
+    //Upload class retrieves multi-part form data posted to web page
+    //and parses it into objects that are easy to interface with.
+    //Requires MDAC (ADODB) COM components found on most servers today
+    //Additional compenents are not necessary.
+    //
+    //Demo:
+    //Set objUpload = new clsUpload
+    //Initializes object and parses all posted multi-part from data.
+    //Once this as been done, Access to the Request object is restricted
+    //
+    //objUpload.Count
+    //Number of fields retrieved
+    //
+    //use: Response.Write "There are " & objUpload.Count & " fields."
+    //
+    //objUpload.Fields
+    //Access to field objects.  This is the default propert so it does
+    //not necessarily have to be specified.  You can also determine if
+    //you wish to specify the field index, or the field name.
+    //
+    //Use:
+    //Set objField = objUpload.Fields("File1")
+    //Set objField = objUpload("File1")
+    //Set objField = objUpload.Fields(0)
+    //Set objField = objUpload(0)
+    //Response.Write objUpload("File1").Name
+    //Response.Write objUpload(0).Name
+    //
+    //------------------------------------------------------------------------------
+    //
+    //List of all fields passed:
+    //
+    //For i = 0 To objUpload.Count - 1
+    //Response.Write objUpload(i).Name & "<BR>"
+    //Next
+    //
+    //------------------------------------------------------------------------------
+    //
+    //HTML needed to post multipart/form-data
+    //
+    //<FORM method="post" encType="multipart/form-data" action="Upload.aspx">
+    //<INPUT type="File" name="File1">
+    //<INPUT type="Submit" value="Upload">
+    //</FORM>
+    //------------------------------------------------------------------------------
+    //
+    //Customized Errors:
+    //(vbObjectError + ##)
+    //
+    //1:  Object does not exist within the ordinal reference.
+    //2:  Failed to save file ... common reasons
+    //3:  Failed to parse posted binary data delimiter
+    //4:  Failed to save file ... unknown
+    //5:  Used Request.Form ... Failed to read posted form data
+    //6:  Failed to read posted form data for unknown reason.
+    //7:  Folder does not exist.
+    //8:  Filename is not valid
+    //9:  Folder is not valid
+    //10: ADODB.Version below 2.5
+    //11: Not enough free space available.
+    //12: File System Object has been disabled.
+    //13: multipart/form-data was not received.
+    //------------------------------------------------------------------------------
+    //
+ // object gBinaryData = null;
+    public class clsUpload
+    {
+        private HttpRequest Request = HttpContext.Current.Request;
+        private HttpResponse Response = HttpContext.Current.Response;
+        private HttpServerUtility Server = HttpContext.Current.Server;
+        private HttpSessionState Session = HttpContext.Current.Session;
+        //------------------------------------------------------------------------------
+        private object TotalBytes = null;
+        //Number of bytes client is sending
+        private object Delimiter = null;
+        //Delimiter between multipart/form-data (43 chars)
+        private char CR = (char)0;
+        //ANSI Carriage Return
+        private char LF = (char)0;
+        //ANSI Line Feed
+        private string CRLF = "";
+        //ANSI Carriage Return & Line Feed
+        private object[] mobjFieldAry = null;
+        //Array to hold field objects
+        private int mlngCount = 0;
+        //Number of fields parsed
+        private string msg = "";
+        //Error Message
+        private string ProductName = "";
+        //Name of the product
+        private string ProductVersion = "";
+        //Version of the product
+        private string ErrorSignature = "";
+        //Signature applied to all products.
+        private clsProgress Progress = null;
+        //Progress information class
+        private bool ParsedData = false;
+        //Did we parse the data?
+        //------------------------------------------------------------------------------
+        private void RequestData() 
+        {
+            if (ParsedData)
+            {
+                return ;
+            }
+            ParsedData = true;
+            //On Error Resume Next
+            //Determine number bytes visitor sent
+            int BufferSize = 0x10000;
+            int TotalBytes = 0;
+            TotalBytes = Request.TotalBytes;
+            int ChunkSize = 0;
+            int Received = 0;
+            //int TotalBytes = 0;
+            ADODB.StreamClass BinaryStream = null;
+            ChunkSize = BufferSize;
+            //Global Property
+            Received = 0;
+            BinaryStream = new ADODB.StreamClass();
+            BinaryStream.Mode = (ADODB.ConnectModeEnum)ADODB.ConnectModeEnum.adModeReadWrite;
+            BinaryStream.Type = (ADODB.StreamTypeEnum)ADODB.StreamTypeEnum.adTypeBinary;
+            BinaryStream.Open(null, ADODB.ConnectModeEnum.adModeUnknown, ADODB.StreamOpenOptionsEnum.adOpenStreamUnspecified, "", "");
+            while(ChunkSize > 0)
+            {
+                //If chunk size buffer will read past the end of the stream
+                //adjust it to read to the end of the stream.
+                if (ChunkSize + Received > TotalBytes)
+                {
+                    ChunkSize = TotalBytes - Received;
+                }
+                //get out of the loop if no more data can be read.
+                if (ChunkSize == 0)
+                {
+                    break;
+                }
+                //Get the current chunk
+                //Write chunk to stream
+                BinaryStream.Write(Request.BinaryRead(ChunkSize));
+                //Incriment bytes received
+                Received = Received + ChunkSize;
+                //As long as the user is still connected ...
+                if (Response.IsClientConnected)
+                {
+                    //Update Progress information.
+                    Progress.LastActive = DateTime.Now.ToString();
+                    Progress.BytesReceived = Received;
+                    Progress.Save();
+                }
+                else
+                {
+                    //Update Progress information
+                    Progress.UploadCompleted = DateTime.Now.ToString();
+                    Progress.Save();
+                    //Stop execution.
+                    return ;
+                }
+            }
+            BinaryStream.Position = 0;
+            gBinaryData = BinaryStream.Read(ADODB.StreamReadEnum.adReadAll);
+            BinaryStream.Close();
+            BinaryStream = null;
+            //Parse out the delimiter
+            Delimiter = ParseBoundary();
+            //Parse the data
+            ParseData();
+        }
+
+        //------------------------------------------------------------------------------
+        //Private Function ParseDelimiter()
+        //
+        //' Delimiter seperates multiple pieces of form data
+        //' "around" 43 characters in length
+        //' next character afterwards is carriage return (except last line has two --)
+        //' first part of delmiter is dashes followed by hex number
+        //' hex number is possibly the browsers session id?
+        //
+        //' Need a MAC to find out why this causes problems.
+        //
+        //' MSIE 3.01 and 3.02 on the Mac, for instance, don't use a
+        //' leading '--' in the boundary field for multipart/form-data POSTs
+        //
+        //' Examples:
+        //
+        //' -----------------------------7d230d1f940246
+        //' -----------------------------7d22ee291ae0114
+        //
+        //' If we can not find a carriage return and line feed combination ...
+        //If InStrB(1, gBinaryData, CRLF) = 0 Then
+        //
+        //' We can not determine the delimiter
+        //
+        //msg = "Failed to parse posted binary data delimiter.  "
+        //msg = msg & " Make sure your encoding attiribute is set to"
+        //msg = msg & " mutlipart/form-data in your <FORM> tag.  example:"
+        //msg = msg & "<FORM method=""post"" encType=""multipart/form-data"""
+        //msg = msg & " action=""ToDatabase.aspx""> "
+        //
+        //Call PublishError(3, msg)
+        //
+        //Exit Sub
+        //
+        //End If
+        //
+        //' parse delimiter
+        //ParseDelimiter = MidB(gBinaryData, 1, InStrB(1, gBinaryData, CRLF) - 1)
+        //
+        //End Function
+        //------------------------------------------------------------------------------
+        private bool IsMultipartFormData() 
+        {
+            //Determine if user posted multipart form-data
+            //if not, they did not specify encType attribute correctly
+            //on <FORM> tag.
+            string ContentType = "";
+            ContentType = Request.ServerVariables["HTTP_CONTENT_TYPE"];
+            //Return true, only if the text is found within the content type.
+            return !(ContentType.IndexOf("multipart/form-data", 1 - 1 ) == 0);
+        }
+
+        //------------------------------------------------------------------------------
+        private string ParseBoundary() 
+        {
+            //Parse boundary from content type
+            //The boundry seperates each type of data within the binary data posted
+            //to this web page.
+            //NOTE: Not sure if this new technique solves issues with
+            //MAC
+            //MSIE 3.01 & 3.02 on MAC.
+            //Opera
+            //Mozilla 1.2
+            //
+            //Could not confirm issues in the past or now.  If you are a developer
+            //and have access to these resources, please help me verify if the
+            //code does or does not work.
+            string ContentType = "";
+            int BoundaryIndex = 0;
+            ContentType = Request.ServerVariables["HTTP_CONTENT_TYPE"];
+            //Find out where the boundary text starts
+            BoundaryIndex = ContentType.IndexOf("boundary=", 1 - 1 );
+            //If boundary is not specified withing content type header
+            if (BoundaryIndex == 0)
+            {
+                //Return nothing.
+                return "";
+            }
+            //Pull the boundary out of the content type
+            //Len("boundary=") = 9
+            return CStrB(ContentType.Substring(BoundaryIndex + 9 - 1));
+        }
+
+        //------------------------------------------------------------------------------
+        private void ParseData() 
+        {
+            //This procedure loops through each section (chunk) found within the
+            //delimiters and sends them to the parse chunk routine
+            int ChunkStart = 0;
+            //start position of chunk data
+            int ChunkLength = 0;
+            //Length of chunk
+            int ChunkEnd = 0;
+            //Last position of chunk data
+            //Initialize at first character
+            ChunkStart = 1;
+            //Find start position
+            ChunkStart = Convert.ToString(gBinaryData).IndexOf(Convert.ToString(Delimiter) + CRLF, ChunkStart - 1 );
+            //While the start posotion was found
+            while(!(ChunkStart == 0))
+            {
+                //Find the end position (after the start position)
+                ChunkEnd = Convert.ToString(gBinaryData).IndexOf(Convert.ToString(Delimiter), ChunkStart + 1 - 1 ) - 4;
+                //Determine Length of chunk
+                ChunkLength = ChunkEnd - ChunkStart;
+                ParseChunk(ref ChunkStart, ref ChunkLength);
+                //Look for next chunk after the start position
+                //ChunkStart = InStrB(ChunkStart + 1, gBinaryData, Delimiter & CRLF)
+                ChunkStart = Convert.ToString(gBinaryData).IndexOf(Convert.ToString(Delimiter) + CRLF, ChunkEnd - 1 );
+            }
+        }
+
+        //------------------------------------------------------------------------------
+        private void ParseChunk(ref int chunkStart, ref int chunkLength) 
+        {
+            //This procedure gets a chunk passed to it and parses its contents.
+            //There is a general format that the chunk follows.
+            //First, the deliminator appears
+            //Next, headers are listed on each line that define properties of the chunk.
+            //Content-Disposition: form-data: name="File1"; filename="C:\Photo.gif"
+            //Content-Type: image/gif
+            //After this, a blank line appears and is followed by the binary data.
+            string FieldName = "";
+            //Name of field
+            string FilePath = "";
+            //File name of binary data
+            string ContentType = "";
+            //Content type of binary data
+            object ContentDisposition = null;
+            //Content Disposition
+            int dataStart = 0;
+            //Start position of data
+            int dataLength = 0;
+            //Length of data
+            //Parse out the content dispostion
+            ContentDisposition = ParseDisposition(ref chunkStart, ref chunkLength);
+            //And Parse the Name
+            FieldName = ParseName(ref ContentDisposition);
+            //And the file name
+            FilePath = ParseFileName(ref ContentDisposition);
+            //Parse out the Content Type
+            ContentType = ParseContentType(ref chunkStart, ref chunkLength);
+            //Determine where the binardy data begins and ends
+            ParseBinaryData(ref chunkStart, ref chunkLength, ref dataStart, ref dataLength);
+            //Add a new field
+            AddField(ref FieldName, ref FilePath, ref ContentType, ref dataStart, ref dataLength);
+        }
+
+        //------------------------------------------------------------------------------
+        private void AddField(ref string fieldName, ref string filePath, ref string contentType, ref int dataStart, ref int dataLength) 
+        {
+            clsField Field = null;
+            //Field object class
+            //Add a new index to the field array
+            //Make certain not to destroy current fields
+            //TODO Redim Preserve not supported.
+            mobjFieldAry = new object[mlngCount + 1];
+            //Create new field object
+            Field = new clsField();
+            //Set field properties
+            Field.Name = fieldName;
+            Field.FilePath = filePath;
+            Field.ContentType = contentType;
+            Field.DataStart = dataStart;
+            Field.DataLength = dataLength;
+            //Determine field length based on if ContentType was provided.
+            if (contentType == "")
+            {
+                //Assume Unicode - 2 bytes per character
+                Field.Length = dataLength / 2;
+            }
+            else
+            {
+                //Assume binary data
+                Field.Length = dataLength;
+            }
+            //Set field array index to new field
+            mobjFieldAry[mlngCount] = Field;
+            //Incriment field count
+            mlngCount = mlngCount + 1;
+        }
+
+        //------------------------------------------------------------------------------
+        private void ParseBinaryData(ref int chunkStart, ref int chunkLength, ref int dataStart, ref int dataLength) 
+        {
+            //Parses binary content of the chunk
+            dataStart = 0;
+            dataLength = 0;
+            //Find first occurence of a blank line
+            dataStart = Convert.ToString(gBinaryData).IndexOf(CRLF + CRLF, chunkStart - 1 );
+            //If it doesn't exist, then return nothing
+            if (dataStart == 0)
+            {
+                return ;
+            }
+            if (dataStart > chunkStart + chunkLength)
+            {
+                dataStart = 0;
+                return ;
+            }
+            //Incriment start to pass carriage returns and line feeds
+            dataStart = dataStart + 4;
+            //calculate data length based on start and length of the chunk.
+            dataLength = ((chunkStart + chunkLength) - dataStart);
+        }
+
+        //------------------------------------------------------------------------------
+        private string ParseContentType(ref int chunkStart, ref int chunkLength) 
+        {
+            string ParseContentType = "";
+            //Parses the content type of a binary file.
+            //example: image/gif is the content type of a GIF image.
+            int StartIndex = 0;
+            //Start Position
+            int EndIndex = 0;
+            //End Position
+            int Length = 0;
+            //Length
+            //Fid the first occurance of a line starting with Content-Type:
+            StartIndex = Convert.ToString(gBinaryData).IndexOf(CRLF + CStrB("Content-Type:"), chunkStart - 1 );
+            //If not found, return nothing
+            if (StartIndex == 0 || StartIndex > chunkStart + chunkLength)
+            {
+                ParseContentType = "";
+                return ParseContentType;
+            }
+            //Find the end of the line
+            EndIndex = Convert.ToString(gBinaryData).IndexOf(Convert.ToString(CR), StartIndex + 15 - 1 );
+            //If not found, return nothing
+            if (EndIndex == 0 || EndIndex > chunkStart + chunkLength)
+            {
+                ParseContentType = "";
+                return ParseContentType;
+            }
+            //Adjust start position to start after the text "Content-Type:"
+            StartIndex = StartIndex + 15;
+            //If the start position is the same or past the end, return nothing
+            if (StartIndex >= EndIndex)
+            {
+                ParseContentType = "";
+                return ParseContentType;
+            }
+            //Determine length
+            Length = EndIndex - StartIndex;
+            //Pull out content type
+            //Convert to unicode
+            //Trim out whitespace
+            //Return results
+            ParseContentType = (CStrU(Convert.ToString(gBinaryData).Substring(StartIndex - 1, Length))).Trim();
+            return ParseContentType;
+        }
+
+        //------------------------------------------------------------------------------
+        private string ParseDisposition(ref int chunkStart, ref int chunkLength) 
+        {
+            //Parses the content-disposition from a chunk of data
+            //
+            //Example:
+            //
+            //Content-Disposition: form-data: name="File1"; filename="C:\Photo.gif"
+            //
+            //Would Return:
+            //form-data: name="File1"; filename="C:\Photo.gif"
+            int StartIndex = 0;
+            //Start Position
+            int EndIndex = 0;
+            //End Position
+            int Length = 0;
+            //Length
+            //Find first occurance of a line starting with Content-Disposition:
+            StartIndex = Convert.ToString(gBinaryData).IndexOf(CRLF + CStrB("Content-Disposition:"), chunkStart - 1 );
+            //If not found, return nothing
+            if (StartIndex == 0 || StartIndex > chunkStart + chunkLength)
+            {
+                return "";
+            }
+            //Find the end of the line
+            EndIndex = Convert.ToString(gBinaryData).IndexOf(CRLF, StartIndex + 22 - 1 );
+            //If not found, return nothing
+            if (EndIndex == 0 || EndIndex > chunkStart + chunkLength)
+            {
+                return "";
+            }
+            //Adjust start position to start after the text "Content-Disposition:"
+            StartIndex = StartIndex + 22;
+            //If the start position is the same or past the end, return nothing
+            if (StartIndex >= EndIndex)
+            {
+                return "";
+            }
+            //Determine Length
+            Length = EndIndex - StartIndex;
+            //Pull out content disposition
+            //Convert to Unicode
+            //Return Results
+            return CStrU(Convert.ToString(gBinaryData).Substring(StartIndex - 1, Length));
+        }
+
+        //------------------------------------------------------------------------------
+        private string ParseName(ref object contentDisposition) 
+        {
+            //Parses the name of the field from the content disposition
+            //
+            //Example
+            //
+            //form-data: name="File1"; filename="C:\Photo.gif"
+            //
+            //Would Return:
+            //File1
+            int StartIndex = 0;
+            //Start Position
+            int EndIndex = 0;
+            //End Position
+            int Length = 0;
+            //Length
+            //Find first occurance of text name="
+            StartIndex = Convert.ToString(contentDisposition).IndexOf("name=\"", 1 - 1 );
+            //If not found, return nothing
+            if (StartIndex == 0)
+            {
+                return "";
+            }
+            //Find the closing quote
+            EndIndex = Convert.ToString(contentDisposition).IndexOf("\"", StartIndex + 6 - 1 );
+            //If not found, return nothing
+            if (EndIndex == 0)
+            {
+                return "";
+            }
+            //Adjust start position to start after the text name="
+            StartIndex = StartIndex + 6;
+            //If the start position is the same or past the end, return nothing
+            if (StartIndex >= EndIndex)
+            {
+                return "";
+            }
+            //Determine Length
+            Length = EndIndex - StartIndex;
+            //Pull out field name
+            //Return results
+            return Convert.ToString(contentDisposition).Substring(StartIndex - 1, Length);
+        }
+
+        //------------------------------------------------------------------------------
+        private string ParseFileName(ref object pstrDisposition) 
+        {
+            string ParseFileName = "";
+            //Parses the name of the field from the content disposition
+            //
+            //Example
+            //
+            //form-data: name="File1"; filename="C:\Photo.gif"
+            //
+            //Would Return:
+            //C:\Photo.gif
+            int llngStart = 0;
+            //Start Position
+            int llngEnd = 0;
+            //End Position
+            int llngLength = 0;
+            //Length
+            //Find first occurance of text filename="
+            llngStart = Convert.ToString(pstrDisposition).IndexOf("filename=\"", 1 - 1 );
+            //If not found, return nothing
+            if (llngStart == 0)
+            {
+                ParseFileName = Convert.ToString(DefaultName());
+                return ParseFileName;
+            }
+            //Find the closing quote
+            llngEnd = Convert.ToString(pstrDisposition).IndexOf("\"", llngStart + 10 - 1 );
+            //If not found, return nothing
+            if (llngEnd == 0)
+            {
+                ParseFileName = Convert.ToString(DefaultName());
+                return ParseFileName;
+            }
+            //Adjust start position to start after the text filename="
+            llngStart = llngStart + 10;
+            //If the start position is the same of past the end, return nothing
+            if (llngStart >= llngEnd)
+            {
+                ParseFileName = Convert.ToString(DefaultName());
+                return ParseFileName;
+            }
+            //Determine length
+            llngLength = llngEnd - llngStart;
+            //Pull out file name
+            //Return results
+            ParseFileName = Convert.ToString(pstrDisposition).Substring(llngStart - 1, llngLength);
+            return ParseFileName;
+        }
+
+        //------------------------------------------------------------------------------
+        private string DefaultName() 
+        {
+            //Some browsers don't supply file names in the headers.
+            //We have to assume a name for them.
+            //Since all we know is that the file is made of binary data,
+            //we assign a .bin extension.
+            return Convert.ToString(DateTime.Today.Year) + "_" + DateAndTime.MonthName(DateTime.Today.Month, true) + "_" + Convert.ToString(DateTime.Today.Day) + "-" + Convert.ToString(DateTime.Now.TimeOfDay.TotalSeconds) + ".bin";
+        }
+
+        //------------------------------------------------------------------------------
+        private string CStrU(ref string pstrANSI) 
+        {
+            //Converts an ANSI string to Unicode
+            //Best used for small strings
+            int llngLength = 0;
+            //Length of ANSI string
+            int llngIndex = 0;
+            //Current position
+            //determine length
+            llngLength = pstrANSI.Length;
+            //Loop through each character
+            for(llngIndex = 1; llngIndex <= llngLength; llngIndex += 1)
+            {
+                //Pull out ANSI character
+                //Get Ascii value of ANSI character
+                //Get Unicode Character from Ascii
+                //Append character to results
+                //Convert to unicode
+            }
+            return CStrU + Convert.ToString((char)((byte)(pstrANSI.Substring(llngIndex - 1, 1)[0])));
+        }
+
+        //------------------------------------------------------------------------------
+        private string CStrB(ref string pstrUnicode) 
+        {
+            //Converts a Unicode string to ANSI
+            //Best used for small strings
+            int llngLength = 0;
+            //Length of ANSI string
+            int llngIndex = 0;
+            //Current position
+            //determine length
+            llngLength = pstrUnicode.Length;
+            //Loop through each character
+            for(llngIndex = 1; llngIndex <= llngLength; llngIndex += 1)
+            {
+                //Pull out Unicode character
+                //Get Ascii value of Unicode character
+                //Get ANSI Character from Ascii
+                //Append character to results
+            }
+            return CStrB + Convert.ToString((char)((short)(pstrUnicode.Substring(llngIndex - 1, 1)[0])));
+        }
+
+        //------------------------------------------------------------------------------
+        public void DeleteFile(object filePath) 
+        {
+            if (!FileSystemObjectEnabled)
+            {
+                PublishError(12, "File System Object has been disabled.");
+                return ;
+            }
+            FileSystemObject FSO = null;
+            FSO = new FileSystemObject();
+            FSO.DeleteFile(Convert.ToString(filePath));
+            FSO = null;
+        }
+
+        //------------------------------------------------------------------------------
+        public void RenameFile(object filePath, object fileName) 
+        {
+            if (!FileSystemObjectEnabled)
+            {
+                PublishError(12, "File System Object has been disabled.");
+                return ;
+            }
+            string folder = "";
+            folder = Convert.ToString(filePath).Substring(1 - 1, Convert.ToString(filePath).LastIndexOf("\\"));
+            FileSystemObject FSO = null;
+            FSO = new FileSystemObject();
+            FSO.MoveFile(Convert.ToString(filePath), folder + Convert.ToString(fileName));
+            FSO = null;
+        }
+
+        //------------------------------------------------------------------------------
+        public void CopyFile(ref object source, ref object destination) 
+        {
+            if (!FileSystemObjectEnabled)
+            {
+                PublishError(12, "File System Object has been disabled.");
+                return ;
+            }
+            FileSystemObject FSO = null;
+            FSO = new FileSystemObject();
+            FSO.CopyFile(Convert.ToString(source), Convert.ToString(destination), true);
+            FSO = null;
+        }
+
+        //------------------------------------------------------------------------------
+        public void MoveFile(ref object source, ref object destination) 
+        {
+            if (!FileSystemObjectEnabled)
+            {
+                PublishError(12, "File System Object has been disabled.");
+                return ;
+            }
+            FileSystemObject FSO = null;
+            FSO = new FileSystemObject();
+            FSO.MoveFile(Convert.ToString(source), Convert.ToString(destination));
+            FSO = null;
+        }
+
+        //------------------------------------------------------------------------------
+        public string UniqueName(string folder, ref string proposedName) 
+        {
+            //Generates a unique file name that has not yet been used
+            //within the target folder.
+            //If we continue to upload a file called photo.gif,
+            //this is what will be returned:
+            //first time:	photo.gif
+            //second time:	photo[1].gif
+            //third time:	photo[2].gif
+            if (!FileSystemObjectEnabled)
+            {
+                PublishError(12, "File System Object has been disabled.");
+                return "";
+            }
+            //Make sure we have a file name
+            if (proposedName == "")
+            {
+                proposedName = Convert.ToString(DefaultName());
+            }
+            //Make sure user supplied a valid file name
+            if (proposedName == ".")
+            {
+                PublishError(8, "Filename is not valid");
+                return "";
+            }
+            //Make sure user supplied a folder to check
+            if (folder == "")
+            {
+                PublishError(9, "Folder is not valid");
+                return "";
+            }
+            string Name = "";
+            //Name of file (without extension)
+            string Ext = "";
+            //File Extension
+            //seperate name/ext
+            if (proposedName.LastIndexOf(".") == 0)
+            {
+                Name = proposedName;
+                Ext = "";
+            }
+            else if( proposedName.LastIndexOf(".") == 1)
+            {
+                Name = "";
+                Ext = proposedName.Substring(2 - 1);
+            }
+            else if( proposedName.LastIndexOf(".") == proposedName.Length)
+            {
+                Name = proposedName.Substring(1 - 1, proposedName.Length - 1);
+                Ext = "";
+            }
+            else
+            {
+                Name = proposedName.Substring(1 - 1, proposedName.LastIndexOf(".") - 1);
+                Ext = proposedName.Substring(proposedName.LastIndexOf(".") + 1 - 1);
+            }
+            //make sure we have trailing slash
+            if (!(folder.Substring(folder.Length - 1, 1) == "\\"))
+            {
+                folder = folder + "\\";
+            }
+            FileSystemObject FSO = null;
+            FSO = new FileSystemObject();
+            //verify folder exists
+            if (!(FSO.FolderExists(folder)))
+            {
+                FSO = null;
+                PublishError(7, "Folder does not exist: " + folder);
+                return "";
+            }
+            string Suffix = "";
+            int Index = 0;
+            Index = 0;
+            Suffix = "";
+            //Check to see if compiled filename exists
+            while(FSO.FileExists(folder + Name + Suffix + "." + Ext))
+            {
+                //File name exists, let's incriment our counter
+                Index = Index + 1;
+                //Setup suffix to match the index
+                Suffix = "[" + Convert.ToString(Index) + "]";
+            }
+            FSO = null;
+            //Return unique file name
+            return Name + Suffix + "." + Ext;
+        }
+
+        //------------------------------------------------------------------------------
+        private void PublishError(int number, string message) 
+        {
+            //writes out error in a specific format.
+            // On Error Goto 0 (UNSUPPORT)
+            Information.Err().Raise(0x80040000 + number, ProductName + " " + ProductVersion, message + ErrorSignature, null, null);
+        }
+
+        //------------------------------------------------------------------------------
+        public string DebugText() 
+        {
+            RequestData();
+            //Returns HTML code used in debugging the information comming accross
+            //within the posted form data
+            string Text = "";
+            int Length = 0;
+            int Index = 0;
+            byte Code = 0;
+            Length = Convert.ToString(gBinaryData).Length;
+            for(Index = 1; Index <= Length; Index += 1)
+            {
+                Code = (byte)(Convert.ToString(gBinaryData).Substring(Index - 1, 1)[0]);
+                switch (Code) {
+                    case (byte)13:
+                        Text = Text + "<B>vbCr</B><BR>";
+                        break;
+                    case (byte)10:
+                        Text = Text + "<B>vbLf</B><BR>";
+                        break;
+                    default:
+                        if (Code < 32)
+                        {
+                            //non-printable character
+                            Text = Text + ".";
+                        }
+                        else
+                        {
+                            //printable.  Encode the character.
+                            Text = Text + Server.HtmlEncode(Convert.ToString((char)(Code)));
+                        }
+                        break;
+                }
+            }
+            return Text;
+        }
+
+        //------------------------------------------------------------------------------
+        ~clsUpload() 
+        {
+            //This event is called when you destroy the class.
+            //
+            //Example:
+            //Set objUpload = Nothing
+            //
+            //Example:
+            //Response.End
+            //
+            //Example:
+            //Page finnishes executing ...
+            //Remove binary data
+            gBinaryData = "";
+            int llngIndex = 0;
+            //Current Field Index
+            //Loop through fields
+            for(llngIndex = 0; llngIndex <= mlngCount - 1; llngIndex += 1)
+            {
+                //Release field object
+                mobjFieldAry[llngIndex] = null;
+            }
+            //Redimension array and remove all data within
+            mobjFieldAry = new object[-1 + 1];
+            //Signify the upload process has been completed.
+            Session.Add("Upload.Completed", DateTime.Now);
+            //Update Session
+            Progress.UploadCompleted = DateTime.Now;
+            Progress.Save();
+        }
+
+        //------------------------------------------------------------------------------
+        public clsUpload() :base() 
+        {
+            //This event is called when you instantiate the class.
+            //
+            //Example:
+            //Set objUpload = New clsUpload
+            ProductName = "Upload Without COM";
+            ProductVersion = "3.11";
+            ErrorSignature = "[Need help?  Contact Lewis Moten, lewis@moten.com, http://www.lewismoten.com]";
+            //Initialize progress information class
+            Progress = new clsProgress();
+            //Set initial information
+            Progress.UploadStarted = DateTime.Now;
+            Progress.LastActive = DateTime.Now;
+            Progress.BytesReceived = 0;
+            Progress.TotalBytes = Request.TotalBytes;
+            Progress.UploadCompleted = "";
+            //update the Progress information
+            Progress.Save();
+            //Set script timeout to 10 minutes.
+            Server.ScriptTimeout = 60 * 10;
+            //Shameless plug for search engines
+            Response.Write("<NOSCRIPT>");
+            Response.Write("<B>Upload Files Without COM</B> provided by: ");
+            Response.Write("<A href=\"http://www.lewismoten.com\"><I>Lewis Moten</I></A>");
+            Response.Write("</NOSCRIPT>");
+            //Verify ADODB Version
+            Connection Connection = null;
+            double AdodbVersion = 0;
+            Connection = new Connection();
+            AdodbVersion = Convert.ToDouble(Connection.Version);
+            Connection = null;
+            if (AdodbVersion < 2.5)
+            {
+                PublishError(10, "Microsoft Data Access Components (ADODB) must be version 2.5 or above.");
+                return ;
+            }
+            //Did the web developer program the form tag correctly?
+            if (Convert.ToBoolean(~Convert.ToInt32(IsMultipartFormData())))
+            {
+                msg = "multipart/form-data was not received.  ";
+                msg = msg + "Make sure that you have specified the endType ";
+                msg = msg + "attribute to \"multipart/form-data\" in your ";
+                msg = msg + "<FORM id=form1 name=form1> tag.";
+                PublishError(13, msg);
+                return ;
+            }
+            //Redimension array with nothing
+            mobjFieldAry = new object[-1 + 1];
+            //Compile ANSI equivilants of carriage returns and line feeds
+            CR = (char)((short)("\r"[0]));
+            //vbCr		Carriage Return
+            LF = (char)((short)("\n"[0]));
+            //vbLf		Line Feed
+            CRLF = Convert.ToString(CR) + Convert.ToString(LF);
+            //vbCrLf	Carriage Return & Line Feed
+            //Set field count to zero
+            mlngCount = 0;
+            //Request data
+            //Call RequestData
+        }
+
+        public int Count
+        {
+        //------------------------------------------------------------------------------
+          get 
+          {
+
+            RequestData();
+            //Return number of fields found
+            return mlngCount;
+          }
+
+        }
+        public object Collection
+        {
+        //------------------------------------------------------------------------------
+          get 
+          {
+
+            object[] myCollection = null;
+            int index = 0;
+            int matches = 0;
+            //convert name to lowercase
+            fieldName = fieldName.ToLower();
+            //default number of matches to none
+            matches = -1;
+            //Loop through each field
+            for(index = 0; index <= Count - 1; index += 1)
+            {
+                //If name matches
+                if ((Convert.ToString(mobjFieldAry[index].Name)).ToLower() == fieldName)
+                {
+                    //incriment number of matches found
+                    matches = matches + 1;
+                    //Add a new item to the collection
+                    //TODO Redim Preserve not supported.
+                    myCollection = new object[matches + 1];
+                    //Assign last item to the value
+                    myCollection[matches] = mobjFieldAry[index];
+                    //.Value
+                }
+            }
+            //Return the collection as an array
+            return myCollection;
+          }
+
+        }
+        public object Fields
+        {
+        //------------------------------------------------------------------------------
+          get 
+          {
+            object Fields;
+        
+            RequestData();
+            long llngIndex = 0;
+            //Index of current field
+            //If a number was passed
+            if (Information.IsNumeric(pstrName))
+            {
+                llngIndex = Convert.ToInt64(pstrName);
+                //If programmer requested an invalid number
+                if (llngIndex > mlngCount - 1 || llngIndex < 0)
+                {
+                    //Raise an error
+                    PublishError(1, "Object does not exist within the ordinal reference.");
+                    return Fields;
+                }
+                //Return the field class for the index specified
+                Fields = mobjFieldAry[Convert.ToInt32(pstrName)];
+                return Fields;
+                //Else a field name was passed
+            }
+            else
+            {
+                //convert name to lowercase
+                pstrName = Convert.ToString(pstrName).ToLower();
+                //Loop through each field
+                for(llngIndex = 0; llngIndex <= mlngCount - 1; llngIndex += 1)
+                {
+                    //If name matches current fields name in lowercase
+                    if ((Convert.ToString(mobjFieldAry[llngIndex].Name)).ToLower() == Convert.ToString(pstrName))
+                    {
+                        //Return Field Class
+                        Fields = mobjFieldAry[llngIndex];
+                        return Fields;
+                    }
+                }
+            }
+            //If matches were not found, return an empty field
+            Fields = new clsField();
+            return Fields;
+          }
+
+        }
+    }
+}

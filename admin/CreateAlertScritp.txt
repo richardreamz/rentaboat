@@ -1,0 +1,10 @@
+    Private Sub createAlertScript(ByVal errorMsg As String)
+        Dim buf As New System.Text.StringBuilder
+
+        buf.AppendLine("<script type=""text/javascript"">")
+        buf.AppendFormat("alert('{0}');", errorMsg)
+        buf.AppendLine("")
+        buf.AppendLine("</script>")
+
+        ClientScript.RegisterStartupScript(Me.GetType(), "err", buf.ToString)
+    End Sub

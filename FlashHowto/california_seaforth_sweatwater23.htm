@@ -1,0 +1,525 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html>
+<head>
+<title>Welcome to BoatRenting.com!</title>
+<style type="text/css" media="screen">@import "br.css";</style>
+<meta http-equiv="Content-type"	content="text/html;	charset=iso-8859-1"	/>
+<meta http-equiv="Content-Language"	content="en-us"	/>
+<meta name="ROBOTS"	content="ALL" />
+
+
+
+<script	language="JavaScript">
+
+function areaMap(zipcode)
+{
+
+
+window.open("http://www.google.com/maps?q="	+zipcode +"&sa=X&oi=map&ct=title","_blank",	"height=800,width=900,status=yes,toolbar=no,menubar=no,location=no");
+
+
+
+}
+
+
+function ViewVideo(filename,desc,name)
+{
+  
+  window.open("./ViewVideo.asp?filename=" +	filename, "_blank",	"height=400,width=400,status=no,toolbar=no,menubar=no,location=no");
+  
+ //	window.open("./boats/" + filename, "_blank", "height=400,width=400,status=no,toolbar=no,menubar=no,location=no");
+  
+  
+  
+}
+
+
+function FCalendario(num_campo)
+{
+	var	matParam = new Array(2);
+	campo =	num_campo;
+	matParam[0]	= window;
+	switch (campo)
+	{
+		case 0:
+			matParam[1]	= "txt_date1"; break;
+		case 1:
+			matParam[1]	= "txt_date2"; break;
+	}
+		window.showModalDialog("calendar.html",matParam,"dialogHeight:210px; dialogWidth:280px;	center:yes;	help:no; resizable:no; status:no");
+}
+
+
+function colocar(day,month,year) {
+		var	dia	= new String(day);
+		if (dia.length < 2)	dia	= "0" +	dia;
+
+		var	mes	= new String(month);
+		if (mes.length < 2)	mes	= "0" +	mes;
+		var	anio = new String(year);
+
+	document.frm_boat.txt_date1.value=mes +	"/"	+ dia +	"/"	+ anio;
+	document.frm_boat.txt_date1_day.value=day;
+	document.frm_boat.txt_date1_month.value=month;
+	document.frm_boat.txt_date1_year.value=year;
+	document.frm_boat.txt_date2.value=mes +	"/"	+ dia +	"/"	+ anio;
+	document.frm_boat.txt_date1_old.value=dia +	"/"	+ mes +	"/"	+ anio;
+	document.frm_boat.txt_date2_old.value=dia +	"/"	+ mes +	"/"	+ anio;
+	document.frm_boat.action="calendar2.asp";
+	document.frm_boat.submit();
+
+}
+
+
+</script>
+
+</head>
+<body>
+<form name="frm_boat" method="post">
+</form>
+<input type="hidden" name="hdnBoatID"  id="hdnBoatID" value="466">
+<input type="hidden" name="hdnMarinaID"	id="hdnMarinaID" value="259">
+<input type="hidden" name="cmb_boat"  id="cmb_boat">
+<input type="hidden" name="cmb_country"	id="cmb_country">
+<input type="hidden" name="cmb_body" id="cmb_body">
+<input type="hidden" name="cmb_facility" id="cmb_facility">
+<input type="hidden" name="cmb_state" id="cmb_state">
+<input type="hidden" name="cmb_zip"	 id="cmb_zip">
+<input type="hidden" name="txt_date1" id="txt_date1">
+<input type="hidden" name="txt_date2" id="txt_date2">
+<input type="hidden" name="txt_date1_day">
+<input type="hidden" name="txt_date1_month">
+<input type="hidden" name="txt_date1_year">
+<input type="hidden" name="txt_date1_old">
+<input type="hidden" name="txt_date2_old">
+	<div id="container">
+		<div id="banner"></div>
+		<div id="menu">
+			<ul>
+					<li	id="current">
+			<img name="mainboatpic"	src="../boats/result_466.jpg" alt="" width="373" height="216"/><a	href="../default.asp">Home</a></li>
+
+				
+				<!--li><a href="javascript:QuickSearch(3)">Boating Clubs</a></li-->
+				<li><a href="javascript:QuickSearch(12)">Cabin</a></li>
+				<li><a href="javascript:QuickSearch(8)">Charters</a></li>
+				<li><a href="javascript:QuickSearch(10)">Dinner</a></li>
+				<li><a href="javascript:QuickSearch(9)">Excursions</a></li>
+				<li><a href="javascript:QuickSearch(1)">Fishing</a></li>
+<li><a href="javascript:QuickSearch(13)">Houseboat</a></li>
+				<li><a href="javascript:QuickSearch(7)">Jet	Ski</a></li>
+				<li><a href="javascript:QuickSearch(4)">Paddle</a></li>
+				<li><a href="javascript:QuickSearch(11)">Pontoon</a></li>
+				<li><a href="javascript:QuickSearch(2)">Sailing</a></li>
+				<li><a href="javascript:QuickSearch(6)">Speed</a></li>
+				<li><a href="javascript:QuickSearch(5)">Yachts</a></li>
+				<!--li><a href="javascript:QuickSearch(13)">Houseboat</a></li-->
+
+			</ul>
+		</div><!-- SUB MENU	-->
+		<table cellpadding="0" cellspacing="0" width="780" height="25" style="background: url('../images/sub_menu_bg.gif') repeat-x bottom left; margin-left: 1px;	color: #666">
+		<tr>
+			<td	width="29" height="25"></td>
+			<td	width="657"	height="25">
+			<a href="../default.asp">Home</a>&nbsp;| &nbsp;
+			<a href="../rentwithus.asp">Advertise on this site</a>&nbsp;|&nbsp;
+			<a href="../contactus.asp">Contact	Us</a>&nbsp;|&nbsp;
+			<a href="../members.asp">Facility</a>&nbsp;|&nbsp;
+			<a href="../facilities_faqs.asp">Facilities FAQs</a>&nbsp;|&nbsp;
+			<a href="../renters_faqs.asp">Renters FAQs</a>&nbsp;|&nbsp;
+			<a href="../Articles.asp">Articles</a>&nbsp;|&nbsp;
+			<a href="../sitemap.asp">Site Map</a>
+			</td>
+			<td	width="130"	height="25">
+			<div>
+              <a	href="../members.asp" class="buttonMenu-Sign" style="color:white;"><b>
+			  Manager Sign In</b></div></a></td>
+		</tr>
+		</table>
+		
+		<div class="calendar_boatimage">
+			&nbsp;<input type="hidden" name="hpicmain" value="boats/result_466.jpg" ><iframe	marginheight="0" marginwidth="0" scrolling="auto" name="f_morePic" width="390" height="108"	src="../picscroll.asp?hdnBoat=466&hdnMarina=259"></iframe>
+		</div>
+				
+		
+		
+			
+		
+		
+		
+		
+			<div class="calendar_calendardiv" >
+				
+				
+					
+						<table border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td>
+									 <iframe marginheight="0" marginwidth="0" name="i_calendar"	  src="../calendar_i.asp?hdnBoat=466&hdnMarina=259" frameborder="0" scrolling="no"	height="165" width="205"></iframe>
+									</td>
+									<td>
+										<br>
+										&nbsp;&nbsp;
+									<img src="../images/booknow.gif"  onclick="javascript:colocar(14,3,2008)" onmouseover="style.cursor='hand'"/>
+										<br>Click on 
+										your desired date
+			
+					
+				
+					
+			
+			
+			
+						<span id="calendar_dates_available">Green =	Available</span><br>
+						<span id="calendar_dates_partially_available">Orange = 1/2 Day</span>
+				
+							<h5	style="text-align: center">1-888-610-BOAT (2628)</h5>
+				
+				
+							</td>
+										
+							</tr>
+							</table>
+				
+				
+			
+						
+							
+		
+				<table border="1" cellspacing="0" cellpadding="0" align="center">
+					
+							
+							
+							<tr>
+							<td>
+							</td>
+							
+							<td>
+							
+							Weekday</td>
+							<td>
+							
+							Weekend</td>
+							<td>
+							Holiday	</td>
+							<td>
+							Hours
+							</td>
+							
+							</tr>
+							
+							
+							
+								<tr>
+									<td>
+									Full day&nbsp;price:
+									</td>
+									<td>
+										$539&nbsp;&nbsp;
+									</td>
+									<td>
+										$539&nbsp;&nbsp;
+									</td>
+									<td>
+										
+									</td>
+									<td>
+									
+									</td>
+									
+								</tr>
+							
+								<tr>
+									<td>
+									Half day am&nbsp;price:
+									</td>
+									<td>
+										$340&nbsp;&nbsp;
+									</td>
+									<td>
+										$340&nbsp;&nbsp;
+									</td>
+									<td>
+										
+									</td>
+									<td>
+									
+									</td>
+									
+								</tr>
+							
+								<tr>
+									<td>
+									Half day pm&nbsp;price:
+									</td>
+									<td>
+										$340&nbsp;&nbsp;
+									</td>
+									<td>
+										$340&nbsp;&nbsp;
+									</td>
+									<td>
+										
+									</td>
+									<td>
+									
+									</td>
+									
+								</tr>
+							
+								<tr>
+									<td>
+									Hourly&nbsp;price:
+									</td>
+									<td>
+										$110&nbsp;&nbsp;
+									</td>
+									<td>
+										$110&nbsp;&nbsp;
+									</td>
+									<td>
+										
+									</td>
+									<td>
+									
+									</td>
+									
+								</tr>
+							
+				
+				</table>
+			  
+			
+		</div>
+
+
+
+	
+	
+	
+
+		
+	
+				
+				
+		
+			
+		
+		
+			
+		
+		
+	
+	<div class="calendar_boatdetails" >
+
+	
+		
+		
+		<div class="calendar_boatdetails" >
+
+			<table cellpadding="0" cellspacing="0" border="0" width="800">
+						
+						
+						
+						
+						
+						<tr>
+						
+						<td	align="left" width="782"  colspan=2>
+						
+						Boat # : 466  &nbsp;&nbsp;&nbsp;&nbsp;
+						
+							
+																 <img src="../images/staryellow.gif" width="20" height="20" />
+														
+																 <img src="../images/staryellow.gif" width="20" height="20" />
+														
+																 <img src="../images/staryellow.gif" width="20" height="20" />
+														
+														 <img src="../images/starwhite.gif" width="20"	height="20"	/>
+														
+														 <img src="../images/starwhite.gif" width="20"	height="20"	/>
+														
+						</td>			
+						</tr>
+					
+								
+						<tr>
+							<td	width="900"	>&nbsp;&nbsp;California&nbsp;-&nbsp;San Diego&nbsp;-&nbsp;92109&nbsp;-&nbsp;Mission Bay
+							
+							<div id="area_map" align="left">
+							
+							<input type="button" value="AREA MAP" onclick="javascript:areaMap('92109')"	id=button2 name=button2>
+							
+							
+							
+							</div>
+						
+							
+							</td>
+							
+						</tr>
+						
+						
+						
+			</table>	
+			
+			<table cellpadding="0" cellspacing="0">
+				
+				
+				
+				<tr>
+					<td	valign="top" bgcolor="F1F5F5">
+						<table class="boatdetails_table" cellpadding="0" cellspacing="0" width="370">
+							<tr>
+								<th	colspan="2"	bgcolor="white">Boat Details</th>
+							</tr>
+							<tr>
+								<td	class="boatcat_title">Boat Name:</td>
+								<td	class="boatcat_detail">23' Pontoon</td>
+							</tr>
+							<tr>
+								<td	class="boatcat_title">Make:</td>
+								<td	class="boatcat_detail">Sweetwater</td>
+							</tr>
+							<tr>
+								<td	class="boatcat_title">Model:</td>
+								<td	class="boatcat_detail">Party boat</td>
+							</tr>
+							<tr>
+								<td	class="boatcat_title">Length:</td>
+								<td	class="boatcat_detail">23'</td>
+							</tr>
+							<tr>
+								<td	class="boatcat_title">Passengers:</td>
+								<td	class="boatcat_detail">12</td>
+							</tr>
+							
+							
+							
+							
+							
+							<tr>
+								<td	class="boatcat_title">Captain&nbsp;or&nbsp;Guide Available&nbsp;for&nbsp;Hire:</td>
+								<td	class="boatcat_detail">No</td>
+							</tr>
+							<tr>
+								<td	class="boatcat_title" valign="top">Description:</td>
+								<td	class="boatcat_detail">This 23' Pontoon Boat is great for picnics and 
+family outings on Mission Bay. Holds up to 12 
+passengers (with a max. of 2650 lbs) with padded 
+seats, table, a cooler and bimini top.</td>
+							</tr>
+							<tr>
+								<td	class="boatcat_title" valign="top">Facility	Area & Attractions:</td>
+								<td	class="boatcat_detail">We have 3 convenient locations in San Diego, with a fleet of more than 200 vessels, sailboats from 16 to 36 ft, powerboats from 15 to 26 ft, jetskis, fishing skiffs, kayaks, paddleboats.Climb aboard one of our boats at our Downtown or Coronado location and you will be amazed how much you can see in just a few hours. Cruise past the Star of India, the oldest merchant ship afloat. Just a bit further and the beautiful San Diego skyline is in full view. Then Harbor and Shelter Island, the U.S. Navy marine base and Point Loma are on your right. Keep a sharp lookout for dolphins, sea lions, and maybe even a whale spout. Head back toward the downtown skyline and on your right you'll see the Naval Air Station, an aircraft carrier or two, and the magnificent Coronado Bay Bridge off in the distance. You can valet dock at our Coronado location and it's just a short walk to the world famous Hotel Del Coronado.  Mission Bay and Coronado locations have a bait, tackle and convenient store.</td>
+							</tr>
+							
+						
+						</table>
+						
+						
+					</td>
+					
+					
+					
+					
+					<td	valign="top"  bgcolor="F1F5F5">
+						<table class="boatdetails_table" cellpadding="0" cellspacing="0" width="370" border="0">
+							<tr>
+								<th	colspan="2"	bgcolor="white">Rental Details</th>
+							</tr>
+							<tr>
+								<td	style="width: 153px" class="boatcat_title">Requirements:</td>
+								<td	style="width: 217px" class="rentdetails">Previous boating experience required.</td>
+							</tr>
+							
+							<tr>
+								<td	class="boatcat_title">Facility #</td>
+								<td	class="rentdetails">259 </td>
+							
+							 </tr>
+							 
+							 <tr>
+								<td	class="boatcat_title">More From	this Facility</td>
+								<td	class="rentdetails">
+								
+								<input type="button" value="search"	onclick="document.location.href='./facility.asp?id=259'"	id=button1 name=button1>
+								
+								</td>
+							
+							 </tr>
+						
+							<tr>
+								<td	class="boatcat_title">Tax Rates:</td>
+								<td	class="rentdetails">0 %</td>
+							</tr>
+							<tr>
+								<td	class="boatcat_title">Reservation&nbsp;Deposit:</td>
+								<td	class="rentdetails">Credit Card</td>
+							</tr>
+							<tr>
+								<td	class="boatcat_title">Security Deposit:</td>
+								<td	class="rentdetails">Credit Card</td>
+							</tr>
+							<tr>
+								<td	class="boatcat_title" valign="top">Facility&nbsp;Cancellation&nbsp;Policy:</td>
+								<td	class="rentdetails">Time of reservation is the departure time ( even if you are late).Arrive 45 minutes prior to your departure time. Cancellation can be made 7 days prior for refund except for the online deposit that will be forfeit. No refund within 7 days of the reservation. No refund due to weather unless small craft advisory is in effect. Rates subject to change, holiday rates not included. 
+Major credit card required for all reservations. 
+$500 damage deposit required for all rentals. 
+Online reservations must be made 48 hours in advance. 
+You must receive a confirmation # for online reservations. to be valid.  
+Rental will be subject to a fuel charge. 
+Valid Driver's License required.  
+Must be 18 years old to rent and operate.
+</td>
+							</tr>
+							<tr>
+								<td	colspan="2"	align="right"><font	size="1" face="Arial"><br>
+								&nbsp;</font></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<div id="footer">
+			<div id="footer_details">
+				California&nbsp;-&nbsp;San Diego&nbsp;-&nbsp;92109&nbsp;-&nbsp;Mission Bay
+ &middot; 631-286-7816 &middot;	<a href="mailto:info@boatrenting.com">info@boatrenting.com</a>
+			</div>
+		</div>
+	</div> <!--	Container Ends Here	-->
+</form>
+</body>
+<script	language="JavaScript">
+function Pics(){
+window.open('morepics.asp?marina=259&boat=466','morePics','width=383,height=200,location=0');
+}
+
+function QuickSearch(x){
+	document.frm_boat.cmb_boat.value = x;
+	document.frm_boat.cmb_country.value	= 0;
+	document.frm_boat.cmb_body.value = 0;
+	document.frm_boat.cmb_facility.value = 0;
+	document.frm_boat.cmb_state.value =	0;
+	document.frm_boat.cmb_zip.value	= 0;
+	document.frm_boat.action = "results.asp";
+	document.frm_boat.submit();
+}
+
+</script>
+
+<script	src="http://www.google-analytics.com/urchin.js"	type="text/java_script">
+</script>
+<script	type="text/java_script">
+_uacct = "UA-872206-1";
+urchinTracker();
+</script>
+
+</html>

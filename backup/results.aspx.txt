@@ -1,0 +1,770 @@
+<%@ Page language="C#" CodeFile="results.aspx.cs" Inherits="BoatRenting.results_aspx_cs" Debug="true" %>
+<%@ Import Namespace = "nce.adosql" %>
+<%@ Import Namespace = "nce.scripting" %>
+//<!--#include file="includes/__dbconnection.aspx"-->
+<!--#include file="includes/__functions.aspx"-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<%
+    if (Request.Form["pag"] != "")
+    {
+        Session.Add("ActualPage", Convert.ToInt32(Request.Form["pag"]));
+    }
+    else
+    {
+        Session.Add("ActualPage", 1);
+    }
+    //'response.write(request.Form("cmb_country") & "<BR>")
+    //'response.write(request.Form("txt_zip") & "<BR>")
+    //'response.write(request.Form("cmb_body") & "<BR>")
+    //'response.write(request.Form("cmb_facility") & "<BR>")
+    //'response.write(request.Form("cmb_boat") & "<BR>")
+    //'response.write(request.Form("cmb_state") & "<BR>")
+    //'response.write(trim(request.Form("txt_city")) & "<BR>")
+    //'response.write(NVL(request.Form("hdn_subboat"),0) & "<BR>")
+    //'response.write(request.Form("cmb_zip") & "<BR>")
+    cmb_country = NVL(Request["cmb_country"], 1);
+    cmb_body = NVL(Request["cmb_body"], 0);
+    cmb_facility = NVL(Request["cmb_facility"], 0);
+    cmb_state = NVL(Request["cmb_state"], 0);
+    cmb_boat = NVL(Request["cmb_boat"], 0);
+    cmd = new Command();
+    rs = new Recordset();
+    cmd.ActiveConnection = oConn;
+    cmd.CommandText = "SP_BR_BOAT_SEARCH_NEW";
+    cmd.CommandType = adCmdStoredProc;
+    cmd.Parameters[1].Value = Request.Form["cmb_country"];
+//xxx    cmd.Parameters[1].Value = 1;
+    cmd.Parameters[2].Value = (Request.Form["txt_zip"]).Trim();
+    //'.Parameters(3)=request.Form("cmb_body")
+    cmd.Parameters[3].Value = cmb_body;
+    //'.Parameters(4)=request.Form("cmb_facility")
+    cmd.Parameters[4].Value = cmb_facility;
+    //'.Parameters(5)=request.Form("cmb_boat")
+    //if ( request.Form("cmb_state") <> 0  or trim(request.Form("txt_city"))  <> "" or request.Form("cmb_zip") <> 0) then
+    cmd.Parameters[5].Value = cmb_boat;
+    //else
+    //.Parameters(5)=0
+    //end if
+    cmd.Parameters[6].Value = Request.Form["cmb_state"];
+    cmd.Parameters[7].Value = (Request.Form["txt_city"]).Trim();
+    cmd.Parameters[8].Value = NVL(Request.Form["hdn_subboat"], 0);
+    cmd.Parameters[9].Value = Request.Form["cmb_zip"];
+    rs.CursorType = (nce.adodb.CursorType)3;
+    rs.CursorLocation = (nce.adodb.CursorLocation)3;
+    rs.Open(cmd);
+    cmd2 = new Command();
+    cmd2.ActiveConnection = oConn;
+    cmd2.CommandText = "SP_BR_SUBBOATTYPE_LIST";
+    cmd2.CommandType = adCmdStoredProc;
+    //'	.Parameters(1)=request.Form("cmb_boat")
+    cmd2.Parameters[1].Value = cmb_boat;
+    rs2 = cmd2.Execute();
+    if (!(rs.Eof))
+    {
+        IntRegistros = 6;
+        rs.PageSize = IntRegistros;
+        rs.AbsolutePage = Convert.ToInt32(Session["ActualPage"]);
+        IntMostrados = 0;
+    }
+    //sMenu = request.Form("cmb_boat")
+    sMenu = cmb_boat;
+        //Response.Write( sMenu)
+    if (sMenu == "1")
+    {
+        c1 = "current";
+    }
+    if (sMenu == "2")
+    {
+        c2 = "current";
+    }
+    if (sMenu == "3")
+    {
+        c3 = "current";
+    }
+    if (sMenu == "4")
+    {
+        c4 = "current";
+    }
+    if (sMenu == "5")
+    {
+        c5 = "current";
+    }
+    if (sMenu == "6")
+    {
+        c6 = "current";
+    }
+    if (sMenu == "7")
+    {
+        c7 = "current";
+    }
+    if (sMenu == "8")
+    {
+        c8 = "current";
+    }
+    if (sMenu == "9")
+    {
+        c9 = "current";
+    }
+    if (sMenu == "10")
+    {
+        c10 = "current";
+    }
+    if (sMenu == "11")
+    {
+        c11 = "current";
+    }
+    if (sMenu == "12")
+    {
+        c12 = "current";
+    }
+    if (sMenu == "13")
+    {
+        c13 = "current";
+    }
+    if (sMenu == "14")
+    {
+        c14 = "current";
+    }
+    if (sMenu == "15")
+    {
+        c16 = "current";
+    }
+    if (sMenu == "")
+    {
+        cHome = "current1";
+    }
+        //'This flag IDS are for the option all on subboatType, and is the same number of the quicksearch
+    if (sMenu == "1")
+    {
+        flgID = "7";
+    }
+    if (sMenu == "2")
+    {
+        flgID = "12";
+    }
+    if (sMenu == "3")
+    {
+        flgID = "1";
+    }
+    if (sMenu == "4")
+    {
+        flgID = "10";
+    }
+    if (sMenu == "5")
+    {
+        flgID = "14";
+    }
+    if (sMenu == "6")
+    {
+        flgID = "13";
+    }
+    if (sMenu == "7")
+    {
+        flgID = "9";
+    }
+    if (sMenu == "8")
+    {
+        flgID = "3";
+    }
+    if (sMenu == "9")
+    {
+        flgID = "6";
+    }
+    if (sMenu == "10")
+    {
+        flgID = "4";
+    }
+    if (sMenu == "11")
+    {
+        flgID = "10";
+    }
+    if (sMenu == "12")
+    {
+        flgID = "2";
+    }
+    if (sMenu == "13")
+    {
+        flgID = "7";
+    }
+    if (sMenu == "14")
+    {
+        flgID = "5";
+    }
+%>
+<html>
+<head>
+<title>Welcome to BoatRenting.com!</title>
+<style type="text/css" media="screen">
+@import "br.css";.Estilo4 {font-size: 9px}
+</style>
+<meta http-equiv="Content-type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Language" content="en-us" />
+<meta name="ROBOTS" content="ALL" />
+</head>
+<body>
+	<div id="container">
+		
+		
+		<div id="banner">
+<%
+        //response.write(request.Form("cmb_boat")&"--"&flgID)
+    if (sMenu == "13")
+    {
+%>
+		
+		<div style="float:right;align:right"> 
+		
+		<a style="color:white" target="_blank" href="http://www.twinanchors.com"><img src="./images/Houseboatrightbanner.gif" width="780" height="80"></a>
+		</div>
+		
+<%
+    }
+    fs = new FileSystemObject();
+    //path="C:\Inetpub\wwwroot\BoatRenting\client\citybanners\New York.jpg"
+    //path = Server.MapPath( "\" )
+    path = Server.MapPath("./citybanners") + "/" + Request.Form["txt_city"] + ".gif";
+        //path=".\citybanners\New York.jpg"
+    if (fs.FileExists(path) == true)
+    {
+        if ((Request.Form["txt_city"]).ToUpper() == "Miami".ToUpper())
+        {
+%>
+
+  
+	<div style="float:right;align:right"> 
+		 <a href="http://www.rentaboat.com" style="color:white" >
+		<img src="./citybanners/<%= Request.Form["txt_city"] + ".gif" %>" width="780" height="80">
+    
+    </a>
+     </div>
+	
+		
+		
+<%
+        }
+    //else
+    //response.write("File!"  & path)
+    }
+    fs = null;
+%>
+		
+		
+		
+		</div>
+		
+		<div id="menu">
+			<ul>
+				<li id="<%= cHome %>"><a href="default.aspx">Home</a></li>
+				<li id="<%= c12 %>"><a href="javascript:QuickSearch(2)">Cabin</a></li>
+				<li id="<%= c8 %>"><a href="javascript:QuickSearch(3)">Charters</a></li>
+				<li id="<%= c14 %>"><a href="javascript:QuickSearch(5)">Diving</a></li>
+				<li id="<%= c9 %>"><a href="javascript:QuickSearch(6)">Excursions</a></li>
+				<li id="<%= c1 %>"><a href="javascript:QuickSearch(7)">Fishing</a></li>
+				<li id="<%= c13 %>"><a href="javascript:QuickSearch(8)">Houseboat</a></li>
+				<li id="<%= c7 %>"><a href="javascript:QuickSearch(9)">Jet Ski</a></li>
+				<li id="<%= c4 %>"><a href="javascript:QuickSearch(10)">Paddle</a></li>
+				<li id="<%= c11 %>"><a href="javascript:QuickSearch(11)">Pontoon</a></li>
+				<li id="<%= c2 %>"><a href="javascript:QuickSearch(12)">Sailing</a></li>
+				<li id="<%= c6 %>"><a href="javascript:QuickSearch(13)">Speed</a></li>
+				<li id="<%= c5 %>"><a href="javascript:QuickSearch(14)">Yachts</a></li>
+			</ul>
+		</div><!-- SUB MENU	-->
+
+	<table cellpadding="0" cellspacing="0" width="780" height="25" style="background: url('images/sub_menu_bg.gif')	repeat-x bottom	left; margin-left: 1px;	color: #666">
+		<tr>
+			<td	width="29" height="25"></td>
+			<td	width="657"	height="25">
+<input type=button value="Back" onClick="history.go(-1)">&nbsp;| &nbsp;
+			<a href="default.aspx">Home</a>&nbsp;| &nbsp;
+			<a href="rentwithus.aspx">Advertise on this site</a>&nbsp;|&nbsp;
+			<a href="contactus.aspx">Contact	Us</a>&nbsp;|&nbsp;
+			<a href="members.aspx">Facility</a>&nbsp;|&nbsp;
+			<a href="facilities_faqs.aspx">Facilities FAQs</a>&nbsp;|&nbsp;
+			<a href="renters_faqs.aspx">Renters FAQs</a>&nbsp;|&nbsp;
+			<a href="Articles.aspx">Articles</a>&nbsp;|&nbsp;
+			<a href="sitemap.aspx">Site Map</a>
+			</td>
+			<td	width="130"	height="25">
+			<div><a	href="members.aspx" class="buttonMenu-Sign" style="color:white;"><b>
+			  Manager Sign In</b></div></a></td>
+		</tr>
+</table>
+
+			
+
+		<!--
+		<div id="main_boat_picture"></div>
+		
+		-->
+		
+		<div id="search_field_new">
+		  <div id="search_new">
+				<h1><font color="#0000FF">Step 2</font><font color="#FF3300">
+                </font>- <font color="#FF3300">Select a boat</font></h1>
+					<form name="frm_search" action="" method="post">
+						<input type="hidden" name="pag">
+						<input type="hidden" name="hdnBoatID">
+						<input type="hidden" name="hdnMarinaID">
+						<input type="hidden" name="hdn_subboat" >
+						<input type="hidden" name="hdnRating">
+
+						<table align=left border="0" style="font-family: Arial; font-size: 10px" cellspacing="1" cellpadding="0">
+							<tr>
+								<td align="right">Country:</td>
+								<td style="text-indent: 5"><%
+    Country();
+%>
+</td>
+								<td align="right">State:</td>
+								<td  style="text-indent: 5"><%
+    States();
+%>
+</td>
+								<td  align="right">City:</td>
+											<td style="text-indent: 5">
+											<!--<input type="text" name="txt_city" class="city1" tabindex="7" value="<%= Request.Form["txt_city"] %>" style="width:107px">-->
+											<input type="text" name="txt_city" class="city1" tabindex="7" value="<%= Request.Form["txt_city"] %>" style="width:107px" size="20" onkeydown="if (event.keyCode == 13) Search()">
+											&nbsp;&nbsp;Optional
+											</td>
+											
+												<td>Zip Code 
+											<input type="text" name="txt_zip" class="zip1" tabindex="2" value="<%= Request.Form["txt_zip"] %>" onchange="javascript:cmb_zip.value=30;" size="20" onkeydown="if (event.keyCode == 13) Search()">
+											Within
+											<select name="cmb_zip" class="water" tabindex="3" style="width:70px">
+												<option value="0" <%
+    if (Request.Form["cmb_zip"] == "")
+    {
+%>
+selected<%
+    }
+%>
+>- Select -</option>
+												<option value="5" <%
+    if (Request.Form["cmb_zip"] == "5")
+    {
+%>
+selected<%
+    }
+%>
+>
+												05 miles</option>
+												<option value="10" <%
+    if (Request.Form["cmb_zip"] == "10")
+    {
+%>
+selected<%
+    }
+%>
+>
+												10 miles</option>
+												<option value="20" <%
+    if (Request.Form["cmb_zip"] == "20")
+    {
+%>
+selected<%
+    }
+%>
+>
+												20 miles</option>
+												<option value="30" <%
+    if (Request.Form["cmb_zip"] == "30")
+    {
+%>
+selected<%
+    }
+%>
+>
+												30 miles</option>
+												<option value="50" <%
+    if (Request.Form["cmb_zip"] == "50")
+    {
+%>
+selected<%
+    }
+%>
+>
+												50 miles</option>
+											</select> of this Zip</td>
+											
+								
+							
+							
+							</tr>
+							
+								<tr>
+										<td colspan="3" align="center" height="20"  >
+								                        &nbsp;    &nbsp;   &nbsp;
+										</td>
+						</tr>
+							
+							<tr>
+							<td colspan="7" align="center">
+							<table border="0" id="table3" style="font-family: Arial; font-size: 10px" cellspacing="0" cellpadding="0">
+								<tr>
+									<td width="40px"></td>
+									<td><a href="javascript:Search()" class="button">
+									Search</a></td>
+									<td><a href="javascript:Clear()" class="button">
+									Clear</a>
+
+									</td>
+									
+									<td>&nbsp;    &nbsp;   &nbsp; </td>
+									<td>
+									<h1><a href="./advancesearch.aspx" target="_self" > Advance Search </a></h1>
+									</td>
+								</tr>
+								
+							</table>
+
+							</td>
+						</tr>
+							
+							
+									<tr style="display:none">
+								<td colspan="4" align="center">
+									<table border="0" id="table1" style="font-family: Arial; font-size: 10px">
+										
+										
+										<tr>
+											<td width="94" align="right">Body of
+											Water:</td>
+											<td style="text-indent: 5"><%
+    BodyWater();
+%>
+											&nbsp;&nbsp;Optional
+											</td>
+										</tr>
+										
+										<tr>
+											<td width="94" align="right">
+											Facility:</td>
+											<td style="text-indent: 5"><%
+    Facility();
+%>
+											&nbsp;&nbsp;Optional
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2" style="font-size: 12px; font-family: Arial; font-weight: bold">
+											<table border="0" width="100%" id="table6" cellspacing="0" cellpadding="0">
+												<tr>
+													<td width="56px"></td>
+													<td></td>
+												</tr>
+											</table>
+											</td>
+										</tr>
+
+										<tr style="display:none">
+											<td width="94" align="right">Boat Type:</td>
+											<td style="text-indent: 5"><%
+    BoatType();
+%>
+</td>
+										</tr>
+										<tr>
+											<td colspan="2" style="font-family: Arial; font-size: 12px; font-weight: bold">
+											<table border="0" width="100%" id="table7" cellspacing="0" cellpadding="0">
+												<tr>
+													<td width="56px"></td>
+													<td>or</td>
+												</tr>
+											</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							
+									
+										
+									
+								<tr>
+																		<td colspan="3" align="center" height="20"  >
+																                        &nbsp;    &nbsp;   &nbsp;
+																		</td>
+						</tr>
+							</table>
+
+							</td>
+						</tr>
+				</table>
+					</form>
+          </div>
+		</div>
+
+		<div id="results">
+			<table class="results_table3" cellspacing="0" cellpadding="0" FRAME="void" RULES="rows">
+<%
+    if (rs.Eof)
+    {
+%>
+				<tr>
+					<td style="width:500px; text-align:left">Boats arriving on this location soon! <br><br>
+
+Send your email address to info@boatrenting.com and receive notification email regarding the arrival. &nbsp;&nbsp;</td>
+				</tr>
+<%
+    }
+    else
+    {
+%>
+				<!--tr><td colspan="6" height="15">&nbsp;</td></tr-->
+				<tr>
+					<th>&nbsp;</th>
+					<th>State</th>
+					<th>City</th>
+					<th>ZIP</th>
+					<th>Make</th>
+					<th>Model</th>
+					<th>Length</th>
+					<th>Category</th>
+				</tr>
+
+<%
+        while(!((rs.Eof || (IntMostrados == 6))))
+        {
+            IntMostrados = IntMostrados + 1;
+            if (IntMostrados % 2 == 0)
+            {
+%>
+					<tr>
+<%
+            }
+            else
+            {
+%>
+					<tr bgcolor="#FFFFCC">
+<%
+            }
+%>
+						<td rowspan="2" class="imagecell">
+							<table border="0" width="80" id="table1" cellspacing="0" cellpadding="0">
+								<tr>
+									<td><%
+            for(i = 1; i <= Convert.ToInt32(rs.Fields["in_rating"].Value); i += 1)
+            {
+%>
+									     <font size="5">*</font>
+<%
+            }
+%>
+									<a href="javascript:goDetail(<%= rs.Fields["in_boatID"].Value %>,<%= rs.Fields["in_marinaID"].Value %>,<%= rs.Fields["in_rating"].Value %>)">
+											<img src="boats/<%= rs.Fields["vc_filename"].Value %>" width="80" height="50" alt="<%= rs.Fields["vc_nombre"].Value %>" border="0"></a></td>
+								</tr>
+<%
+            if (IntMostrados % 2 == 0)
+            {
+%>
+								<tr>
+									<td valign="top"><img src="images/arrow_normal.gif"></td>
+								</tr>
+<%
+            }
+            else
+            {
+%>
+								<tr>
+									<td valign="top"><img src="images/arrow_celda.gif"></td>
+								</tr>
+<%
+            }
+%>
+							</table>
+						</td>
+						<td height="8"><%= NVL(Convert.ToString(rs.Fields["SName"].Value), "-") %></td>
+						<td height="8"><%= NVL(Convert.ToString(rs.Fields["vc_city"].Value), "-") %></td>
+						<td height="8"><%= NVL(Convert.ToString(rs.Fields["ch_zip"].Value), "-") %></td>
+						<td height="8"><%= NVL(Convert.ToString(rs.Fields["vc_make"].Value), "-") %></td>
+						<td height="8"><%= NVL(Convert.ToString(rs.Fields["vc_model"].Value), "-") %></td>
+						<td><%= NVL(Convert.ToString(rs.Fields["vc_size"].Value), "-") %></td>
+						<td><%= NVL(Convert.ToString(rs.Fields["vc_description"].Value), "-") %></td>
+					</tr>
+<%
+            if (IntMostrados % 2 == 0)
+            {
+%>
+						<!--tr class="celda"-->
+						<tr class="normal">
+<%
+            }
+            else
+            {
+%>
+						<tr class="celda">
+<%
+            }
+%>
+						<td colspan="4" class="cell">
+<%= NVL(Convert.ToString(rs.Fields["vc_bodywater"].Value), "-") %>&nbsp;&nbsp;&nbsp;&nbsp;
+						</td>
+						<td colspan="3" class="moreinfo">
+							<a href="javascript:goDetail(<%= rs.Fields["in_boatID"].Value %>,<%= rs.Fields["in_marinaID"].Value %>,<%= rs.Fields["in_rating"].Value %>)">
+							More Info...</a>
+						</td>
+					</tr>
+<%
+            rs.MoveNext();
+        }
+        for(i = IntMostrados + 1; i <= 6; i += 1)
+        {
+%>
+				<td width="110">&nbsp;</td>
+<%
+        }
+    }
+%>
+			</table>
+
+<%
+    if (IntMostrados > 0)
+    {
+        if (Convert.ToDouble(Session["ActualPage"]) > 1.0)
+        {
+%>
+					<a href="javascript:goPage(<%= Convert.ToDouble(Session["ActualPage"]) - 1.0 %>)" class="prev">
+			« Previous</a>
+<%
+        }
+        if (Convert.ToDouble(Session["ActualPage"]) < rs.PageCount)
+        {
+            if (Convert.ToDouble(Session["ActualPage"]) < rs.PageCount)
+            {
+%>
+						<a href="javascript:goPage(<%= Convert.ToDouble(Session["ActualPage"]) + 1.0 %>)" class="next">
+			Next »</a>
+<%
+            }
+        }
+    }
+%>
+		</div>
+
+		<div id="footer">
+			<div id="footer_details">BoatRenting.com · 320 South Country Road ·
+				Brookhaven/Bellport NY 11719 · 631-286-7816 ·
+				<a href="mailto:info@boatrenting.com">info@boatrenting.com</a></div>
+		</div>
+	</div>
+
+<script language="JavaScript" type="text/javascript">
+	function QuickSearch(x){
+		//Clear();
+		
+		document.frm_search.cmb_boat.selectedIndex = x;
+		
+		document.frm_search.action = "results.aspx";
+		document.frm_search.submit();
+	}
+
+	function QuickSearch2(y){
+		//document.frm_search.cmb_country.selectedIndex = 1;
+		
+		//document.frm_search.cmb_state.selectedIndex = 0;
+		
+		//document.frm_search.cmb_body.selectedIndex = 0;
+		
+		//document.frm_search.cmb_facility.selectedIndex = 0;
+		//document.frm_search.txt_zip.value="";
+		//document.frm_search.txt_city.value="";
+		document.frm_search.hdn_subboat.value = y;
+		//document.frm_search.cmb_zip.value=0;
+		document.frm_search.action = "results.aspx";
+		document.frm_search.submit();
+	}
+	function Search(){
+	if (document.frm_search.txt_zip.value=="") {
+		if (!(document.frm_search.cmb_zip.value=="0")){
+			document.frm_search.cmb_zip.value=0;
+		}
+	}
+	
+	
+	  
+
+		document.frm_search.action = "results.aspx";
+		document.frm_search.submit();
+}
+
+	function Clear(){
+		//document.frm_search.cmb_country.selectedIndex = 0;
+		document.frm_search.cmb_state.selectedIndex = 0;
+		document.frm_search.cmb_body.selectedIndex = 0;
+		document.frm_search.cmb_facility.selectedIndex = 0;
+		document.frm_search.cmb_boat.selectedIndex = 0;
+		document.frm_search.txt_zip.value="";
+		document.frm_search.txt_city.value="";
+		
+	}
+
+	function goPage(x){
+
+		document.frm_search.pag.value = x;
+		document.frm_search.action = "results.aspx";
+		document.frm_search.submit();
+	}
+
+	function goDetail(x,y,z){
+		document.frm_search.hdnBoatID.value = x;
+		document.frm_search.hdnMarinaID.value = y;
+		document.frm_search.hdnRating.value = z;
+		document.frm_search.action = "calendar.aspx";
+		document.frm_search.submit();
+	}
+
+	function loadStates(){
+
+		document.frm_search.submit();
+	}
+	
+	function ClearFileds(x)
+	{
+	if ((x == 1) && (document.frm_search.cmb_facility != 0))
+	{
+	document.frm_search.cmb_country.selectedIndex = 0;
+		document.frm_search.cmb_state.selectedIndex = 0;
+		document.frm_search.cmb_body.selectedIndex = 0;
+		//document.frm_search.cmb_boat.selectedIndex = 0;
+		document.frm_search.txt_zip.value="";
+		document.frm_search.txt_city.value="";
+		
+		Search();
+		
+	
+	}
+	
+	
+	if ((x == 2) && (document.frm_search.cmb_body.selectedIndex != 0))
+	{
+	    document.frm_search.cmb_country.selectedIndex = 0;
+		document.frm_search.cmb_state.selectedIndex = 0;
+		document.frm_search.cmb_facility.selectedIndex = 0;
+		//document.frm_search.cmb_boat.selectedIndex = 0;
+		document.frm_search.txt_zip.value="";
+		document.frm_search.txt_city.value="";
+		
+		Search();
+		
+	
+	}
+	
+	
+	
+	
+	}
+	
+	</script>
+</body>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/java_script">
+    </script>
+<script type="text/java_script">
+_uacct = "UA-872206-1";
+urchinTracker();
+    </script>
+
+</html>
+

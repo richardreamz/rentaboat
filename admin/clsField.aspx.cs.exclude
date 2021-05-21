@@ -1,0 +1,113 @@
+using Microsoft.VisualBasic;
+using nce.scripting;
+using nce.adosql;
+//using BoatRenting.clsField;
+using System;
+using System.Collections;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Web;
+using System.Web.SessionState;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
+namespace BoatRenting {
+
+  public partial class clsField_aspx_cs : System.Web.UI.Page
+  {
+    public void Page_Load(object _sender, EventArgs _e) 
+    {
+        //------------------------------------------------------------------------------
+        //Author:		Lewis Moten
+        //Email:		Lewis@Moten.com
+        //URL:		http://www.lewismoten.com
+        //Date:		March 19, 2002
+        //------------------------------------------------------------------------------
+        //Field class represents interface to data passed within one field
+        //
+        //Two available methods of getting a field:
+        //Set objField = objUpload.Fields("File1")
+        //Set objField = objUpload("File1")
+        //
+        //
+        //objField.Name
+        //Name of the field as defined on the form
+        //
+        //objFiled.Filepath
+        //Path that file was sent from
+        //
+        //ie: C:\Documents and Settings\lmoten\Desktop\Photo.gif
+        //
+        //objField.FileDir
+        //Directory that file was sent from
+        //
+        //ie: C:\Documents and Settings\lmoten\Desktop
+        //
+        //objField.FileExt
+        //Uppercase Extension of the file
+        //
+        //ie: GIF
+        //
+        //objField.FileName
+        //Name of the file
+        //
+        //use: Response.AddHeader "Content-Disposition", "filename=""" & objField.FileName & """"
+        //
+        //ie: Photo.gif
+        //
+        //objField.ContentType
+        //Type of binary data
+        //
+        //use: Response.ContentType = objField.ContentType
+        //
+        //ie: image/gif
+        //
+        //objField.Value
+        //Unicode value passed from form.  This value is empty if the field is binary data.
+        //
+        //use: Response.Write "The value of this field is: " & objField.Value
+        //
+        //objField.BinaryData
+        //Contents of files binary data. (Integer SubType Array)
+        //
+        //use: Response.BinaryWrite objField.BinaryData
+        //
+        //objField.BLOB
+        //Same thing as BinaryData but with a shorter name.  Added to help prevent
+        //confusion with database access.
+        //
+        //use: Call lobjRs.Fields("Image").AppendChunk(objField.BLOB)
+        //
+        //objField.Length
+        //byte size of Value or BinaryData - depending on type of field
+        //
+        //use: Response.Write "The size of this file is: " & objField.Length
+        //
+        //objField.BinaryAsText()
+        //Converts binary data into unicode format.  Useful when you expect the user
+        //to upload a text file and you have the need to interact with it.
+        //
+        //use: Response.Write objField.BinaryAsText()
+        //
+        //objField.SaveAs()
+        //Saves binary data to a specified path.  This will overwrite any existing files.
+        //
+        //use: objField.SaveAs(Server.MapPath("/Uploads/") & "\" & objField.FileName)
+        //
+        //objField.DataStart
+        //location within all posted binary data where particular fields data begins.
+        //
+        //use: FieldData = MidB(BinaryData, objField.DataStart, objField.DataLength)
+        //objField.DataLength
+        //length of the posted binary data
+        //
+        //use: FieldData = MidB(BinaryData, objField.DataStart, objField.DataLength)
+        //------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------
+    }
+
+
+  }
+
+} 

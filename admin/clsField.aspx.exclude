@@ -1,0 +1,5 @@
+<%@ Page language="C#" CodeFile="clsField.aspx.cs" Inherits="BoatRenting.clsField_aspx_cs" %>
+<%@ Import Namespace = "Microsoft.VisualBasic" %>
+<%@ Import Namespace = "nce.scripting" %>
+<%@ Import Namespace = "nce.adosql" %>
+<%--<%@ Import Namespace = "BoatRenting.clsField" %>--%>

@@ -1,0 +1,180 @@
+<%@ Page language="C#" CodeFile="users_save.aspx.cs" Inherits="BoatRenting.users_save_aspx_cs" %>
+<%@ Import Namespace = "nce.adosql" %>
+//<!--#include file="__dbConnection.aspx"-->
+<!--#include file="__functions.aspx"-->
+<%
+    if (Convert.ToString(Session["userID"]) == "")
+    {
+        Session.Abandon();
+        Response.Redirect("/members.aspx");
+    } 
+    hdn_Action = Request["hdn_Action"];
+    txt_MarinaID = Session["MarinaID"];
+    txt_UserID = NVL(Request["hdn_UserID"], 0);
+    Session.Add("userID", 1);
+    if (!((Request.Form["hdn_original"] == Request.Form["txt_userName"])))
+    {
+        cmd2 = new Command();
+        rs2 = new Recordset();
+        cmd2.ActiveConnection = oConn;
+        cmd2.CommandText = "SP_BR_CLIENT_USERNAME_EXISTS";
+        cmd2.CommandType = adCmdStoredProc;
+        cmd2.Parameters[1].Value = Request.Form["txt_userName"];
+        rs2.Open(cmd2);
+        if (Convert.ToString(rs2.Fields[0].Value) == "0")
+        {
+            txt_UserName = NVL(Request.Form["txt_UserName"], "");
+            txt_Password = NVL(Request.Form["txt_Password"], "");
+            cbo_UserLevel = NVL(Request.Form["cbo_UserLevel"], "");
+            cmd = new Command();
+            cmd.ActiveConnection = oConn;
+            cmd.CommandText = "SP_BR_USER_SAVE";
+            cmd.CommandType = adCmdStoredProc;
+            cmd.Parameters[1].Value = hdn_Action;
+            cmd.Parameters[2].Value = txt_MarinaID;
+            cmd.Parameters[3].Value = txt_UserID;
+            cmd.Parameters[4].Value = txt_UserName;
+            cmd.Parameters[5].Value = txt_Password;
+            cmd.Parameters[6].Value = Convert.ToInt32(cbo_UserLevel);
+            cmd.Parameters[7].Value = Convert.ToInt32(Session["userID"]);
+            cmd.Execute();
+        }
+    }
+    else
+    {
+        txt_UserName = NVL(Request.Form["txt_UserName"], "");
+        txt_Password = NVL(Request.Form["txt_Password"], "");
+        cbo_UserLevel = NVL(Request.Form["cbo_UserLevel"], "");
+        cmd = new Command();
+        cmd.ActiveConnection = oConn;
+        cmd.CommandText = "SP_BR_USER_SAVE";
+        cmd.CommandType = adCmdStoredProc;
+        cmd.Parameters[1].Value = hdn_Action;
+        cmd.Parameters[2].Value = txt_MarinaID;
+        cmd.Parameters[3].Value = txt_UserID;
+        cmd.Parameters[4].Value = txt_UserName;
+        cmd.Parameters[5].Value = txt_Password;
+        cmd.Parameters[6].Value = Convert.ToInt32(cbo_UserLevel);
+        cmd.Parameters[7].Value = Convert.ToInt32(Session["userID"]);
+        cmd.Execute();
+    }
+%>
+<html>
+<head>
+<title>Welcome to BoatRenting.com!</title>
+<style type="text/css" media="screen">@import "br_admin.css";</style>
+<meta http-equiv="Content-type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Language" content="en-us" />
+<meta name="ROBOTS" content="ALL" />
+</head>
+
+<script language="javascript">
+function redirect()
+{
+alert("The information was saved ");
+document.frm.action="users_list.aspx";
+//history.go(-2);
+document.frm.submit();
+}
+
+function LogOut() {
+  	document.frm_users_mant.action="logout.aspx";
+  	document.frm_users_mant.submit();
+}
+</script>
+<body>
+<form name="frm" method="post">
+<script language="javascript"><%
+    if (!((Request.Form["hdn_original"] == Request.Form["txt_userName"])))
+    {
+        if (Convert.ToString(rs2.Fields[0].Value) == "0")
+        {
+%>
+	   redirect();
+<%
+        }
+    }
+    else
+    {
+%>
+   redirect();
+<%
+    }
+%>
+   
+</script>
+</form>
+
+<FORM name="frm_users_mant" method=POST>
+<input type="hidden" name="hdnPag" value="<%= hdnPag %>">
+<input type="hidden" name="hdn_Action" value="<%= hdn_Action %>">
+<input type="hidden" name="hdn_UserID" value="<%= hdn_UserID %>">
+<input type="hidden" name="cbo_userLevel" value="<%= cbo_UserLevel %>"-->
+	<div id="container">
+		<div id="banner"></div>
+		<!--div id="admin_menu">
+			<span class="floatright"><a href="javascript:LogOut();">Log Out</a></span>
+			<a href="facilities_search.aspx">Facility</a>&nbsp;|&nbsp;
+			<a href="users_list.aspx">Add User</a>
+		</div-->
+		<div id="menu">
+			<ul>
+
+			<li><a href="FACILITIES_list.aspx">Facility</a></li>
+			<li id="current"><a href="users_list.aspx">Add User</a></li>
+			<li><a href="javascript:LogOut();">Log Out</a></li>
+			</ul>
+		</div>
+		<div id="sub_menu">&nbsp;  </div>
+			<div id="table_div">
+
+				<table id="facility_table" cellpadding="0" cellspacing="0">
+					<tr>
+						<th colspan="2"><br>
+<%
+    if (hdn_Action == "N")
+    {
+%>
+						New User
+<%
+    }
+    else
+    {
+%>
+						Edit User
+<%
+    }
+%>
+</th>
+					</tr>
+					<tr>
+						<td width="19%" height="15" class="align_right"></td>
+						<td width="81%">&nbsp;<font size="2">The User Name <b><%= Request.Form["txt_usser"] %></b> 
+						is already registered in the system<br>
+						&nbsp;- Please, press <b>Go Back</b>, to register a different User Name.</font></td>
+					</tr>
+					<tr>
+						<td class="align_right"></td>
+						<td></td>
+					</tr>
+					<tr class="separator_tr">
+						<td colspan="2"></td>
+					</tr>
+				</table>
+				<a href="javascript:goBack()" class="button"> &laquo; Go back </a>
+	  </div>
+		<div id="footer">
+			<div id="footer_details">
+				BoatRenting.com &middot; 320 South Country Road &middot; Brookhaven/Bellport NY 11719 &middot; 631-286-7816 &middot; <a href="mailto:info@boatrenting.com">info@boatrenting.com</a>
+			</div>
+		</div>
+	</div>
+	</form>
+</body>
+<script language="JavaScript" type="text/javascript">
+function goBack(){
+	window.history.back();
+}
+</script>
+</html>
+
