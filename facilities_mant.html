@@ -1,0 +1,569 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+   <!-- #include file="includes/__dbConnection.asp" -->
+<!-- #include file="__functions.asp" -->
+
+<%
+
+countryID = 0
+if not Request("country") = "" Then countryID = Request("country")
+txt_ContactName = NVL(Request("txt_ContactName"),"")
+txt_BusinessName = NVL(Request("txt_BusinessName"),"")
+txt_MarinaName = NVL(Request("txt_MarinaName"),"")
+txt_addressLine1 = NVL(Request("txt_addressLine1"),"")
+txt_addressLine2 = NVL(Request("txt_addressLine2"),"")
+txt_city = NVL(Request("txt_city"),"")
+cbo_State = NVL(Request("cbo_State"),0)
+txt_zip = NVL(Request("txt_zip"),"")
+cbo_Country = NVL(Request("cbo_Country"),0)
+cbo_BodyWater = NVL(Request("cbo_BodyWater"),"")
+txt_phone = NVL(Request("txt_phone"),"")
+txt_fax = NVL(Request("txt_fax"),"")
+txt_tax = NVL(Request("txt_tax"),0)
+txt_email = NVL(Request("txt_email"),"")
+cbo_multipleLocations = NVL(Request("cbo_multipleLocations"),"")
+cbo_accomodations = NVL(Request("cbo_accomodations"),"")
+cbo_captain = NVL(Request("cbo_captain"),"")
+txta_depositPolicy = NVL(Request("txta_depositPolicy"),"")
+txta_facilityDirections = NVL(Request("txta_facilityDirections"),"")
+txta_facilityArea = NVL(Request("txta_facilityArea"),"")
+txt_start = NVL(Request("txt_start"),"")
+txt_end = NVL(Request("txt_end"),"")
+
+hdn_Action=Request("hdn_Action")
+txt_marinaID=Request("MarinaID")
+
+if hdn_Action="E" then
+    Session("MarinaID")=txt_marinaID
+	set cmd= Server.CreateObject("Adodb.command")
+	with cmd
+		set .Activeconnection=oConn
+		.Commandtext="SP_BR_MARINA_GET"
+		.CommandType=adCmdStoredProc
+		.Parameters(1)=txt_marinaID
+		set rs= .execute()
+	end with
+	txt_ContactName = NVL(rs("vc_ContactName"),"")
+	txt_BusinessName = NVL(rs("vc_BusinessName"),"")
+	txt_MarinaName = NVL(rs("vc_MarinaName"),"")
+	txt_addressLine1 = NVL(rs("vc_addressLine1"),"")
+	txt_addressLine2 = NVL(rs("vc_addressLine2"),"")
+	txt_city = NVL(rs("vc_city"),"")
+	cbo_State = NVL(rs("in_StateID"),0)
+	txt_zip = NVL(rs("ch_zip"),"")
+	cbo_Country = NVL(rs("in_CountryID"),0)
+	cbo_BodyWater = NVL(rs("vc_BodyWater"),"")
+	txt_phone = NVL(rs("vc_phone"),"")
+	txt_fax = NVL(rs("vc_fax"),"")
+	txt_tax = NVL(rs("nu_tax"),0)
+	txt_email = NVL(rs("vc_email"),"")
+	cbo_multipleLocations = NVL(rs("ch_multipleLocations"),"")
+	cbo_accomodations = NVL(rs("ch_accomodations"),"")
+'	txt_explain = NVL(rs("vc_explain"),"")
+'	cbo_securityDeposit = NVL(rs("ch_securityDeposit"),"")
+	cbo_captain = NVL(rs("ti_captain"),"")
+	txta_depositPolicy = NVL(rs("vc_depositPolicy"),"")
+	txta_facilityDirections = NVL(rs("vc_facilityDirections"),"")
+	txta_facilityArea = NVL(rs("vc_facilityArea"),"")
+end if
+
+%>
+
+<html>
+<head>
+    <title>Welcome to BoatRenting.com!</title>
+    <style type="text/css" media="screen">
+        @import "br_admin.css";
+    </style>
+    <meta http-equiv="Content-type" content="text/html; charset=iso-8859-1" />
+    <meta http-equiv="Content-Language" content="en-us" />
+    <meta name="ROBOTS" content="ALL" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async=async src="https://www.googletagmanager.com/gtag/js?id=UA-872206-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-872206-2');
+    </script>
+
+
+</head>
+
+<script language="javascript">
+
+function Validar () {
+    var chk=false;
+
+	//Initialise variables
+	var errorMsg = "";
+
+
+
+
+
+	//Check for a Name
+	if (document.getElementById("txt_contactName").value == ""){
+		errorMsg += "\n\t Contact Name \t                  - Enter your Contact Name";
+	}
+
+	//Check for a Name
+	if (document.getElementById("txt_businessName").value == ""){
+		errorMsg += "\n\t Bussiness Name \t                  - Enter your Bussiness Name";
+	}
+
+	if ((document.forms[0].cbo_State.options[document.forms[0].cbo_State.selectedIndex].value == "0") && (document.forms[0].cbo_Country.options[document.forms[0].cbo_Country.selectedIndex].value == "1"  || document.forms[0].cbo_Country.options[document.forms[0].cbo_Country.selectedIndex].value == "5" 	))
+	{
+		errorMsg += "\n\t State Name \t                  - Enter State";
+	}
+
+
+
+//document.forms[0].cbo_Country.options[document.forms[0].cbo_Country.selectedIndex].value 
+
+
+
+	if (document.forms[0].cbo_Country.options[document.forms[0].cbo_Country.selectedIndex].value == "0"){
+		errorMsg += "\n\t Country Name \t                  - Enter Country";
+	}
+	
+
+	if (document.forms[0].cbo_BodyWater.value == ""){
+		errorMsg += "\n\t Body of Water \t                  - Enter Body of Water";
+	}
+
+
+	if (document.getElementById("txt_phone").value == ""){
+		errorMsg += "\n\t Phone \t\t                  - Enter Phone";
+	}
+
+
+
+	if (document.getElementById("txt_email").value == ""){
+		errorMsg += "\n\t E-mail \t\t                  - Write your E-mail";
+	}
+
+
+	if (document.getElementById("txt_email").value != "")
+	{
+		strEmail = document.getElementById("txt_email").value;
+		if (strEmail.length>0)
+		{
+			if (strEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) == -1)
+			{
+				errorMsg += "\n\t E-mail \t\t                  - Your E-mail address is invalid";
+			}
+		}
+	}
+
+	if (document.getElementById("txt_tax").value == ""){
+		errorMsg += "\n\t Tax rate \t\t                  - Enter Tax Rate";
+	}
+
+	if (document.getElementById("txt_start").value == ""){
+		errorMsg += "\n\t Business Hours \t\t  - Open";
+	}
+
+	if (document.getElementById("txt_end").value == ""){
+		errorMsg += "\n\t Business Hours \t\t  - Closed";
+	}
+
+	if (!document.forms[0].chk_accept.checked){
+		errorMsg += "\n\t  You have to accept the Terms and Conditions to registrate your facility";
+	}
+
+
+	//If there is aproblem with the form then display an error
+	if (errorMsg != ""){
+				msg = "Your enquiry has not been sent because there are problem(s) with the form.\n";
+		msg += "Please correct the problem(s) and re-submit the form.\n";
+				msg += "The following field(s) need to be corrected:\n";
+
+            errorMsg = msg + errorMsg;
+
+		
+alert(errorMsg );
+
+		return false;
+	}
+
+
+	return true;
+}
+
+
+function Save() {
+	if (Validar()){
+	  	document.frm_facilities_mant.action="facilities_save.asp";
+	  	document.frm_facilities_mant.submit();
+	}
+}
+
+function Cancel() {
+  	history.back();
+  	//document.frm_facilities_mant.action="facilities_list.asp";
+  	//document.frm_facilities_mant.submit();
+}
+
+function LogOut() {
+	document.frm_facilities_mant.action="logout.asp";
+	document.frm_facilities_mant.submit();
+}
+
+
+function cuenta1(FORM1) {
+var n = document.frm_facilities_mant.txta_depositPolicy.value.length;
+if (n>=1000)
+{
+	window.event.keyCode = 0;
+	alert('The field facility cancellation policy can not contain more than 1000 characters');
+	return false;
+}
+return true;
+}
+
+function cuenta2(FORM1) {
+var n = document.frm_facilities_mant.txta_facilityArea.value.length;
+if (n>=1000)
+{
+	window.event.keyCode = 0;
+	alert('The field facility area + atractions can not contain more than 1000 characters');
+	return false;
+}
+return true;
+}
+
+function cuenta3(FORM1) {
+var n = document.frm_facilities_mant.txta_facilityDirections.value.length;
+if (n>=1000)
+{
+	window.event.keyCode = 0;
+	alert('The field facility directions can not contain more than 1000 characters');
+	return false;
+}
+return true;
+}
+
+function OnlyNumbers() {
+	var key=window.event.keyCode;
+		if ((key < 48 || key > 57) && key!=46 ){
+		window.event.keyCode=0;
+		alert('Type only numbers');
+	}
+}
+
+
+
+</script>
+<body>
+<FORM name="frm_facilities_mant" method=POST>
+<input type="hidden" name="hdnPag" value="<%=nPag%>">
+<input type="hidden" name="hdn_Action" value="<%=hdn_Action%>">
+<input type="hidden" name="hdn_MarinaID" value="<%=txt_MarinaID%>">
+<input type="hidden" name="cmb_boat">
+<input type="hidden" name="cmb_country">
+<input type="hidden" name="cmb_body">
+<input type="hidden" name="cmb_facility">
+<input type="hidden" name="cmb_state">
+<input type="hidden" name="cmb_zip">
+<input type="hidden" name="country" value=0>
+	<div id="container">
+		<div id="banner"></div>
+		<!--div id="admin_menu">
+			<span class="floatright"><a href="javascript:LogOut();">Log Out</a></span>
+			<a href="FACILITIES_SEARCH.ASP">Facility</a>&nbsp;|&nbsp;
+			<a href="users_list.asp">Add User</a>
+		</div-->
+		<div id="menu">
+			<ul>
+				<li id="current"><a href="default.asp">Home</a></li>
+				<li><a href="javascript:QuickSearch(3)">Boating Clubs</a></li>
+				<li><a href="javascript:QuickSearch(12)">Cabin</a></li>
+				<li><a href="javascript:QuickSearch(8)">Charters</a></li>
+				<li><a href="javascript:QuickSearch(10)">Dinner</a></li>
+				<li><a href="javascript:QuickSearch(9)">Excursions</a></li>
+				<li><a href="javascript:QuickSearch(1)">Fishing</a></li>
+				<li><a href="javascript:QuickSearch(7)">Jet Ski</a></li>
+				<li><a href="javascript:QuickSearch(4)">Paddle</a></li>
+				<li><a href="javascript:QuickSearch(11)">Pontoon</a></li>
+				<li><a href="javascript:QuickSearch(2)">Sailing</a></li>
+				<li><a href="javascript:QuickSearch(6)">Speed</a></li>
+				<li><a href="javascript:QuickSearch(5)">Yachts</a></li>
+				<!--li><a href="javascript:QuickSearch(8)">Houseboat</a></li-->
+
+			</ul>
+		</div>
+		<div id="sub_menu">
+				<a href="default.asp">Home</a>&nbsp;| &nbsp;
+			<a href="rentwithus.asp">Advertise on this site</a>&nbsp;|&nbsp;
+			<a href="contactus.asp">Contact Us</a>&nbsp;|&nbsp;
+			<a href="members.asp">Facility</a>&nbsp;|&nbsp;
+			<a href="facilities_faqs.asp">Facilities FAQs</a>&nbsp;|&nbsp;
+			<a href="renters_faqs.asp">Renters FAQs</a>&nbsp;|&nbsp;
+			<a href="Articles.asp">Articles</a>&nbsp;|&nbsp;
+            <a href="In_the_News.asp">Press Room</a>&nbsp;|&nbsp;
+			<a href="sitemap.asp">Site Map</a></div>
+			<div id="table_div">
+				<table id="facility_table" cellpadding="0" cellspacing="0">
+					<tr>
+						<th colspan="4">
+						<%if hdn_Action="N" then%>
+							Edit Facility
+						<%else%>
+							New Facility
+						<%end if%>
+						</th>
+					</tr>
+					<tr>
+						<td class="align_right">Contact Name<span class="hilite">*</span></td>
+						<td colspan="3"><input name="txt_contactName" type="text" class="contact_name" id="txt_contactName" value="<%=txt_contactName%>" maxlength="100" tabindex="1" /></td>
+					</tr>
+					<tr>
+						<td class="align_right">Facility or Proprietor Name<span class="hilite">*</span></td>
+						<td colspan="3"><input name="txt_businessName" type="text" class="business_name" id="txt_businessName" value="<%=txt_businessName%>" maxlength="100" tabindex="2" /></td>
+					</tr>
+					<tr>
+						<td class="align_right">Marina Name if not the same</td>
+						<td colspan="3"><input name="txt_marinaName" type="text" class="facility_name" id="txt_marinaName" value="<%=txt_marinaName%>" maxlength="100" tabindex="3" /></td>
+					</tr>
+					<tr>
+						<td class="align_right">E-mail or User Name<span class="hilite">*</span></td>
+						<td colspan="3"><input name="txt_usser" type="text" maxlength="100" tabindex="4" /></td>
+					</tr>
+
+					<tr>
+						<td class="align_right">Password<span class="hilite">*</span></td>
+						<td colspan="3"><input name="txt_pass" type="password" maxlength="30" tabindex="5" /></td>
+					</tr>
+					<tr>
+						<td class="align_right">Address 1<span class="hilite">*</span></td>
+						<td colspan="3"><input name="txt_addressLine1" type="text" class="address_line1"  value="<%=txt_addressLine1%>" maxlength="200"  tabindex="6" ></td>
+					</tr>
+					<tr>
+						<td class="align_right">Address 2</td>
+						<td colspan="3"><input name="txt_addressLine2" type="text" class="address_line2" value="<%=txt_addressLine2%>" maxlength="200" tabindex="7" /></td>
+					</tr>
+					<tr>
+					  <td class="align_right">Country<span class="hilite">*</span></td>
+					  <td colspan="3">
+                        <%	CountryName()	%>
+                      </td>
+					</tr>
+					<tr>
+						<td class="align_right">State/Province<span class="hilite">*</span></td>
+						<td colspan="3">
+							<%	StateName()	%>
+						</td>
+					</tr>
+					<tr>
+						<td class="align_right">City/Region</td>
+						<td colspan="3"><input name="txt_city" type="text" class="city" id="txt_city" value="<%=txt_city%>" maxlength="50" tabindex="8" /></td>
+					</tr>
+
+					<tr>
+						<td class="align_right">Zip/Postal Code</td>
+						<td colspan="3"><input name="txt_zip" type="text" class="zipcode" id="txt_zip" value="<%=txt_zip%>" maxlength="5" tabindex="10"  /></td>
+					</tr>
+					<tr>
+						<td class="align_right">Body of Water<span class="hilite">*</span>&nbsp;<a href="javascript:ShowHelp(1);" tabindex="29"><img src="images/help.png" border="0" alt=" Name the body of water in which your boat is located. Please be specific. For example, if your facility is located on the East Coast, you would not say Atlantic Ocean, but rather the particular bay, cove or river where your boat is located. " /></a></td>
+						<td colspan="3">
+							<input name="cbo_BodyWater" type="text" class="body_of_water"  value="<%=cbo_BodyWater%>" maxlength="200" tabindex="11" />
+						</td>
+					</tr>
+					<tr>
+						<td class="align_right">Phone<span class="hilite">*</span></td>
+						<td colspan="3"><input name="txt_phone" type="text" class="phone_number" id="txt_phone" value="<%=txt_phone%>" maxlength="20" tabindex="12" /></td>
+					</tr>
+
+					<tr>
+						<td class="align_right">Fax</td>
+						<td colspan="3"><input name="txt_fax" type="text" class="fax" id="txt_fax" value="<%=txt_fax%>" maxlength="20" tabindex="13" /></td>
+					</tr>
+					<tr>
+						<td class="align_right">Reservation E-mail<a href="javascript:ShowHelp(4)" tabindex="30"><img src="images/help.png" alt=" This is the E-mail address were you want your tentative reservations alerts sent to. You may have multiple alerts sent to multiple E-mail address once you assign additional users on your account. " border="0" /></a><span class="hilite">*</span></td>
+						<td colspan="3"><input name="txt_email" type="text" class="address_line2" id="txt_email" value="<%=txt_email%>" maxlength="100" tabindex="14" /></td>
+					</tr>
+					<tr>
+						<td class="align_right">Tax Rate<span class="hilite">*</span></td>
+						<td colspan="3"><input name="txt_tax" type="text" class="fax" id="txt_tax" value="<%=txt_tax%>" tabindex="15" onkeypress="javascript:OnlyNumbers();" /></td>
+					</tr>
+
+					<tr>
+					  <td class="align_right">Multiple Locations&nbsp; <a href="javascript:ShowHelp(2)" tabindex="30"><img src="images/help.png" alt=" If your facility has multiple locations you must enroll each individual location as a separate facility with its own user name and password. You may keep the Contact name and Business name the same, but user name and password must be unique " border="0" /></a></td>
+					  <td colspan="3"><select name="cbo_multipleLocations" class="multiple_locations" id="cbo_multipleLocations" tabindex="16">
+                            <option value="0" <%if cbo_multipleLocations="0" then %>selected <%end if%>>No</option>
+                            <option value="1" <%if cbo_multipleLocations="1" then %>selected <%end if%>>Yes</option>
+                          </select>
+                        </td>
+					</tr>
+					<tr>
+						<td class="align_right">Do you offer accomodations?</td>
+						<td colspan="3"><select name="cbo_accomodations" class="accomodations" id="cbo_accomodations"  tabindex="17">
+                            <option value="0" <%if cbo_accomodations="0" then %>selected <%end if%>>No</option>
+                            <option value="1" <%if cbo_accomodations="1" then %>selected <%end if%>>Yes</option>
+                          </select>
+                        </td>
+					</tr>
+					<tr>
+						<!--td class="align_right">If 'yes', please explain:</td>
+					  <td><input name="txt_explain" type="text" class="accomodations_explain" id="txt_explain" value="<%=txt_explain%>"/>
+                      </td-->
+					  <td class="align_right">Do you offer captain or guide?</td>
+					  <td colspan="3"><select name="cbo_captain" id="cbo_captain"  tabindex="18">
+                            <option value="0" <%if cbo_captain="0" then %>selected <%end if%>>No</option>
+                            <option value="1" <%if cbo_captain="1" then %>selected <%end if%>>Yes</option>
+                          </select>
+					  </td>
+					</tr>
+					<!--tr>
+						<td class="align_right">Security Deposit</td>
+						<td>
+							<select name="cbo_SecurityDeposit">
+								<option value="0" <%'if cbo_SecurityDeposit="0" then %>selected <%'end if%>>Yes</option>
+								<option value="1"  <%'if cbo_SecurityDeposit="1" then %>selected <%'end if%>>No</option>
+							</select>
+						</td>
+						<td colspan="2">
+					</tr>
+					<tr>
+						<td class="align_top_right">Deposit Policy</td>
+						<td colspan="3">
+							<textarea name="txta_depositPolicy" cols="60" rows="2" id="txta_depositPolicy"><%=txta_depositPolicy%></textarea>
+						</td>
+					</tr-->
+
+					<tr>
+					  <td class="align_right">Business Hours: Open<span class="hilite">*</span></td>
+					  <td colspan="3"><input name="txt_start" type="text" class="fax" id="txt_start" value="<%=txt_start%>" maxlength="8" tabindex="20"/>
+            			&nbsp;<font size="1">Example. 09:30 am</font></td>
+					</tr>
+					<tr>
+					  <td class="align_right">Closed<span class="hilite">*</span></td>
+					  <td colspan="3"><input name="txt_end" type="text" class="fax" id="txt_end" value="<%=txt_end%>" maxlength="8" tabindex="21"/>
+					  	&nbsp;<font size="1">Example. 05:00 pm</font></td>
+					</tr>
+					<tr>
+						<td class="align_top_right">Facility Cancellation Policy</td>
+						<td colspan="3">
+							<textarea name="txta_depositPolicy" cols="60" rows="2" id="txta_depositPolicy"  tabindex="22" onkeypress="javascript:cuenta1();" ><%=txta_depositPolicy%></textarea>
+						</td>
+					</tr>
+					<tr>
+					  <td class="align_top_right">Facility Area
+				          + Atractions&nbsp;<a href="javascript:ShowHelp(3);" tabindex="31"><img src="images/help.png" border="0" alt=" This is where you can explain the benefits of your area. For example, if your facility has a bait and tackle store or ship store you can include it here. Also, if there are any restaurants, parks, beaches, or other local attractions that would interest a customer you can list them or include a short explanation. " /></a></td>
+					  <td colspan="3"><textarea name="txta_facilityArea" cols="60" rows="2" id="txta_facilityArea"  tabindex="23" onkeypress="javascript:cuenta2();" ><%=txta_facilityArea%></textarea></td>
+					</tr>
+					<tr>
+					  <td class="align_top_right">Facility Directions</td>
+						<td colspan="3">
+							<textarea name="txta_facilityDirections" cols="60" rows="2" id="txta_facilityDirections" tabindex="24" onkeypress="javascript:cuenta3();"  ><%=txta_facilityDirections%></textarea>
+						</td>
+					</tr>
+					<tr>
+					  <td class="align_top_right">&nbsp;</td>
+					  <td colspan="3">&nbsp;</td>
+				  </tr>
+				</table>
+				<div><span class="hilite">*</span>
+				 <span class="hilite_explain">Required fields</span></div>
+				<div style="font-size: 12pt; margin-top: 6px; padding-left: 20px;">
+				<input type="checkbox"  name="chk_accept"  tabindex="25" />I accept the <a style="font-size: 12pt;" href="javascript:ShowTC()"  tabindex="26">Terms and Conditions</a> and agree with them.</div>
+				 <a href="javascript:Save();" class="button"  tabindex="27">Save</a>
+				 <a href="javascript:Cancel();" class="button" tabindex="28">Cancel</a>
+	  </div>
+		<div id="footer">
+			<div id="footer_details">
+				BoatRenting.com &middot; 320 South Country Road &middot; Brookhaven/Bellport NY 11719 &middot; 631-286-7816 &middot; <a href="mailto:info@boatrenting.com">info@boatrenting.com</a>
+			</div>
+		</div>
+	</div>
+	</form>
+</body>
+<script language="JavaScript" type="text/javascript">
+function ShowTC(){
+window.open('termsconditions.asp', 'tc', 'scrollbars=yes,height=450,width=500,status=no');
+}
+
+function ShowHelp(opt){
+if (opt==1){
+text='Name the body of water in which your boat is located. Please be specific. For example, if your facility is located on the East Coast, you would not say Atlantic Ocean, but rather the particular bay, cove or river where your boat is located.'
+}
+if (opt==2){
+text='If your facility has multiple locations you must enroll each individual location as a separate facility with its own user name and password. You may keep the Contact name and Business name the same, but user name and password must be unique.<br><u>IMPORTANT</u><br>Please remember what user name and password go with each facility.'
+}
+if (opt==3){
+text='This is where you can explain the benefits of your area. For example, if your facility has a bait and tackle store or ship store you can include it here. Also, if there are any restaurants, parks, beaches, or other local attractions that would interest a customer you can list them or include a short explanation.'
+}
+if (opt==4){
+text='This is the E-mail address were you want your tentative reservations alerts sent to. You may have multiple alerts sent to multiple E-mail address once you assign additional users on your account.'
+}
+
+window.open('help.asp?text='+text, 'help'+opt, 'scrollbars=no,height=220,width=300,status=no');
+}
+
+function QuickSearch(x){
+	document.frm_facilities_mant.cmb_boat.value = x;
+	document.frm_facilities_mant.cmb_country.value = 0;
+	document.frm_facilities_mant.cmb_body.value = 0;
+	document.frm_facilities_mant.cmb_facility.value = 0;
+	document.frm_facilities_mant.cmb_state.value = 0;
+	document.frm_facilities_mant.cmb_zip.value = 0;
+	document.frm_facilities_mant.action = "results.asp";
+	document.frm_facilities_mant.submit();
+}
+function LoadStates(){
+	var country = document.frm_facilities_mant.cbo_Country.selectedIndex;
+	document.frm_facilities_mant.country.value = country;
+	document.frm_facilities_mant.action = "facilities_mant.asp";
+	document.frm_facilities_mant.submit();
+}
+
+</script>
+
+
+
+</html>
+
+
+<%Function StateName()
+	Dim rs, cmd
+	Set cmd=Server.CreateObject("ADODB.Command")
+	With cmd
+		Set .ActiveConnection=oConn
+		.CommandText = "SP_BR_STATE_LIST"
+		.CommandType=adCmdStoredProc
+		.Parameters.Refresh
+		.Parameters("@CountryID")=countryID
+		Set rs = .Execute()
+	End With
+%>
+	<select name="cbo_State" class="state" tabindex="9" >
+	<option value="0">[Select]</option>
+	<%Do while not rs.eof %>
+	         <option value="<%=rs("in_stateID")%>"><%=rs("vc_Name")%></option>
+	<% rs.movenext%>
+  	<%Loop%>
+  	</select>
+
+<%End function%>
+
+<%Function CountryName()
+	Dim rs, cmd
+	Set cmd=Server.CreateObject("ADODB.Command")
+	With cmd
+		Set .ActiveConnection=oConn
+		.CommandText = "SP_BR_COUNTRY_LIST"
+		Set rs = .Execute()
+	End With
+%>
+	<select name="cbo_Country" class="country" tabindex="19" onchange="javascript:LoadStates();">
+	<option value="0">[Select]</option>
+	<%Do while not rs.eof %>
+	         <option value="<%=rs("in_CountryID")%>"  ><%=rs("vc_Name")%></option>
+	<% rs.movenext%>
+  	<%Loop%>
+  	</select>
+	<script> document.frm_facilities_mant.cbo_Country.selectedIndex = <%=countryID%> </script>
+<%End function%>
+

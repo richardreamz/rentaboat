@@ -1,0 +1,605 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="ClientMaster.master.cs" Inherits="ClientMaster" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    
+      <title>Home</title>
+    <meta charset="utf-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    <meta name = "format-detection" content = "telephone=no" />
+    <meta name="description" content="Your description">
+    <meta name="keywords" content="Your keywords">
+    <meta name="author" content="Your name">
+    
+
+
+      <%--  <script src="js/jquery.carouFredSel-6.2.0.js"></script>
+    <script src="js/owl.carousel.js"></script>--%>
+
+
+    <!-- CSS STYLES -->
+	<link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    
+	<!-- SCRIPTS -->
+	<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <!--[if IE]><html class="ie" lang="en"> <![endif]-->
+
+
+
+
+     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+   
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&key=AIzaSyDUasdm918z0Cm88TSAymH85w_MVYK95Nk"></script>
+     
+     <script type="text/javascript">
+    <!--
+    function setDropDownList(elementRef, valueToSetTo) {
+        var isFound = false;
+
+
+        for (var i = 0; i < elementRef.options.length; i++) {
+            if (elementRef.options[i].value == valueToSetTo) {
+                elementRef.options[i].selected = true;
+                isFound = true;
+            }
+        }
+
+
+        if (isFound == false)
+            elementRef.options[0].selected = true;
+    }
+
+</script>
+     
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+	<script src="js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="js/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="js/superfish.min.js" type="text/javascript"></script>
+	<script src="js/jquery.flexslider-min.js" type="text/javascript"></script>
+	
+   <%-- <script src="js/myscript.js" type="text/javascript"></script>--%>
+  
+
+     <%--   <script>	
+			$(window).load( function(){
+				//	Responsive layout, resizing the items
+				$('#carousel1').carouFredSel({
+				    responsive: true,
+					auto: false,		
+					scroll: 1,
+					width: '100%',	
+                    direction: 'up',
+                    next: "#next",
+					pagination: false,
+					mousewheel: false,
+					items: {
+					  width: 270,
+					  height: 'auto',	//	optionally resize item-height
+						visible: {
+							min: 1,
+							max: 1
+						}
+					}
+				});
+                
+			});
+    </script>--%>
+    
+  <%--  <script>	
+        $(document).ready(function() {
+            
+        $('.list2 li a').hover(function(){
+            $(this).stop().css({color:'#b6b6b6'});         
+            $(this).parent().siblings('em').find('img').stop().css({'margin-top':'-7px'});   
+                }, function(){
+            $(this).stop().css({color:'#c11030'});         
+            $(this).parent().siblings('em').find('img').stop().css({'margin-top':0});       
+        })
+                     
+            ////////////
+                var owl = $("#owl-demo");
+                         
+               $(".next").click(function(){
+                    owl.trigger('owl.next');
+                  })
+                  $(".prev").click(function(){
+                    owl.trigger('owl.prev');
+                  })
+             
+              $("#owl-demo").owlCarousel({
+                
+                  //navigation : true,
+                  
+                  items : 4,
+                  itemsDesktop : [1220,4],
+                  itemsDesktopSmall : [979,3],
+                  itemsTablet :	[750,2],
+                  itemsTabletSmall	:	[550,2],
+                  itemsMobile :	[470,1]
+              });
+        });
+        
+    </script>--%>
+
+
+
+
+
+   <script>
+       var placeSearch, autocomplete;
+       var componentForm = {
+           street_number: 'short_name',
+           route: 'long_name',
+           locality: 'long_name',
+           administrative_area_level_1: 'short_name',
+           country: 'long_name',
+           postal_code: 'short_name',
+
+       };
+       var cleared = false;
+       function clearAddressSelection() {
+
+
+           if (!cleared) {
+
+
+
+               var st = document.getElementById('<%= txtStreetName.ClientID %>');
+                           st.value = "";
+
+                           var city = document.getElementById('<%= txtCityName.ClientID %>');
+                 city.value = "";
+
+                 var state = document.getElementById('<%= txtState.ClientID %>');
+                 state.value = "";
+
+                 var zip = document.getElementById('<%= txtZipCode.ClientID %>');
+                 zip.value = "";
+
+                 var lat = document.getElementById('<%= txtLat.ClientID %>');
+                 lat.value = "";
+
+                 var lon = document.getElementById('<%= txtLon.ClientID %>');
+                 lon.value = "";
+                 cleared = true;
+
+             }
+
+         }
+
+         function initialize() {
+             // Create the autocomplete object, restricting the search
+             // to geographical location types.
+             //  clearAddressSelection();
+             autocomplete = new google.maps.places.Autocomplete(
+             /** @type {HTMLInputElement} */(document.getElementById("<%=txtSearch.ClientID%>")),
+       { types: ['geocode'] });
+             // When the user selects an address from the dropdown,
+             // populate the address fields in the form.
+             google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                 fillInAddress();
+             });
+         }
+
+         // The START and END in square brackets define a snippet for our documentation:
+         // [START region_fillform]
+         function fillInAddress() {
+             // Get the place details from the autocomplete object.
+             var place = autocomplete.getPlace();
+
+            
+
+
+             var latlng = place.geometry.location;
+           
+
+             var address = "";
+             var streetno = "";
+             var route = "";
+             var locality = "";
+             var postalcode = "";
+             var administrativearea = "";
+             // Get each component of the address from the place details
+             //and fill the corresponding field on the form.
+             for (var i = 0; i < place.address_components.length; i++) {
+                 var addressType = place.address_components[i].types[0];
+                 // alert(addressType);
+                 if (componentForm[addressType]) {
+                     var val = place.address_components[i][componentForm[addressType]];
+                     //  document.getElementById(addressType).value = val;
+                     //alert(addressType);
+
+                     if (addressType == "street_number")
+                         streetno = val;
+                     else if (addressType == "route")
+                         route = val;
+                     else if (addressType == "locality")
+                         locality = val;
+                     else if (addressType == "postal_code")
+                         postalcode = val;
+                     else if (addressType == "administrative_area_level_1")
+                         administrativearea = val;
+
+
+                     // alert(val);
+
+                 }
+
+             }
+
+             // alert(postalcode);
+
+             var st = document.getElementById('<%= txtStreetName.ClientID %>');
+             st.value = route;
+
+             var city = document.getElementById('<%= txtCityName.ClientID %>');
+             city.value = locality;
+
+             var state = document.getElementById('<%= txtState.ClientID %>');
+             state.value = administrativearea;
+
+             var zip = document.getElementById('<%= txtZipCode.ClientID %>');
+             zip.value = postalcode;
+
+             var lat = document.getElementById('<%= txtLat.ClientID %>');
+             lat.value = latlng.lat();
+
+             var lon = document.getElementById('<%= txtLon.ClientID %>');
+             lon.value = latlng.lng();
+
+
+
+             document.getElementById('<%=btnSearch.ClientID%>').click();
+
+         }
+
+
+       function gotoDetails(boatid, marinaid, rating) {
+
+           var bid = document.getElementById('<%= txtSelectedBoatId.ClientID %>');
+            bid.value = boatid;
+
+
+            var mid = document.getElementById('<%= txtSelectedMarinaId.ClientID %>');
+        mid.value = marinaid;
+
+        var rat = document.getElementById('<%= txtSelectedRating.ClientID %>');
+        rat.value = rating;
+
+        document.getElementById('<%=btnShowDetails.ClientID%>').click();
+
+    }
+
+
+</script>
+   
+
+
+    
+    <!--[if lt IE 9]>
+    <div style='text-align:center'><a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." /></a></div>  
+    <script src="assets/assets/js/html5shiv.js"></script> 
+    <script src="assets/assets/js/respond.min.js"></script>
+  <![endif]-->
+
+
+    <style>
+
+   .ar{ float: right;background-color:white; }
+.al{ float: left;}
+.clear{ clear: both;}
+
+
+.form1{ background-color:white; padding: 5px; }
+
+.form1 .title{ min-width: 100px; display: inline-block; }
+
+
+.button{ display: inline-block; background: #000; padding:0px 0px; z-index: 0; color: #fff; background-color:#FF9933;}
+.overlay{ z-index:5; background: rgba(0, 0, 0, .50); display: block; position:fixed; width: 100%; height: 100%; }
+
+.popup{ padding: 20px 10px 35px; background: white; z-index: 999; display: none; position: absolute; right: 10px; margin-top:30px; font-size:12px;border: 1px solid #2E2828;}
+#footer{ position: fixed; bottom: 0; background: #fff; width: 100%; font-size: 12px; text-align: center; }
+#footer div{ padding: 5px; }
+
+.close{ font-weight: bold; color:#337ab7!important; float: right;  background-color:white!important;opacity:1!important }
+    </style>
+
+<%--    position: absolute; bottom: 5px; right: 10px;--%>
+    <script>
+
+     
+
+        function showLoginBox()
+        {
+            $("body").append(''); $(".popup").show();
+            $('#lblLoginMessage').html("");
+            $(".close").click(function (e) {
+                $(".popup, .overlay").hide();
+            });
+
+
+        }
+
+        function CloseLoginBox()
+        {
+
+            $(".popup, .overlay").hide();
+
+            return false;
+        }
+
+        function TryLogin()
+        {
+            var username = document.getElementById('<%= txtLoginName.ClientID%>').value;
+            var password = document.getElementById('<%= txtPassword.ClientID%>').value;
+            PageMethods.ValidateLogin(username,password,OnSuccess);
+            return false;
+
+        }
+
+        function OnSuccess(result)
+        {
+           
+
+            if (result == "Failed") {
+
+                $('#lblLoginMessage').html("Failed to Login");
+            }
+            else {
+                $('#lblLoginMessage').html("");
+                frmIndex.__EVENTTARGET.value = '<%= btnSignIn.UniqueID%>';
+                __doPostBack('<%= btnSignIn.UniqueID%>', 'btnSignIn');
+            }
+            //alert(result);
+
+
+        }
+    </script>
+    
+
+    
+    <asp:ContentPlaceHolder id="head" runat="server">
+
+
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <header id="header">
+<!-- TOP LINE -->
+
+    <asp:ScriptManager ID="scm" runat="server" EnablePageMethods="true"></asp:ScriptManager>
+					<div class="full_width top_line clearfix">
+						<div class="row">
+                          
+                            <asp:UpdatePanel ID="uplLogin" runat="server">
+                                <ContentTemplate>
+
+                               
+                    		 <div class="ar login_popup">
+                                <div class="col-lg-12 col-sm-12" align="right" style="background-color:#248992!important"><a  onclick="showLoginBox()" runat="server" > Sign In</a> </div>
+                         
+                         <div class="popup" runat="server" id="loginPopupDiv" >
+                            <a href="#" class="close" style="float:right;" onclick="return CloseLoginBox();">[X]</a>
+                            <div class="form1">
+                                <span style="color:black;">Username:</span><asp:TextBox ID="txtLoginName" runat="server" style="background-color:white!important;color:black!important;width:150px!important"></asp:TextBox><br /><br />
+                                <span style="color:black;">Password:</span> <asp:TextBox ID="txtPassword" runat="server" TextMode="Password"  style="background-color:white!important;color:black!important;width:150px!important;"></asp:TextBox>
+                           <br />
+                                <div align="right">
+                              
+                                    <asp:Button ID="btnSignIn" runat="server"  Text="Sign In"  OnClientClick="return TryLogin();" OnClick="btnSignIn_Click" style="margin-top:10px;color:black!important;"/>
+                             
+                                <p style="text-align:center;font-size:11px;">
+                                    <a href="memberpassword.aspx" style="color:#248992!important;text-decoration:underline!important">Forgot your password?</a> &nbsp;|&nbsp; <a href="facilities_mant.aspx"  style="color:#248992!important;text-decoration:underline!important">Boat Owner Sign Up</a>
+                                </p>
+                                     
+                                <asp:Label ID="lblLoginMessage" runat="server" ForeColor="Red" Font-Size="Medium"></asp:Label>
+                                
+                                    </div>
+                            </div>
+                        </div>
+                                         
+                        
+                        </div>
+
+                             </ContentTemplate>
+
+                            </asp:UpdatePanel>
+
+					</div><!-- //TOP LINE -->
+                    
+<div class="menu_block clearfix">
+        <div class="navbar-brand"><img src="img/logo.png" alt="Rent A Boat"/></div>
+        <!-- RESPONSIVE BUTTON MENU -->
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="glyphicon glyphicon-align-justify"></span>
+							</button>
+						</div><!-- //RESPONSIVE BUTTON MENU -->
+                        
+           <div class="navbar-collapse collapse">
+							<ul class="nav navbar-nav">
+                  <li class="active"><a href="index.aspx">HOME</a></li>
+                  <li class="sub-menu"><a href="how_to_rent_a_boat.aspx">RENTERS<em class="indicator2"></em></a>
+                       <ul>
+                       		<li><a href="renter_faqs.aspx">FAQ's</a></li>
+                          	<li><a href="how_to_rent_a_boat.aspx">How To Rent</a></li>
+                           	<%--**##**<li><a class="last" href="renters-sign-in.html">Sign In</a></li>--%>
+                       </ul>
+                  </li>
+                  <li class="sub-menu"><a href="facilities_mant.aspx">OWNERS<em class="indicator2"></em></a>
+                  		<ul>                           
+							<li><a href="facilities_mant.aspx">List Your Boat</a></li> 
+                             
+                            <li><a href="owners-faqs.html">FAQ's</a></li>
+                            <li><a class="last" href="members.aspx">Sign in</a></li>
+                        </ul>                                     
+                  </li>
+                  <li ><a href="about-us.html">ABOUT US</a></li>
+                  <li class="sub-menu"><a href="how-It-works.html">HOW IT WORKS<em class="indicator2"></em></a>
+                        <ul>
+                          <li><a href="how-It-works.html">How it Works</a></li>
+                          <li><a href="renting-vs-owning.html">Renting vs. Owning</a></li>
+                          <li><a href="rental-tips.html">Rental Tips</a></li>
+                          <li><a class="last" href="marine-liability-insurance.html">Marine Liability Insurance</a></li>
+                        </ul>
+                   </li>
+                  <li><a href="contact_us.aspx">CONTACT US</a></li>
+                </ul>
+            </div>
+        </div>  
+       
+
+<!--==============================content=================================-->
+
+
+      <div class="container" ><div class="row_header-home" >
+           <div align="center">
+            <h1 class="white" style="font-size:50px;">Welcome Aboard</h1>
+		   		<div style="width:65%; margin-left:auto; margin-right:auto"><hr /></div>
+                
+                <h3  style="color:#fff;">Find Boat Rentals In Your Area Now!</h3>
+                
+                     <div class="search" id="search">
+                <asp:TextBox ID="txtSearch" runat="server" placeholder="Where do you want to go?" style="font-size:12px; " onkeypress="clearAddressSelection()"></asp:TextBox>               
+                   <asp:LinkButton ID="btnSearch" runat="server"  class="btn btn-primary btn1 btn-search" OnClick="btnSearch_Click"  >  
+                      <span>search</span>
+                     </asp:LinkButton>
+                         <br />
+              <asp:LinkButton ID="lnkAdvancedSearch" Text="Advanced Search" style="color:white;" runat="server" PostBackUrl="~/advancesearch.aspx"></asp:LinkButton>
+                  </div>   
+              <asp:Label ID="lblMessage" runat="server"></asp:Label>
+              <asp:HiddenField ID="txtStreetName" runat="server" />
+              <asp:HiddenField ID="txtCityName" runat="server" />
+              <asp:HiddenField ID="txtState" runat="server" />
+              <asp:HiddenField ID="txtZipCode" runat="server" />
+              <asp:HiddenField ID="txtLat" runat="server" />
+              <asp:HiddenField ID="txtLon" runat="server" />
+              <asp:HiddenField ID="txtSelectedBoatId" runat="server" />
+              <asp:HiddenField ID="txtSelectedMarinaId" runat="server" />
+              <asp:HiddenField ID="txtSelectedRating" runat="server" />
+                
+                 
+            
+            
+             <div class="row" style="margin-top:480px;">
+              <div class="col-lg-12 col-sm-12 padbot20"><br><br>
+               <h2 class="white" > Popular Boat Rental Locations</h2>
+            <br/>
+        
+                    <ul class="list1">
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="results.aspx?t=4&lat=25.47303326127954&lng=-77.080078125&miles=140&c=6" class="btn btn-primary btn2"><strong><img src="images/Depositphotos_12483121_xs.jpg" alt=""></strong><span>Bahamas</span></a>
+                        </li>
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="results.aspx?t=4&lat=25.684850188749582&lng=-79.984588623046885&miles=38" class="btn btn-primary btn2"><strong><img src="images/Depositphotos_12483121_xs_54b7dbc92a2de.jpg" alt=""></strong><span>Miami</span></a>
+                        </li>
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="results.aspx?t=4&lat=40.094882122321195&lng=-72.86407470703125&miles=75" class="btn btn-primary btn3"><strong><img src="images/Depositphotos_12483121_xs_54b7dc54ce48a.jpg" alt=""></strong><span>New York<br>City</span></a>
+                        </li>
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="results.aspx?t=4&lat=22.749588557614043&lng= -121.21078491210938&miles=176" class="btn btn-primary btn2"><strong><img src="images/Depositphotos_12483121_xs_54b7dc8a5bde6.jpg" alt=""></strong><span>Dallas</span></a>
+                        </li>
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="results.aspx?t=4&lat=33.68778175843939&lng=-118.5369873046875&miles=38" class="btn btn-primary btn2"><strong><img src="images/Depositphotos_12483121_xs_54b7dcc276993.jpg" alt=""></strong><span>Los Angeles</span></a>
+                        </li>
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="results.aspx?t=4&lat=22.749588557614043&lng=-121.21078491210938&miles=753" class="btn btn-primary btn2"><strong><img src="images/Depositphotos_12483121_xs_54b7dcf79153e.jpg" alt=""></strong><span>San Diego</span></a>
+                        </li>
+                    </ul>
+
+<br/>
+                <div style="max-width:900px; width:100%;" >
+                    <p style="color:#fff; font-size:18px;">Find your dream boat in one click! RentABoat.com offers boat rentals from pontoon boats, Yachts, Charters, Jet Skis, Sailboats, Houseboats and much more! Search Now!</p>
+                </div>
+    
+            </div>
+            </div>
+            
+            </div>
+        </div>
+        </div>
+      
+        </header>
+
+
+
+    <div>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+
+    </div>
+    </form>
+
+
+    
+<!-- FOOTER -->
+
+
+				<footer class="full_width footer_block">
+                <div class="container">
+					<div class="row" >
+						<div class="col-lg-3 col-sm-3 padbot20">
+							<h2>Get in touch</h2>
+							1-888-610-BOAT<br />
+                            631-286-7816<br />
+                            <a href="mailto:info@boatrenting.com">info@boatrenting.com</a><br>
+                             <ul class="social">
+							<li class="icon1"><a href="javascript:void(0);" alt=""></a></li>
+							<li class="icon2"><a href="javascript:void(0);" alt=""></a></li>
+							
+							<li class="icon4"><a href="javascript:void(0);" alt=""></a></li>
+							<li class="icon5"><a href="javascript:void(0);" alt=""></a></li>
+							<li class="icon6"><a href="javascript:void(0);" alt=""></a></li>
+						</ul><!-- //SOCIAL ICONS -->
+						</div>
+                        
+						<div class="col-lg-3 col-sm-3">
+							<h2>Learn More</h2>
+							<a href="list-your-boat.html">How To List</a><br />
+							<a href="how-to-rent-a-boat.html">How To Rent</a><br />
+							<a href="owners-faqs.html">Owners FAQ's</a><br />
+							<a href="renters-faqs.html">Renters FAQ's</a><br /> 							
+						</div>
+                        
+						<div class="col-lg-3 col-sm-3">
+							<h2>Company</h2>
+							<a href="about-us.html">About</a><br />
+							<a href="#">Press</a><br />
+							<a href="#">Testimonials</a><br />
+							<a href="#">Policies</a><br />							
+						</div>
+                        
+                        <div class="col-lg-3 col-sm-3">
+							<h2>Articles</h2>
+							<a href="#">Renting vs Owning</a><br />
+							<a href="#">Rental Tips</a><br />
+							<a href="#">Marine Liability Insurance</a><br />							
+						</div>
+					</div>
+                    <div style="width:65%; margin-left:auto; margin-right:auto"><hr /></div>
+                    <div class="row" >
+                    	<div align="center">&copy; Copyright 2015 Rent a Boat RentABoat.com &nbsp;&nbsp; | &nbsp;&nbsp;<a href="#">Privacy Policy</a><br>
+                        631-286-7816 | 320 South Counrty Rd Brookhaven NY 11719<br>
+
+                    </div></div>
+				
+                    </div>
+
+                    </footer><!-- //FOOTER -->
+
+
+</body>
+</html>

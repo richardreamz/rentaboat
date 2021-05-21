@@ -1,0 +1,197 @@
+<html><DIV id=container style="WIDTH: 713px; HEIGHT: 698px">
+<DIV id=banner style="WIDTH: 779px; HEIGHT: 102px"></DIV>
+<DIV id=menu style="WIDTH: 912px; HEIGHT: 246px">
+<UL>
+<LI id=current><A href="http://0185eff.netsolhost.com/default.asp">Home</A></LI>
+<LI id="<%=c12%>"><A href="javascript:QuickSearch(2)">Cabin</A></LI>
+<LI id="<%=c8%>"><A href="javascript:QuickSearch(3)">Charters</A></LI>
+<LI id="<%=c10%>"><A href="javascript:QuickSearch(5)">Diving</A></LI>
+<LI id="<%=c9%>"><A href="javascript:QuickSearch(6)">Excursions</A></LI>
+<LI id="<%=c1%>"><A href="javascript:QuickSearch(7)">Fishing</A></LI>
+<LI id="<%=c13%>"><A href="javascript:QuickSearch(8)">Houseboat</A></LI>
+<LI id="<%=c7%>"><A href="javascript:QuickSearch(9)">Jet Ski</A></LI>
+<LI id="<%=c4%>"><A href="javascript:QuickSearch(10)">Paddle</A></LI>
+<LI id="<%=c11%>"><A href="javascript:QuickSearch(11)">Pontoon</A></LI>
+<LI id="<%=c2%>"><A href="javascript:QuickSearch(12)">Sailing</A></LI>
+<LI id="<%=c6%>"><A href="javascript:QuickSearch(13)">Speed</A></LI>
+<LI id="<%=c5%>"><A href="javascript:QuickSearch(14)">Yachts</A></LI></UL></DIV><!-- SUB MENU -->
+<TABLE style="BACKGROUND: url(images/sub_menu_bg.gif) repeat-x left bottom; MARGIN-LEFT: 1px; COLOR: #666" height=25 cellSpacing=0 cellPadding=0 width=777>
+<TBODY>
+<TR>
+<TD width=29 height=25></TD>
+<TD width=657 height=25><A href="http://0185eff.netsolhost.com/default.asp">Home</A>&nbsp;| &nbsp; <A href="http://0185eff.netsolhost.com/rentwithus.asp">Advertise on this site</A>&nbsp;|&nbsp; <A href="http://0185eff.netsolhost.com/contactus.asp">Contact Us</A>&nbsp;|&nbsp; <A href="http://0185eff.netsolhost.com/members.asp">Facility</A>&nbsp;|&nbsp; <A href="http://0185eff.netsolhost.com/facilities_faqs.asp">Facilities FAQs</A>&nbsp;|&nbsp; <A href="http://0185eff.netsolhost.com/renters_faqs.asp">Renters FAQs</A>&nbsp;|&nbsp; <A href="http://0185eff.netsolhost.com/Articles.asp">Articles</A>&nbsp;|&nbsp; <A href="http://0185eff.netsolhost.com/Inthe-News.asp">Press Room</A>&nbsp;|&nbsp; <A href="http://0185eff.netsolhost.com/sitemap.asp">Site Map</A> </TD>
+<TD width=127 height=25>
+<DIV><A class=buttonMenu-Sign style="COLOR: white" href="http://0185eff.netsolhost.com/members.asp"><B>Manager Sign In</B></DIV></A></TD></TR></TBODY></TABLE><!-- SUB MENU --><!--<div id="sub_menu">
+	<a href="default.asp">Home</a>&nbsp;|&nbsp;<a href="rentwithus.asp">Rent With Us</a>&nbsp;|&nbsp;<a href="contactus.asp">Contact Us</a>&nbsp;|&nbsp;<a href="members.asp">Members</a> <a href="members.asp" class="button" ><b>Sign In</b></a>
+</div>
+--><!--
+<div id="main_boat_picture" style="width: 912; height: 35"><a href="http://www.discoverboating.com/contests/bestboatname.aspx" target="_blank"><img src="images/boat_home.jpg"></a></div>
+-->
+<DIV id=search_field_new>
+<DIV id=search_new style="WIDTH: 800px; HEIGHT: 106px">
+<H1><FONT color=#0000a0 size=2><SPAN>Step 1 &nbsp;&nbsp;&nbsp; </SPAN></FONT><FONT color=#990000 size=2>Find a Boat&nbsp;&nbsp;&nbsp; <SPAN style="FONT-WEIGHT: 400"><FONT face=Arial>Choose a location</FONT></SPAN></FONT></H1>
+<FORM style="border: 1px dotted red; padding: 2px"  name=frm_search action="" method=post><INPUT type=hidden value=0 name=country> <INPUT type=hidden value=0 name=state> <INPUT type=hidden value=0 name=bodyOfWater> <INPUT type=hidden name=zip> <INPUT type=hidden name=city> <INPUT type=hidden value=0 name=facility> <INPUT type=hidden value=0 name=boat> <!--<input type="hidden" name="txt_city" value = "">--><INPUT type=hidden name=hdnBoatID> <INPUT type=hidden name=hdnMarinaID> <INPUT type=hidden name=hdnRating> <!-- Beginning of the Table Find a Boat -->
+<DIV align=center>
+<TABLE style="FONT-SIZE: 10px; FONT-FAMILY: Arial" height=70 cellSpacing=0 cellPadding=0 align=left border=0>
+<TBODY>
+<TR>
+<TD align=right height=20>Country:&nbsp;&nbsp;</TD>
+<TD height=20><% Country()%></TD>
+<TD align=right height=20>&nbsp;&nbsp;State:&nbsp;&nbsp;</TD>
+<TD width=80 height=20><% States()%></TD>
+<TD align=right height=20>&nbsp;&nbsp;&nbsp;City:&nbsp;&nbsp;</TD>
+<TD style="TEXT-INDENT: 5px" height=20><INPUT class=city1 title="Your Google Toolbar can fill this in for you. Select AutoFill" style="BACKGROUND-COLOR: #ffffa0" tabIndex=7 value="<%=request.Form(" name=txt_city txt_city?)%>" style="width:107px" size="20"&gt; &nbsp;&nbsp; </TD>
+<TD height=20>Zip Code <INPUT class=zip1 title="Your Google Toolbar can fill this in for you. Select AutoFill" style="BACKGROUND-COLOR: #ffffa0" tabIndex=2 value="<%=request.Form(" name=txt_zip txt_zip?)%>" onchange="javascript:cmb_zip.value=30;" size="20"&gt; Within <SELECT class=water style="WIDTH: 70px" tabIndex=3 name=cmb_zip> <OPTION value=0 selected then% request.Form(?cmb_zip?)="" <%if>selected&gt;- Miles -</OPTION> <OPTION value=5 then% request.Form(?cmb_zip?)="5" <%if>selected&gt; 05 miles</OPTION> <OPTION value=10 then% request.Form(?cmb_zip?)="10" <%if>selected&gt; 10 miles</OPTION> <OPTION value=20 then% request.Form(?cmb_zip?)="20" <%if>selected&gt; 20 miles</OPTION> <OPTION value=30 then% request.Form(?cmb_zip?)="30" <%if>selected&gt; 30 miles</OPTION> <OPTION value=50 then% request.Form(?cmb_zip?)="50" <%if>selected&gt; 50 miles</OPTION></SELECT> of this Zip</TD></TR>
+<TR>
+<TR>
+<TD align=middle colSpan=3 height=1>&nbsp; &nbsp; &nbsp; </TD></TR>
+<TR>
+<TD align=middle colSpan=7 height=17>
+<TABLE id=table3 style="FONT-SIZE: 10px; FONT-FAMILY: Arial" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD width=40></TD>
+<TD><A class=button href="javascript:Search()">Search</A></TD>
+<TD><A class=button href="javascript:Clear()">Clear</A> </TD>
+<TD>&nbsp; &nbsp; &nbsp; </TD>
+<TD>
+<H1><A href="http://0185eff.netsolhost.com/advancesearch.asp" target=_self>Advance Search </A></H1></TD></TR></TBODY></TABLE></TD></TR>
+<TR style="DISPLAY: none">
+<TD align=middle colSpan=4 height=34>
+<TABLE id=table1 style="FONT-SIZE: 10px; FONT-FAMILY: Arial" height=22 border=0>
+<TBODY>
+<TR>
+<TD align=right width=94 height=4>Body of Water:</TD>
+<TD style="TEXT-INDENT: 5px" height=4><% BodyWater()%>&nbsp;&nbsp;Optional </TD></TR>
+<TR>
+<TD align=right width=94 height=1>Facility:</TD>
+<TD style="TEXT-INDENT: 5px" height=1><% Facility()%>&nbsp;&nbsp;Optional </TD></TR>
+<TR>
+<TD style="FONT-WEIGHT: bold; FONT-SIZE: 12px; FONT-FAMILY: Arial" colSpan=2 height=1>
+<TABLE id=table6 cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD width=56></TD>
+<TD></TD></TR></TBODY></TABLE></TD></TR>
+<TR style="DISPLAY: none">
+<TD align=right width=94 height=12>Boat Type:</TD>
+<TD style="TEXT-INDENT: 5px" height=12><% BoatType()%></TD></TR>
+<TR>
+<TD style="FONT-WEIGHT: bold; FONT-SIZE: 12px; FONT-FAMILY: Arial" colSpan=2 height=12>
+<TABLE id=table7 cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD width=56></TD>
+<TD>or</TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></DIV><!-- Ending of the Table Find a Boat --></FORM></DIV></DIV><BR>&nbsp;&nbsp; 
+<BLOCKQUOTE>
+<P>&nbsp;&nbsp; 
+<DIV class=calendar_boatimage><IMG height=216 alt="" src="http://0185eff.netsolhost.com/boats/result_24.jpg" width=373> </DIV>
+<DIV class=calendar_calendardiv>
+<DIV style="FLOAT: left">
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IFRAME name=i_calendar marginWidth=0 marginHeight=0 src="calendar_i.asp?hdnBoat=24&amp;hdnMarina=2" frameBorder=0 width=205 scrolling=no height=165></IFRAME></TD></TR></TBODY></TABLE></DIV>
+<DIV class=explanation style="WIDTH: 170px; HEIGHT: 200px">
+<DIV class=exp_title style="WIDTH: 170px; HEIGHT: 25px">
+<H5 style="TEXT-ALIGN: center"><IMG height=38 src="http://0185eff.netsolhost.com/images/booknow.gif" width=81> <BR>Click on your desired date</H5></DIV><SPAN id=calendar_dates_available>Green = Available</SPAN><BR><SPAN id=calendar_dates_partially_available>Orange = 1/2 Day</SPAN> 
+<H5 style="TEXT-ALIGN: center"><FONT color=#000080></FONT></H5>
+<H5 style="TEXT-ALIGN: center">1-888-610-BOAT (2628)</H5></DIV></DIV>
+<TABLE cellSpacing=0 cellPadding=0 width=775 border=0>
+<TBODY>
+<TR align=middle>
+<TD><IMG height=20 src="http://0185eff.netsolhost.com/images/staryellow.gif" width=20> <IMG height=20 src="http://0185eff.netsolhost.com/images/staryellow.gif" width=20> <IMG height=20 src="http://0185eff.netsolhost.com/images/staryellow.gif" width=20> <IMG height=20 src="http://0185eff.netsolhost.com/images/staryellow.gif" width=20> <IMG height=20 src="http://0185eff.netsolhost.com/images/starwhite.gif" width=20> </TD>
+<TD width=700>&nbsp; </TD></TR>
+<TR>
+<TD width=770>&nbsp;&nbsp;New York&nbsp;-&nbsp;Brookhaven&nbsp;-&nbsp;11719&nbsp;-&nbsp;NY, Long Island, Great South Bay, Fire Island </TD></TR></TBODY></TABLE>
+<DIV class=calendar_boatdetails>
+<TABLE cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TD vAlign=top bgColor=#f1f5f5>
+<TABLE class=boatdetails_table cellSpacing=0 cellPadding=0 width=370>
+<TBODY>
+<TR>
+<TH bgColor=white colSpan=2>Boat Details</TH></TR>
+<TR>
+<TD class=boatcat_title>Boat Name:</TD>
+<TD class=boatcat_detail>04 21' 200</TD></TR>
+<TR>
+<TD class=boatcat_title>Make:</TD>
+<TD class=boatcat_detail>Trophy 200 hp</TD></TR>
+<TR>
+<TD class=boatcat_title>Model:</TD>
+<TD class=boatcat_detail>2100 200hp</TD></TR>
+<TR>
+<TD class=boatcat_title>Length:</TD>
+<TD class=boatcat_detail>21</TD></TR>
+<TR>
+<TD class=boatcat_title>Passengers:</TD>
+<TD class=boatcat_detail>5</TD></TR>
+<TR>
+<TD class=boatcat_title>Captain&nbsp;or&nbsp;Guide Available&nbsp;for&nbsp;Hire:</TD>
+<TD class=boatcat_detail>Yes</TD></TR>
+<TR>
+<TD class=boatcat_title vAlign=top>Description:</TD>
+<TD class=boatcat_detail>200hp Outboard, Sun Cover, VHF radio, GPS Tracking, Fishing Rod Holders,Hold 45 gals Fuel, goes 35mph.</TD></TR>
+<TR>
+<TD class=boatcat_title vAlign=top>Facility Area &amp; Attractions:</TD>
+<TD class=boatcat_detail>5 Minutes from Fire Island, restaurants and parks. Near by beaches; Bellport Beach, Old Inlet, Watch Hill, Davis Park, Cherry Grove. </TD></TR></TBODY></TABLE></TD>
+<TD vAlign=top bgColor=#f1f5f5>
+<TABLE class=boatdetails_table cellSpacing=0 cellPadding=0 width=370 border=0>
+<TBODY>
+<TR>
+<TH bgColor=white colSpan=2>Rental Details</TH></TR>
+<TR>
+<TD class=boatcat_title style="WIDTH: 153px">Requirements:</TD>
+<TD class=rentdetails style="WIDTH: 217px">Driver licence, Credit Card, Some BOATING EXPERIECNE . Rentals Over 7 Days are discounted by 10%. NO WEEKEND HALF-DAYS.</TD></TR>
+<TR>
+<TD class=boatcat_title>Full day&nbsp;price:</TD>
+<TD class=rentdetails><FONT size=1>Weekday</FONT>&nbsp;$325&nbsp;&nbsp;<FONT size=1>Weekend</FONT>&nbsp;$375&nbsp;&nbsp;<FONT size=1>Holiday</FONT>&nbsp;$450 </TD></TR>
+<TR>
+<TD class=boatcat_title>Half day am&nbsp;price:</TD>
+<TD class=rentdetails><FONT size=1>Weekday</FONT>&nbsp;$275&nbsp;&nbsp; </TD></TR>
+<TR>
+<TD class=boatcat_title>Half day pm&nbsp;price:</TD>
+<TD class=rentdetails><FONT size=1>Weekday</FONT>&nbsp;$275&nbsp;&nbsp; </TD></TR>
+<TR>
+<TD class=boatcat_title>Hourly&nbsp;price:</TD>
+<TD class=rentdetails><FONT size=1>Weekday</FONT>&nbsp;$150&nbsp;&nbsp; </TD></TR>
+<TR>
+<TD class=boatcat_title>Tax Rates:</TD>
+<TD class=rentdetails>8.62 %</TD></TR>
+<TR>
+<TD class=boatcat_title>Reservation&nbsp;Deposit:</TD>
+<TD class=rentdetails>100</TD></TR>
+<TR>
+<TD class=boatcat_title>Security Deposit:</TD>
+<TD class=rentdetails>300.00</TD></TR>
+<TR>
+<TD class=boatcat_title vAlign=top>Facility&nbsp;Cancellation&nbsp;Policy:</TD>
+<TD class=rentdetails>4th of July Holiday 7-1, 7-2, 7-3, 7-4, 7-5, 7-6 &amp;7-7 is holiday pricing. Rain Date only, NO CANCELATIONS. Date changes not accepted within 48 hours of original rental date.</TD></TR>
+<TR>
+<TD align=right colSpan=2><FONT face=Arial size=1><BR>&nbsp;</FONT></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></DIV>
+<DIV id=footer>
+<DIV id=footer_details>BoatRenting.com � 320 South Country Road � Brookhaven/Bellport NY 11719 � 631-286-7816 � <A href="mailto:info@boatrenting.com">info@boatrenting.com</A> </DIV></DIV></BLOCKQUOTE></DIV><!-- Container Ends Here --></FORM>
+<SCRIPT language=JavaScript>
+function Pics(){
+window.open('morepics.asp?marina=2&boat=24','morePics','width=383,height=200,location=0');
+}
+function QuickSearch(x){
+document.frm_boat.cmb_boat.value = x;
+document.frm_boat.cmb_country.value = 0;
+document.frm_boat.cmb_body.value = 0;
+document.frm_boat.cmb_facility.value = 0;
+document.frm_boat.cmb_state.value = 0;
+document.frm_boat.cmb_zip.value = 0;
+document.frm_boat.action = "results.asp";
+document.frm_boat.submit();
+}
+   </SCRIPT>
+<SCRIPT src="http://www.google-analytics.com/urchin.js" type=text/java_script>
+   </SCRIPT>
+<SCRIPT type=text/java_script>
+_uacct = "UA-872206-1";
+urchinTracker();
+   </SCRIPT>
+</html>

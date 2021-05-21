@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5870B829-92AA-47C2-9293-4684E7837379}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>BoatRenting</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>BoatRenting</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Adddata.aspx" />
+    <Content Include="Copyright.txt" />
+    <Content Include="datatype.htm" />
+    <Content Include="db.aspx" />
+    <Content Include="dbMain.aspx" />
+    <Content Include="Deletedata.aspx" />
+    <Content Include="Editdata.aspx" />
+    <Content Include="EULA.txt" />
+    <Content Include="Global.asax">
+      <SubType>Component</SubType>
+    </Content>
+    <Content Include="Image.aspx" />
+    <Content Include="images\Admin.gif" />
+    <Content Include="images\admindb.jpg" />
+    <Content Include="images\admindetails.jpg" />
+    <Content Include="images\clear.gif" />
+    <Content Include="images\CreateTable.jpg" />
+    <Content Include="images\custom.jpg" />
+    <Content Include="images\dataAccess.jpg" />
+    <Content Include="images\Delete.jpg" />
+    <Content Include="images\deleterow.gif" />
+    <Content Include="images\DeleteTable.JPG" />
+    <Content Include="images\edit.gif" />
+    <Content Include="images\Edit.jpg" />
+    <Content Include="images\Editfield.jpg" />
+    <Content Include="images\InAction.jpg" />
+    <Content Include="images\Login.jpg" />
+    <Content Include="images\placeholder-100.jpg" />
+    <Content Include="images\placeholder-200.jpg" />
+    <Content Include="images\placeholder-600.jpg" />
+    <Content Include="images\readtable.jpg" />
+    <Content Include="images\TableDetails.JPG" />
+    <Content Include="images\tables.jpg" />
+    <Content Include="images\View.jpg" />
+    <Content Include="includes\bot.htm" />
+    <Content Include="Index.aspx" />
+    <Content Include="Logout.aspx" />
+    <Content Include="TestImage.aspx" />
+    <Content Include="Viewdata.aspx" />
+    <Content Include="Web.config" />
+    <Compile Include="Adddata.aspx.cs">
+      <DependentUpon>Adddata.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Adddata.aspx.designer.cs">
+      <DependentUpon>Adddata.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="classes\clsDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="classes\clsPhotoManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="db.aspx.cs">
+      <DependentUpon>db.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="db.aspx.designer.cs">
+      <DependentUpon>db.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dbMain.aspx.cs">
+      <DependentUpon>dbMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dbMain.aspx.designer.cs">
+      <DependentUpon>dbMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Deletedata.aspx.cs">
+      <DependentUpon>Deletedata.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Deletedata.aspx.designer.cs">
+      <DependentUpon>Deletedata.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Editdata.aspx.cs">
+      <DependentUpon>Editdata.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Editdata.aspx.designer.cs">
+      <DependentUpon>Editdata.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Image.aspx.cs">
+      <DependentUpon>Image.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Image.aspx.designer.cs">
+      <DependentUpon>Image.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Logout.aspx.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestImage.aspx.cs">
+      <DependentUpon>TestImage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestImage.aspx.designer.cs">
+      <DependentUpon>TestImage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Viewdata.aspx.cs">
+      <DependentUpon>Viewdata.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Viewdata.aspx.designer.cs">
+      <DependentUpon>Viewdata.aspx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Adddata.aspx.resx">
+      <DependentUpon>Adddata.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="db.aspx.resx">
+      <DependentUpon>db.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dbMain.aspx.resx">
+      <DependentUpon>dbMain.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Deletedata.aspx.resx">
+      <DependentUpon>Deletedata.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editdata.aspx.resx">
+      <DependentUpon>Editdata.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Global.asax.resx">
+      <DependentUpon>Global.asax.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Image.aspx.resx">
+      <DependentUpon>Image.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Index.aspx.resx">
+      <DependentUpon>Index.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Logout.aspx.resx">
+      <DependentUpon>Logout.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestImage.aspx.resx">
+      <DependentUpon>TestImage.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewdata.aspx.resx">
+      <DependentUpon>Viewdata.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="images\Thumbs.db" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>2287</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/BoatRenting</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

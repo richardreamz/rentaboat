@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <div style="width:599px; font-family:Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size:16px;">
+        <div style="background-color:#248992; padding:20px; "><a href="http://www.rentaboat.com/"><img src="http://www.rentaboat.com//img/logo.png" alt="Rent A Boat" /></a></div>
+
+        <br>
+
+        <h2 style="color:#248992">
+            Dear {RenterFullname}, </h2>
+            
+            <br /><br />
+
+
+            Thank you for choosing <a href="http://rentaboat.com" target="_blank">
+    RentABoat.com</a> You have tentatively reserved the following boat.
+    Please note this is NOT a confirmed reservation.
+    You MUST contact the boat owner after receiving this email. This broker fee WILL be deducted from the total rental fee by the boat owner. If for some reason the boat is not available, there will be no charge to your credit card.
+    This broker fee is not a deposit. The boat owner will contact you to collect their listed deposit.
+    <br />
+    <br />
+
+        Thank you for renting with us<br>
+        <a href="http://www.rentaboat.com" target="_blank">RentABoat.com</a>
+        <br>
+        <a href="tel:631-286-7816" value="+16312867816" target="_blank">631-286-7816</a>
+        <br>
+        <a href="mailto:Info@rentaboat.com" target="_blank">Info@RentABoat.com</a>
+      
+    <br />
+    <br />
+
+    <table cellpadding="10" width="100%" border="1" cellspacing="0" style="border-color:#989595;">
+        <thead style="background-color:#248992;color:white">
+            <tr>
+                <th>Boat Details</th>
+            
+                <th>Rent Details</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr style="border: 1px solid grey;">
+                <td valign="top" style="border: 1px solid grey;">
+                    {BoatID}
+                    <br />
+                    <br />
+
+                    {BoatName}<br /><br />
+                    {BoatYear},&nbsp; {BoatMake}, &nbsp; {BoatModel}
+                    <br /><br />
+
+                    {BoatSize}
+                    <br />
+                    <br />
+
+
+
+
+                    Passengers: {MaximumPassengers}<br /><br />
+
+
+
+                    Description: {BoatDescription}<br /><br />
+
+                    Requirement: {Requirement}<br /><br />
+
+                    Location: {MarinaAddress}<br /><br />
+
+
+
+
+                </td>
+               
+                <td valign="top" style="border: 1px solid grey;">
+
+                    Pick Up Date: {RentalStartDate}<br />
+
+                    <br />
+
+
+                    Drop Off Date:{RentalEndDate}<br />
+
+                    <br />
+
+
+
+                    Total Price ={TotalPrice} Minus Online Reservation Fee Paid Now: {RentalOnlineFee}
+                    <br />
+                    <br />
+
+
+
+                    Due at Dock ={TotalPriceminusRentalOnlineFee} plus tax:{TaxRate}% <br />
+                    <br />
+
+                </td>
+            </tr>
+
+            <tr>
+                <th style="background-color:#248992;color:white" colspan="2">Owners Contact Information</th>
+            </tr>
+            <tr>
+                <td valign="top" colspan="2">
+                    Contact  Name:{OwnerName}<br /><br />
+
+                    Facility Name:{FacilityName}<br /><br />
+
+                    Marina Name :{MarinaName}<br /><br />
+
+                    Boat Address:{BoatAddress}<br /><br />
+                    Owner Phone: {OwnerPhone}<br /><br />
+
+                    Email : {OwnerEmail}
+                    <br /><br />
+                    Website :{OwnerWebsite}
+                    <br /><br />
+                    Cancellation Policy : {CancellationPolicy}
+                    <br /><br />
+                    Direction: {Direction}
+                    <br /><br />
+
+                </td>
+             </tr>
+
+
+        </tbody>
+
+    </table>
+
+       
+
+
+</div>
+
+</body>
+</html>

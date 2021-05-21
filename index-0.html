@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Home</title>
+    <meta charset="utf-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    <meta name = "format-detection" content = "telephone=no" />
+    <meta name="description" content="Your description">
+    <meta name="keywords" content="Your keywords">
+    <meta name="author" content="Your name">
+    <link rel="stylesheet" href="css/bootstrap.css" >
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="fonts/font-awesome.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    
+	<script src="js/jquery.js"></script>
+    <script src="js/jquery-migrate-1.2.1.js"></script>
+    <script src="js/superfish.js"></script>
+    <script src="js/jquery.mobilemenu.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/jquery.ui.totop.js"></script>
+    <script src="js/jquery.touchSwipe.min.js"></script>
+    <script src="js/jquery.equalheights.js"></script>
+    
+    
+    <script src="js/jquery.carouFredSel-6.2.0.js"></script>
+    <script src="js/owl.carousel.js"></script>
+    <script src="js/jquery.touchSwipe.min.js"></script>    
+    
+    <script>	
+			$(window).load( function(){
+				//	Responsive layout, resizing the items
+				$('#carousel1').carouFredSel({
+				    responsive: true,
+					auto: false,		
+					scroll: 1,
+					width: '100%',	
+                    direction: 'up',
+                    next: "#next",
+					pagination: false,
+					mousewheel: false,
+					items: {
+					  width: 270,
+					  height: 'auto',	//	optionally resize item-height
+						visible: {
+							min: 1,
+							max: 1
+						}
+					}
+				});
+                
+			});
+    </script>
+    
+    <script>	
+        $(document).ready(function() {
+            
+        $('.list2 li a').hover(function(){
+            $(this).stop().css({color:'#b6b6b6'});         
+            $(this).parent().siblings('em').find('img').stop().css({'margin-top':'-7px'});   
+                }, function(){
+            $(this).stop().css({color:'#c11030'});         
+            $(this).parent().siblings('em').find('img').stop().css({'margin-top':0});       
+        })
+                     
+            ////////////
+                var owl = $("#owl-demo");
+                         
+               $(".next").click(function(){
+                    owl.trigger('owl.next');
+                  })
+                  $(".prev").click(function(){
+                    owl.trigger('owl.prev');
+                  })
+             
+              $("#owl-demo").owlCarousel({
+                
+                  //navigation : true,
+                  
+                  items : 4,
+                  itemsDesktop : [1220,4],
+                  itemsDesktopSmall : [979,3],
+                  itemsTablet :	[750,2],
+                  itemsTabletSmall	:	[550,2],
+                  itemsMobile :	[470,1]
+              });
+        });
+        
+    </script>
+    
+    <!--[if lt IE 9]>
+    <div style='text-align:center'><a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." /></a></div>  
+    <script src="assets/assets/js/html5shiv.js"></script> 
+    <script src="assets/assets/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+<!--==============================header=================================-->
+<header id="header">
+    <div class="bgheader2">
+        <div class="container">
+            <nav class="navbar navbar-default navbar-static-top tm_navbar" role="navigation">
+                <ul class="nav sf-menu">
+                  <li class="active"><a href="index.html">home</a></li>
+                  <li><a href="index-1.html">vacations<em class="indicator1"></em></a>
+                        <ul>
+                          <li><a href="#">columns 01</a></li>
+                          <li><a href="#">columns 02</a></li>
+                          <li><a class="last" href="#">columns 03<em class="indicator2"></em></a>
+                            <ul>
+                               <li><a href="#">columns 04</a></li>
+                               <li><a class="last" href="#">columns 05</a></li>                       
+                            </ul>
+                          </li>
+                        </ul>
+                  </li>
+                  <li><a href="index-2.html">cruises</a></li>
+                  <li><a href="index-3.html">about us</a></li>
+                  <li class="last"><a href="index-4.html">contacts</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="container">
+          <h1 class="navbar-brand navbar-brand_"><a href="index.html"><img alt="travel booking" src="img/logo.png"></a></h1> 
+        </div>
+        <div class="row_header1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-offset-2 col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                        <form id="search" class="search" action="search.php" method="GET" accept-charset="utf-8">
+                        	 <input type="text" onfocus="if(this.value =='' ) this.value=''" onblur="if(this.value=='') this.value=''" value="" name="s">
+                             <a href="#" class="btn btn-primary btn1 btn-search" onClick="document.getElementById('search').submit()"><span>search</span><strong><img src="img/arrow1.png" alt=""></strong></a>
+                        </form>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        <div class="row_header2">
+            <div class="container">
+                <div class="row">
+                    <ul class="list1">
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="#" class="btn btn-primary btn2"><strong><img src="img/page1_icon1.png" alt=""></strong><span>hotels</span></a>
+                        </li>
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="#" class="btn btn-primary btn2"><strong><img src="img/page1_icon2.png" alt=""></strong><span>flights</span></a>
+                        </li>
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="#" class="btn btn-primary btn2"><strong><img src="img/page1_icon3.png" alt=""></strong><span>cars</span></a>
+                        </li>
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="#" class="btn btn-primary btn2"><strong><img src="img/page1_icon4.png" alt=""></strong><span>cruises</span></a>
+                        </li>
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="#" class="btn btn-primary btn2"><strong><img src="img/page1_icon5.png" alt=""></strong><span>packages</span></a>
+                        </li>
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="#" class="btn btn-primary btn3"><strong><img src="img/page1_icon6.png" alt=""></strong><span>select<br>a date</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="col-lg-offset-3 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <div class="title1">
+                            <strong>This Week's Hot Tours</strong>
+                            <span>great ideas for family rest</span>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+</header>
+<!--==============================content=================================-->
+<div id="content">
+    <!--==============================row_1=================================-->
+    <div class="row_1">
+        <div class="container">
+            <div class="owlbox">
+                <div class="clearfix"></div>
+                <div class="owldiv">
+                	<div id="owl-demo" class="owl-carousel owl-theme">	
+                           <div class="item">
+                               <a href="#" class="box1">
+                                    <div class="title2">italy<em>italy</em></div>
+                                    <figure><img src="img/page1_img1.jpg" alt=""></figure>
+                                    <div class="">
+                                        <div class="info2">
+                                            <div class="title3"><strong>Rome, Venice, Florence</strong><span>6-7 NIGHTS, AIRFARE, 3-5 STAR HOTELS</span></div>
+                                            <div class="title4"><span>from</span> <strong>$680</strong></div>
+                                        </div>
+                                    </div>
+                                    <div class="title5">book now!<em>book now!</em></div>
+                               </a>
+                           </div>
+                           <div class="item">
+                               <a href="#" class="box1">
+                                    <div class="title2">france<em>france</em></div>
+                                    <figure><img src="img/page1_img2.jpg" alt=""></figure>
+                                    <div class="">
+                                        <div class="info2">
+                                            <div class="title3"><strong>Paris, Bordeaux, Toulouse</strong><span>6-7 NIGHTS, AIRFARE, 3-5 STAR HOTELS</span></div>
+                                            <div class="title4"><span>from</span> <strong>$680</strong></div>
+                                        </div>
+                                    </div>
+                                    <div class="title5">book now!<em>book now!</em></div>
+                               </a>
+                           </div>
+                           <div class="item">
+                               <a href="#" class="box1">
+                                    <div class="title2">thailand<em>thailand</em></div>
+                                    <figure><img src="img/page1_img3.jpg" alt=""></figure>
+                                    <div class="">
+                                        <div class="info2">
+                                            <div class="title3"><strong>Ko Tao, Sangkhlaburi, Chiang Mai</strong><span>6-7 NIGHTS, AIRFARE, 3-5 STAR HOTELS</span></div>
+                                            <div class="title4"><span>from</span> <strong>$680</strong></div>
+                                        </div>
+                                    </div>
+                                    <div class="title5">book now!<em>book now!</em></div>
+                               </a>
+                           </div>
+                           <div class="item">
+                               <a href="#" class="box1">
+                                    <div class="title2">uk<em>uk</em></div>
+                                    <figure><img src="img/page1_img4.jpg" alt=""></figure>
+                                    <div class="">
+                                        <div class="info2">
+                                            <div class="title3"><strong>London, Dublin, Edinburg</strong><span>6-7 NIGHTS, AIRFARE, 3-5 STAR HOTELS</span></div>
+                                            <div class="title4"><span>from</span> <strong>$680</strong></div>
+                                        </div>
+                                    </div>
+                                    <div class="title5">book now!<em>book now!</em></div>
+                               </a>
+                           </div>
+                           <div class="item">
+                               <a href="#" class="box1">
+                                    <div class="title2">italy<em>italy</em></div>
+                                    <figure><img src="img/page1_img1.jpg" alt=""></figure>
+                                    <div class="">
+                                        <div class="info2">
+                                            <div class="title3"><strong>Rome, Venice, Florence</strong><span>6-7 NIGHTS, AIRFARE, 3-5 STAR HOTELS</span></div>
+                                            <div class="title4"><span>from</span> <strong>$680</strong></div>
+                                        </div>
+                                    </div>
+                                    <div class="title5">book now!<em>book now!</em></div>
+                               </a>
+                           </div>
+                           <div class="item">
+                               <a href="#" class="box1">
+                                    <div class="title2">france<em>france</em></div>
+                                    <figure><img src="img/page1_img2.jpg" alt=""></figure>
+                                    <div class="">
+                                        <div class="info2">
+                                            <div class="title3"><strong>Paris, Bordeaux, Toulouse</strong><span>6-7 NIGHTS, AIRFARE, 3-5 STAR HOTELS</span></div>
+                                            <div class="title4"><span>from</span> <strong>$680</strong></div>
+                                        </div>
+                                    </div>
+                                    <div class="title5">book now!<em>book now!</em></div>
+                               </a>
+                           </div>
+                           <div class="item">
+                               <a href="#" class="box1">
+                                    <div class="title2">thailand<em>thailand</em></div>
+                                    <figure><img src="img/page1_img3.jpg" alt=""></figure>
+                                    <div class="">
+                                        <div class="info2">
+                                            <div class="title3"><strong>Ko Tao, Sangkhlaburi, Chiang Mai</strong><span>6-7 NIGHTS, AIRFARE, 3-5 STAR HOTELS</span></div>
+                                            <div class="title4"><span>from</span> <strong>$680</strong></div>
+                                        </div>
+                                    </div>
+                                    <div class="title5">book now!<em>book now!</em></div>
+                               </a>
+                           </div>
+                           <div class="item">
+                               <a href="#" class="box1">
+                                    <div class="title2">uk<em>uk</em></div>
+                                    <figure><img src="img/page1_img4.jpg" alt=""></figure>
+                                    <div class="">
+                                        <div class="info2">
+                                            <div class="title3"><strong>London, Dublin, Edinburg</strong><span>6-7 NIGHTS, AIRFARE, 3-5 STAR HOTELS</span></div>
+                                            <div class="title4"><span>from</span> <strong>$680</strong></div>
+                                        </div>
+                                    </div>
+                                    <div class="title5">book now!<em>book now!</em></div>
+                               </a>
+                           </div>
+                	</div>
+                </div>
+            </div>
+            <div class="customNavigation">
+              <a class="prev"><img src="img/arrowprev.png" alt=""></a>
+              <a class="next"><img src="img/arrownext.png" alt=""></a>
+            </div>
+        </div>
+    </div>
+    <!--==============================row_2=================================-->
+    <div class="row_2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <h2>popular getaways:</h2>
+                    <ul class="list2">
+                        <li><em><img src="img/arrow2.png" alt=""></em><p><a href="#">Cayman Islands</a></p></li>
+                        <li><em><img src="img/arrow2.png" alt=""></em><p><a href="#">Puerto Rico</a></p></li>
+                        <li><em><img src="img/arrow2.png" alt=""></em><p><a href="#">Barbados</a></p></li>
+                        <li><em><img src="img/arrow2.png" alt=""></em><p><a href="#">Aruba</a></p></li>
+                        <li><em><img src="img/arrow2.png" alt=""></em><p><a href="#">Nassau, Bahamas</a></p></li>
+                        <li><em><img src="img/arrow2.png" alt=""></em><p><a href="#">Jamaica</a></p></li>
+                        <li><em><img src="img/arrow2.png" alt=""></em><p><a href="#">Cancun, Mexico</a></p></li>
+                    </ul> 
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+                    <h2>why plan your travel <br>with us?</h2>
+                    <div class="row">
+                        <div  class="col-lg-4 col-md-4 col-sm-4 col-xs-4 colrow2">
+                            <h3>400+ airlines, 100.000 hotels, 24/7</h3>
+                            <p>Praesent vestibulum aenean noummy hendrerit mauris. Cum sociis natoque penatibus et magnis dis parturient montes ascetur ridiculus.</p>
+                            <a href="#" class="btn-link btn-link1">read more</a>
+                        </div>
+                        <div  class="col-lg-4 col-md-4 col-sm-4 col-xs-4 colrow2">
+                            <h3>Our travel experts can help you plan your perfect trip</h3>
+                            <p>Praesent vestibulum aenean noummy hendrerit mauris. Cum sociis natoque penatibus et magnis dis parturient montes ascetur ridiculus.</p>
+                            <a href="#" class="btn-link btn-link1">read more</a>
+                        </div>
+                        <div  class="col-lg-4 col-md-4 col-sm-4 col-xs-4 colrow2">
+                            <h3>Regular promotions & package <span>Price Match Guarantee</span></h3>
+                            <p>Praesent vestibulum aenean noummy hendrerit mauris. Cum sociis natoque penatibus et magnis dis parturient.</p>
+                            <a href="#" class="btn-link btn-link1">read more</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                	<div class="list_carousel responsive">
+                		<ul id="carousel1">			
+                            <li>
+                                <a href="#">
+                                    <div class="texts1">
+                                        <strong>tropical<br>islands<br>offers</strong>
+                                        <span>from $680</span>
+                                    </div>
+                                    <img src="img/page1_img5.jpg" alt="">
+                                </a>
+                            </li>		
+                            <li>
+                                <a href="#">
+                                    <div class="texts1">
+                                        <strong>tropical<br>islands<br>offers</strong>
+                                        <span>from $550</span>
+                                    </div>
+                                    <img src="img/page1_img6.jpg" alt="">
+                                </a>
+                            </li>			
+                		</ul>
+                	</div>  
+            		<div class="clearfix"></div>
+                    <div class="caruselbuttons">
+                		<div id="next" class="navimgs"><img src="img/arrow3.png" alt=""></div>
+                    </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--==============================row_3=================================-->
+    <div class="row_3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <a class="box2 maxheight" href="#">usa flights+ hotel offers</a>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
+                    <a class="box3 maxheight" href="#">
+                        <div class="title6">
+                            <p>Save up to 70% on<br>cheap City breaks</p>
+                        </div>
+                        <div class="title7">
+                            <p>Berlin <strong>from $680</strong></p>
+                            <p>Budapest <strong>from $680</strong></p>
+                            <p>Venice <strong>from $680</strong></p>
+                        </div>
+                        <div class="plane"><img src="img/plane.png" alt=""></div>
+                        <em><img src="img/arrow4.png" alt=""></em>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--==============================row_4=================================-->
+    <div class="row_4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col4list maxheight1">
+                    <h2>Honeymoon<br>Registry:</h2>
+                    <p>Praesent vestibulum aenean noummy hendrerit mauris. Cum sociis natoque penatibus et magnis dis parturient montes ascetur ridiculus mus. Null dui.</p>
+                    <h3><a href="#">Praesent vestibulum aenean noummy hendrerit mauris cum sociis natoque.</a></h3>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col4list maxheight1">
+                    <h2>airport<br>delays:</h2>
+                    <p>Praesent vestibulum aenean noummy hendrerit mauris. Cum sociis natoque penatibus et magnis dis parturient montes ascetur ridiculus mus. Null dui.</p>
+                    <h3><a href="#">Praesent vestibulum aenean noummy hendrerit mauris cum sociis natoque.</a></h3>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col4list maxheight1">
+                    <h2>Traveler's<br>Health:</h2>
+                    <p>Praesent vestibulum aenean noummy hendrerit mauris. Cum sociis natoque penatibus et magnis dis parturient montes ascetur ridiculus mus. Null dui.</p>
+                    <h3><a href="#">Praesent vestibulum aenean noummy hendrerit mauris cum sociis natoque.</a></h3>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col4list maxheight1">
+                    <h2>Passports<br>/Visas:</h2>
+                    <p>Praesent vestibulum aenean noummy hendrerit mauris. Cum sociis natoque penatibus et magnis dis parturient montes ascetur ridiculus mus. Null dui.</p>
+                    <h3><a href="#">Praesent vestibulum aenean noummy hendrerit mauris cum sociis natoque.</a></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--==============================footer=================================-->
+<footer>
+    <div class="container">
+        <div class="linemap">
+            <img class="imgmapsmall" src="img/mapsmall.png" alt="">
+            <span class="extraline1"></span>
+            <figure></figure>
+            <span class="extraline2"></span>
+        </div>
+        <a class="smalllogo" href="index-1.html"><img src="img/smallogo.png" alt="travel booking"></a>
+        <p class="footerpriv">&copy; <span id="copyright-year"></span> <img src="img/line3.png" alt=""> <a class="privacylink" href="index-5.html">Privacy Policy</a>More <a rel="nofollow" href="http://www.templatemonster.com/category/travel-agency-website-templates/" target="_blank">Travel Agency Website Templates at TemplateMonster.com</a></p>         
+    </div>
+</footer>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/tm-scripts.js"></script>
+</body>
+</html>

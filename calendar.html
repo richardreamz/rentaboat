@@ -1,0 +1,419 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Calendar</title>
+    <meta charset="utf-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    <meta name = "format-detection" content = "telephone=no" />
+    <meta name="description" content="Your description">
+    <meta name="keywords" content="Your keywords">
+    <meta name="author" content="Your name">
+    
+
+    
+    
+    <!-- CSS STYLES -->
+	<link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	
+    <link href="css/form.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    
+	<!-- SCRIPTS -->
+	<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <!--[if IE]><html class="ie" lang="en"> <![endif]-->
+	
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="js/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="js/superfish.min.js" type="text/javascript"></script>
+	<script src="js/jquery.flexslider-min.js" type="text/javascript"></script>
+	<script src="js/myscript.js" type="text/javascript"></script>
+  
+        <script>
+        $(document).ready(function () {
+
+            $('.list2 li a').hover(function () {
+                $(this).stop().css({ color: '#b6b6b6' });
+                $(this).parent().siblings('em').find('img').stop().css({ 'margin-top': '-7px' });
+            }, function () {
+                $(this).stop().css({ color: '#c11030' });
+                $(this).parent().siblings('em').find('img').stop().css({ 'margin-top': 0 });
+            })
+
+            ////////////
+           
+        });
+
+    </script>
+    
+    <script>
+        $(function () {
+            $("#datepicker1,#datepicker2").datepicker();
+        });
+    </script>
+    
+    
+    
+    <!--[if lt IE 9]>
+    <div style='text-align:center'><a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." /></a></div>  
+    <script src="assets/assets/js/html5shiv.js"></script> 
+    <script src="assets/assets/js/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+<body>
+<!--==============================header=================================-->
+
+<!-- HEADER -->
+				
+                
+<header id="header">
+<!-- TOP LINE -->
+					<div class="full_width top_line clearfix">
+						<div class="row">
+                    		<div class="col-lg-12 col-sm-12" align="right"><a href="members.aspx">Owner Sign In</a> <!--**##**| <a href="#">Renter Sign In</a>--></div>
+                        </div>
+					</div><!-- //TOP LINE -->
+                    
+
+<div class="menu_block clearfix">
+        <div class="navbar-brand"><img src="img/logo.png" alt="Rent A Boat"/></div>
+        <!-- RESPONSIVE BUTTON MENU -->
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="glyphicon glyphicon-align-justify"></span>
+							</button>
+						</div><!-- //RESPONSIVE BUTTON MENU -->
+                        
+           <div class="navbar-collapse collapse">
+							<ul class="nav navbar-nav">
+                  <li><a href="index.aspx">HOME</a></li>
+                  <li class="sub-menu"><a href="how_to_rent_a_boat.aspx">RENTERS<em class="indicator2"></em></a>
+                       <ul>
+                       		<li><a href="renter_faqs.aspx">FAQ's</a></li>
+                          	<li><a href="how_to_rent_a_boat.aspx">How To Rent</a></li>
+                           	<li class="last" ><a href="renters-sign-in.html">Sign In</a></li>
+                       </ul>
+                  </li>
+                  <li class="sub-menu" ><a href="facilities_mant.aspx">OWNERS<em class="indicator2"></em></a>
+                  		<ul>
+                            
+							<li><a href="./admin/BoatOwnerSignup.aspx">List Your Boat</a></li> 
+                            
+                            <li><a href="owners-faqs.html">FAQ's</a></li>
+                            <li><a class="last" href="members.aspx">Sign in</a></li>
+                        </ul>                                     
+                  </li>
+                  <li ><a href="about-us.html">ABOUT US</a></li>
+                  <li class="sub-menu"><a href="how-It-works.html">HOW IT WORKS<em class="indicator2"></em></a>
+                        <ul>
+                          <li><a href="how-It-works.html">How it Works</a></li>
+                          <li><a href="renting-vs-owning.html">Renting vs. Owning</a></li>
+                          <li><a href="rental-tips.html">Rental Tips</a></li>
+                          <li><a class="last" href="marine-liability-insurance.html">Marine Liability Insurance</a></li>
+                        </ul>
+                   </li>
+                  <li><a href="contact_us.aspx">CONTACT US</a></li>
+                </ul>
+            </div>
+        </div>  
+       
+
+<!--==============================content=================================-->
+
+      <div class="container" >
+      	<div class="row_header2" align="center" >
+        	<h3  style="color:#fff;">Find Boat Rentals In Your Area Now!</h3>
+              
+            <form id="search" class="search" action="search.php" method="get" accept-charset="utf-8">
+            	<input placeholder="Where do you want to go?" name="s" type="text" style="font-size:12px; ">
+                <a href="#" class="btn btn-primary btn1 btn-search" onclick="document.getElementById('search').submit()"><span>search</span></a>                    
+            </form>               
+      </div>         
+	</div>
+
+</header>
+<!--==============================content=================================-->
+
+    <!--==============================row_1=================================-->
+<div class="container">
+      <div class="row">
+           <div class="col-lg-12 col-sm-12 padbot20">
+           <a href="">Search Breadcrumb</a> | <a href="">State</a> | <a href="">other search criteria</a>
+             <h2>Suntracker Party Barge</h2>
+             Brookhaven, New York 11719
+             </div>
+             
+             <div class="col-lg-7 col-sm-7 padbot20">
+             <!-- Search item -->
+             
+             <!--Image-->
+             	<div class="boat-page-image">
+		<img src="https://d2jh4nh0bx3cra.cloudfront.net/9021_get-attachment-1.aspx_tb.jpeg" alt="Suntracker Party Barge" />
+   				</div>
+                <div class="boat-page-thumb">
+                <ul class="list-boat-thumb">
+                <li><img src="https://d2jh4nh0bx3cra.cloudfront.net/9021_get-attachment-1.aspx_tb.jpeg" alt="Suntracker Party Barge" /></li>
+                <li><img src="https://d2jh4nh0bx3cra.cloudfront.net/9021_get-attachment-1.aspx_tb.jpeg" alt="Suntracker Party Barge" /></li>
+                <li><img src="https://d2jh4nh0bx3cra.cloudfront.net/9021_get-attachment-1.aspx_tb.jpeg" alt="Suntracker Party Barge" /></li>
+                </ul>               
+                Boat# : 591 <img src="images/star-rate.jpg" height="30px;"><br>
+                
+                <a href="#" class="btn btn-primary btn1a"><span>Area Map</span></a>
+                <br><br>
+                </div>
+                <!--overview-->
+              	<div class="boat-page-overview">
+              	
+                <h2>Boat Details</h2>
+                <p><span class="boat-page-item">Boat Name:</span> Text Here</p>
+                <p><span class="boat-page-item">Make:</span> Text Here</p>
+                <p><span class="boat-page-item">Model:</span> Text Here</p>
+                <p><span class="boat-page-item">Length:</span> Text Here</p>
+                <p><span class="boat-page-item">Passengers:</span> Text Here</p>
+                <p><span class="boat-page-item">Captain or Guide available for hire:</span> Text Here</p>
+                           		
+                   
+                </div>
+                
+                <div class="boat-page-overview">
+              		
+                <h2>Boat Description</h2>
+                           		
+                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac fringilla libero, dictum imperdiet purus. In hac habitasse platea dictumst. Morbi scelerisque, nunc ac gravida congue, tellus diam semper est, quis porttitor dui libero facilisis sapien. Nunc vulputate neque non nisl gravida, eu malesuada erat pharetra. Mauris a tortor vel diam aliquam venenatis ac eget erat. In hendrerit rhoncus auctor. Maecenas varius nisl elit. Integer id justo lacus. Ut vulputate pellentesque felis rutrum convallis. Aenean viverra massa felis, commodo interdum lacus tincidunt ac. Vestibulum molestie augue erat, sit amet varius quam semper finibus.</p>
+                </div>
+                
+                <div class="boat-page-overview">
+              		
+                <h2>Rental Details </h2>
+                    
+					<p><span class="boat-page-item">Requirements:</span> Text Here</p>
+                    <p><span class="boat-page-item">Owner #:</span> Text Here</p>
+                    <p><span class="boat-page-item">More Boats From This Owner:</span><a href="#" class="btn btn-primary btn1a"><span>Search</span></a></p>
+                    <p><span class="boat-page-item">Tax Rates:</span> Text Here</p>
+                    <p><span class="boat-page-item">Reservatopm Deposit:</span> Text Here</p>
+                    <p><span class="boat-page-item">Security Deposit:</span> Text Here</p>
+                    <p><span class="boat-page-item">Cancellation Policy:</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac fringilla libero, dictum imperdiet purus. In hac habitasse platea dictumst. Morbi scelerisque, nunc ac gravida congue, tellus diam semper est, quis porttitor dui libero facilisis sapien. Nunc vulputate neque non nisl gravida, eu malesuada erat pharetra.</p> 		
+                   
+                </div>
+                
+                <div class="boat-page-overview">
+              		
+                <h2>Area and Attractions:</h2>
+                           		
+                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac fringilla libero, dictum imperdiet purus. In hac habitasse platea dictumst. Morbi scelerisque, nunc ac gravida congue, tellus diam semper est, quis porttitor dui libero facilisis sapien. Nunc vulputate neque non nisl gravida, eu malesuada erat pharetra. Mauris a tortor vel diam aliquam venenatis ac eget erat. In hendrerit rhoncus auctor. Maecenas varius nisl elit. Integer id justo lacus. Ut vulputate pellentesque felis rutrum convallis. Aenean viverra massa felis, commodo interdum lacus tincidunt ac. Vestibulum molestie augue erat, sit amet varius quam semper finibus.</p>
+                </div>
+
+			</div>
+            <div class="col-lg-5 col-sm-5 padbot20">	
+
+
+				<div class="boat-table">
+                <table>
+               		<tr>
+                		<td></td>
+                        <td>Weekday</td>
+                        <td>Weekend</td>
+                        <td>Holidays</td>
+                        <td>Hours</td>
+                	</tr>
+                    <tr>
+                		<td>Full Day</td>
+                        <td>$500</td>
+                        <td>$500</td>
+                        <td>$500</td>
+                        <td>9am-5:30pm</td>
+                	</tr>
+                    <tr>
+                		<td>Half Day AM</td>
+                        <td>$500</td>
+                        <td>$500</td>
+                        <td>$500</td>
+                        <td>9am-1pm</td>
+                	</tr>
+                    <tr>
+                		<td>Half Day PM</td>
+                        <td>$500</td>
+                        <td>$500</td>
+                        <td>$500</td>
+                        <td>1:30pm-5:30pm</td>
+                	</tr>
+                    <tr>
+                		<td>Per Hour</td>
+                        <td>$100</td>
+                        <td>$200</td>
+                        <td>$300</td>
+                        <td></td>
+                	</tr>
+                 </table>
+
+       		</div>
+            
+      <br><br>
+            
+            <div class="boat-page-overview" >
+            
+            <div style="float:left;"><h2>Boat's Availability</h2>
+            <div class="mini-box" style="background-color:#93d13f;">&nbsp;</div> Green = Available<br>
+            <div class="mini-box" style="background-color:#cccccc;">&nbsp;</div> Grey = Not Available<br>
+            <div class="mini-box" style="background-color:#F77D06;">&nbsp;</div> Orange = Available Half Day<br>
+            </div>
+            <div style="float:left; padding-left:20px;">
+            <img src="images/active-calendar.png"></div>
+            <div style="clear:both;"></div>
+            </div>
+            
+            
+            
+            <div class="boat-page-overview" >
+            <h2>Choose Time</h2>
+            <form><fieldset>
+            <div class="control-group">
+  				<label class="control-label" for="selectbasic">Pick Up Date</label>
+    			<select id="" name="selectbasic" class="input-xlarge">
+      				<option>Option one</option>
+      				<option>Option two</option>
+    			</select>
+                <label class="control-label" for="selectbasic">Drop Off Date</label>
+    			<select id="" name="selectbasic" class="input-xlarge">
+      				<option>Option one</option>
+      				<option>Option two</option>
+    			</select>
+                <label class="control-label" for="selectbasic">Start Time</label>
+    			<select id="" name="selectbasic" class="input-xlarge">
+      				<option>Option one</option>
+      				<option>Option two</option>
+    			</select>
+                <label class="control-label" for="selectbasic">Return Time</label>
+    			<select id="" name="selectbasic" class="input-xlarge">
+      				<option>Option one</option>
+      				<option>Option two</option>
+    			</select>
+</div>
+<div style="clear:both;"></div>
+<div>*You only need to select a start and return time if you're renting per hour.</div>
+           
+                      
+            </fieldset></form></div>
+
+
+            
+            
+            <div class="boat-page-overview">
+            <h2 class="red">Returning Customer</h2>
+             <form id="contact-form" class="contact-form"><fieldset>
+            <div class="control-group">
+  
+    <input id="" name="" placeholder="User Name" class="input-xlarge" type="text">
+</div>
+<div class="control-group">
+
+    <input id="" name="" placeholder="Password" class="input-xlarge" type="text">
+</div>
+<div style="clear:both;"></div>
+<div class="btns" align="right">
+                        <a href="#" data-type="submit" class="btn3 ">Request to Book</a>
+                      </div>
+</fieldset></form>
+
+		</div>
+
+
+
+<div class="boat-page-overview">
+		<h2 class="red">NEW Customer</h2>
+             <form id="contact-form" class="contact-form"><fieldset>
+            <div class="control-group">
+
+    <input id="" name="" placeholder="First Name" class="input-xlarge" type="text">
+</div>
+<div class="control-group">
+
+    <input id="" name="" placeholder="Last Name" class="input-xlarge" type="text">
+    </div>
+<div class="control-group">
+
+    <input id="" name="" placeholder="Email" class="input-xlarge" type="text">
+</div>
+<div class="control-group">
+
+    <input id="" name="" placeholder="Password" class="input-xlarge" type="text">
+</div>
+<div class="control-group">
+
+    <input id="" name="" placeholder="Confirm Password" class="input-xlarge" type="text">
+</div>
+<div style="clear:both;"></div>
+<div class="btns" align="right">
+                        <a href="#" data-type="submit" class="btn3 ">Request to Book</a>
+                      </div>
+</fieldset></form>
+
+</div>
+
+
+<iframe width="400" height="225" src="https://www.youtube.com/embed/QZd7015XaTQ?showinfo=0" frameborder="0" allowfullscreen></iframe>
+            
+   </div>
+</div>    
+
+</div>
+<!-- FOOTER -->
+
+
+				<footer class="full_width footer_block">
+                <div class="container">
+					<div class="row" >
+						<div class="col-lg-3 col-sm-3 padbot20">
+							<h2>Get in touch</h2>
+							1-888-610-BOAT<br />
+                            631-286-7816<br />
+                            <a href="mailto:info@boatrenting.com">info@boatrenting.com</a><br><br>
+                             <ul class="social">
+							<li class="icon1"><a href="javascript:void(0);" alt=""></a></li>
+							<li class="icon2"><a href="javascript:void(0);" alt=""></a></li>							
+							<li class="icon4"><a href="javascript:void(0);" alt=""></a></li>
+							<li class="icon5"><a href="javascript:void(0);" alt=""></a></li>
+							<li class="icon6"><a href="javascript:void(0);" alt=""></a></li>
+						</ul><!-- //SOCIAL ICONS -->
+						</div>
+                        
+						<div class="col-lg-3 col-sm-3">
+							<h2>Learn More</h2>
+                            <a href="rentwithus.aspx">How To List</a><br />
+                            <a href="how_to_rent_a_boat.aspx">How To Rent</a><br />
+							<a href="owners-faqs.html">Owners FAQ's</a><br />
+                            <a href="renter_faqs.aspx">Renters FAQ's</a><br /> 							
+						</div>
+                        
+						<div class="col-lg-3 col-sm-3">
+							<h2>Company</h2>
+							<a href="about-us.html">About</a><br />
+							<a href="#">Press</a><br />
+							<a href="#">Testimonials</a><br />
+							<a href="#">Policies</a><br />							
+						</div>
+                        
+                        <div class="col-lg-3 col-sm-3">
+							<h2>Articles</h2>
+							<a href="renting-vs-owning.html">Renting vs Owning</a><br />
+							<a href="rental-tips.html">Rental Tips</a><br />
+							<a href="marine-liability-insurance.html">Marine Liability Insurance</a><br />							
+						</div>
+					</div>
+                    <div style="width:65%; margin-left:auto; margin-right:auto"><hr /></div>
+                    <div class="row" >
+                    	<div align="center">&copy; Copyright 2015 Rent a Boat RentABoat.com  | <a href="#">Privacy Policy</a><br>
+                        631-286-7816  |  320 South Counrty Rd<br>Brookhaven NY 11719<br>
+
+                    </div></div></div>
+				</footer><!-- //FOOTER -->
+				
+
+
+</body>
+</html>

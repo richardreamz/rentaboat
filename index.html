@@ -1,0 +1,481 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Home</title>
+    <meta charset="utf-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    <meta name = "format-detection" content = "telephone=no" />
+    <meta name="description" content="Your description">
+    <meta name="keywords" content="Your keywords">
+    <meta name="author" content="Your name">
+    
+
+
+        <script src="js/jquery.carouFredSel-6.2.0.js"></script>
+    <script src="js/owl.carousel.js"></script>
+    <!-- CSS STYLES -->
+	<link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    
+	<!-- SCRIPTS -->
+	<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <!--[if IE]><html class="ie" lang="en"> <![endif]-->
+	
+	<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>-->
+	
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="js/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="js/superfish.min.js" type="text/javascript"></script>
+	<script src="js/jquery.flexslider-min.js" type="text/javascript"></script>
+	<script src="js/myscript.js" type="text/javascript"></script>
+  
+        <script>	
+			$(window).load( function(){
+				//	Responsive layout, resizing the items
+				$('#carousel1').carouFredSel({
+				    responsive: true,
+					auto: false,		
+					scroll: 1,
+					width: '100%',	
+                    direction: 'up',
+                    next: "#next",
+					pagination: false,
+					mousewheel: false,
+					items: {
+					  width: 270,
+					  height: 'auto',	//	optionally resize item-height
+						visible: {
+							min: 1,
+							max: 1
+						}
+					}
+				});
+                
+			});
+    </script>
+    
+    <script>	
+        $(document).ready(function() {
+            
+        $('.list2 li a').hover(function(){
+            $(this).stop().css({color:'#b6b6b6'});         
+            $(this).parent().siblings('em').find('img').stop().css({'margin-top':'-7px'});   
+                }, function(){
+            $(this).stop().css({color:'#c11030'});         
+            $(this).parent().siblings('em').find('img').stop().css({'margin-top':0});       
+        })
+                     
+            ////////////
+                var owl = $("#owl-demo");
+                         
+               $(".next").click(function(){
+                    owl.trigger('owl.next');
+                  })
+                  $(".prev").click(function(){
+                    owl.trigger('owl.prev');
+                  })
+             
+              $("#owl-demo").owlCarousel({
+                
+                  //navigation : true,
+                  
+                  items : 4,
+                  itemsDesktop : [1220,4],
+                  itemsDesktopSmall : [979,3],
+                  itemsTablet :	[750,2],
+                  itemsTabletSmall	:	[550,2],
+                  itemsMobile :	[470,1]
+              });
+        });
+        
+    </script>
+
+    <script>
+      $(function () {
+          $("#datepicker1,#datepicker2").datepicker();
+      });
+    </script>
+       
+   
+
+    
+    <!--[if lt IE 9]>
+    <div style='text-align:center'><a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." /></a></div>  
+    <script src="assets/assets/js/html5shiv.js"></script> 
+    <script src="assets/assets/js/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+<body>
+<!--==============================header=================================-->
+
+<!-- HEADER -->
+				
+                
+<header id="header">
+<!-- TOP LINE -->
+					<div class="full_width top_line clearfix">
+						<div class="row">
+                    		<div class="col-lg-12 col-sm-12" align="right"><a href="#">Owner Sign In</a> <!--**##**| <a href="#">Renter Sign In</a>--></div>
+                        </div>
+					</div><!-- //TOP LINE -->
+                    
+<div class="menu_block clearfix">
+        <div class="navbar-brand"><img src="img/logo.png" alt="Rent A Boat"/></div>
+        <!-- RESPONSIVE BUTTON MENU -->
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="glyphicon glyphicon-align-justify"></span>
+							</button>
+						</div><!-- //RESPONSIVE BUTTON MENU -->
+                        
+           <div class="navbar-collapse collapse">
+							<ul class="nav navbar-nav">
+                  <li class="active"><a href="index.html">HOME</a></li>
+                  <li class="sub-menu"><a href="how-to-rent-a-boat.html">RENTERS<em class="indicator2"></em></a>
+                       <ul>
+                       		<li><a href="renters-faqs.html">FAQ's</a></li>
+                          	<li><a href="how-to-rent-a-boat.html">How To Rent</a></li>
+                           	<!--**##**<li><a class="last" href="renters-sign-in.html">Sign In</a></li>-->
+                       </ul>
+                  </li>
+                  <li class="sub-menu"><a href="list-your-boat.html">OWNERS<em class="indicator2"></em></a>
+                  		<ul>                           
+							<li><a href="list-your-boat.html">List Your Boat</a></li> 
+                             
+                            <li><a href="owners-faqs.html">FAQ's</a></li>
+                            <li><a class="last" href="owner-sign-in.html">Sign in</a></li>
+                        </ul>                                     
+                  </li>
+                  <li ><a href="about-us.html">ABOUT US</a></li>
+                  <li class="sub-menu"><a href="how-It-works.html">HOW IT WORKS<em class="indicator2"></em></a>
+                        <ul>
+                          <li><a href="how-It-works.html">How it Works</a></li>
+                          <li><a href="renting-vs-owning.html">Renting vs. Owning</a></li>
+                          <li><a href="rental-tips.html">Rental Tips</a></li>
+                          <li><a class="last" href="marine-liability-insurance.html">Marine Liability Insurance</a></li>
+                        </ul>
+                   </li>
+                  <li><a href="contact_us.aspx">CONTACT US</a></li>
+                </ul>
+            </div>
+        </div>  
+       
+
+<!--==============================content=================================-->
+
+
+      <div class="container" ><div class="row_header-home" >
+           <div align="center">
+            <h1 class="white" >Welcome Aboard</h1>
+		   		<div style="width:65%; margin-left:auto; margin-right:auto"><hr /></div>
+                
+                <h3  style="color:#fff;">Find Boat Rentals In Your Area Now!</h3>
+                
+                        <form id="search" class="search" action="search.php" method="get" accept-charset="utf-8" style="">
+                        	 <input placeholder="Where do you want to go?" name="s" type="text" style="font-size:12px; ">
+                        	
+                              <a href="#" class="btn btn-primary btn1 btn-search" onclick="document.getElementById('search').submit()"><span>search</span></a>                    
+                         </form>
+                    
+                
+                 
+            
+            
+             <div class="row" style="margin-top:480px;">
+              <div class="col-lg-12 col-sm-12 padbot20"><br><br>
+               <h2 class="white" > Popular Boat Rental Locatons</h2>
+            <br>
+        
+                    <ul class="list1">
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="#" class="btn btn-primary btn2"><strong><img src="images/Depositphotos_12483121_xs.jpg" alt=""></strong><span>Long Island</span></a>
+                        </li>
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="#" class="btn btn-primary btn2"><strong><img src="images/Depositphotos_12483121_xs_54b7dbc92a2de.jpg" alt=""></strong><span>Miami</span></a>
+                        </li>
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="#" class="btn btn-primary btn3"><strong><img src="images/Depositphotos_12483121_xs_54b7dc54ce48a.jpg" alt=""></strong><span>New York<br>City</span></a>
+                        </li>
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="#" class="btn btn-primary btn2"><strong><img src="images/Depositphotos_12483121_xs_54b7dc8a5bde6.jpg" alt=""></strong><span>Dallas</span></a>
+                        </li>
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="#" class="btn btn-primary btn2"><strong><img src="images/Depositphotos_12483121_xs_54b7dcc276993.jpg" alt=""></strong><span>Los Angeles</span></a>
+                        </li>
+                        <li class="col-lg-2 col-md-4 col-sm-4 col-xs-4 list1col">
+                            <a href="#" class="btn btn-primary btn2"><strong><img src="images/Depositphotos_12483121_xs_54b7dcf79153e.jpg" alt=""></strong><span>San Diego</span></a>
+                        </li>
+                    </ul>
+
+<br>
+                <div style="max-width:900px; width:100%;" >
+                    <p style="color:#fff; font-size:18px;">Find your dream boat in one click! RentABoat.com offers boat rentals from pontoon boats, Yachts, Charters, Jet Skis, Sailboats, Houseboats and much more! Search Now!</p>
+                </div>
+    
+            </div>
+            </div>
+            
+            </div>
+        </div>
+        </div>
+        </header>
+ <!--==============================content=================================-->
+
+
+<div class="container"> 
+
+
+    <!--==============================row_1=================================-->
+
+ <div class="row" style="padding:50px; 0">
+                    <div class="col-lg-3 col-sm-3 padbot20">
+                           <div class="item">
+                               <a href="#" class="box1">
+                                    <div class="title2">City Destination<em>City Destination</em></div>
+                                    <figure><img src="images/page1_img1.jpg" alt=""></figure>
+                                    <div class="">
+                                        <div class="info2">
+                                            <div class="title3"><strong>City State</strong><span>Description</span></div>
+                                            <div class="title4"><span>from</span> <strong>$680</strong></div>
+                                        </div>
+                                    </div>
+                                    <div class="title5">book now!<em>book now!</em></div>
+                               </a>
+                           </div>
+                  </div>
+                  <div class="col-lg-3 col-sm-3 padbot20">             
+                           <div class="item">
+                               <a href="#" class="box1">
+                                    <div class="title2">City<em>City</em></div>
+                                    <figure><img src="images/page1_img1.jpg" alt=""></figure>
+                                    <div class="">
+                                        <div class="info2">
+                                            <div class="title3"><strong>City State</strong><span>Description</span></div>
+                                            <div class="title4"><span>from</span> <strong>$680</strong></div>
+                                        </div>
+                                    </div>
+                                    <div class="title5">book now!<em>book now!</em></div>
+                               </a>
+                           </div>
+                 </div>
+                 <div class="col-lg-3 col-sm-3 padbot20">	
+                           <div class="item">
+                               <a href="#" class="box1">
+                                    <div class="title2">City<em>City</em></div>
+                                    <figure><img src="images/page1_img1.jpg" alt=""></figure>
+                                    <div class="">
+                                        <div class="info2">
+                                            <div class="title3"><strong>City State</strong><span>Description</span></div>
+                                            <div class="title4"><span>from</span> <strong>$680</strong></div>
+                                        </div>
+                                    </div>
+                                    <div class="title5">book now!<em>book now!</em></div>
+                               </a>
+                           </div>
+                 </div>
+                 <div class="col-lg-3 col-sm-3 padbot20">	
+                          <div class="item">
+                               <a href="#" class="box1">
+                                    <div class="title2">City<em>City</em></div>
+                                    <figure><img src="images/page1_img1.jpg" alt=""></figure>
+                                    <div class="">
+                                        <div class="info2">
+                                            <div class="title3"><strong>City State</strong><span>Description</span></div>
+                                            <div class="title4"><span>from</span> <strong>$680</strong></div>
+                                        </div>
+                                    </div>
+                                    <div class="title5">book now!<em>book now!</em></div>
+                               </a>
+                           </div>
+                        </div>
+                	</div><!--row-->
+           
+           
+ </div>
+
+    <hr>
+        <!--==============================row_3=================================-->
+<div class="container">      
+     <div class="row"> 
+     	<div class="col-lg-2 col-sm-2 padbot20"><br><br></div>
+        <div align="center" class="col-lg-4 col-sm-4 padbot20">    		
+    		<div style=" position:relative; background-color:#fff; width:100px; padding:5px; z-index:15;"><h3>Owners</h3></div>
+ 			<div style=" position:relative; border:1px solid #ddd; margin:0; width:320px; z-index:5; margin-top:-22px; padding:7px" align="center">
+    			<div style="line-height:18px; text-align:left"><br>
+    				<ul>
+    				<li> Reach millions of boat renters.</li>
+					<li> You decide who rents your boat.</li>
+					<li> You set the price and availability.</li>
+					<li> No membership fees.</li>
+					<li> No monthly dues. </li>
+       				</ul>
+				</div>
+                <a href="#"><div style="background-color:#fe595e; padding:5px 15px 5px;" align="center"><h3 style="color:#fff;">Learn More</h3></div></a>
+            </div>
+       </div>
+
+
+		<div align="center" class="col-lg-4 col-sm-4 padbot20">			
+    			<div style="position:relative; background-color:#fff; width:100px; padding:5px; z-index:15;"><h3>Renters</h3></div>
+				<div style="position:relative; border:1px solid #ddd; margin:0; width:320px; z-index:5; margin-top:-22px; padding:7px" align="center">
+    			<div style="line-height:18px; text-align:left;"><br>
+					<ul>
+    				<li> Lowest boat rental rates available.</li>
+					<li> Easy searching/Easy booking.</li>
+					<li> No membership fees.</li>
+					<li> No monthly dues.</li>
+                    <li> Access your dream boat within seconds!</li>
+                    </ul>
+                 </div>
+                 
+				<a href="#"><div style="background-color:#fe595e; padding:5px 15px 5px;" align="center"><h3 style="color:#fff;">Learn More</h3></div></a>
+          </div>
+       </div>
+		<div class="col-lg-2 col-sm-2 padbot20"><br><br></div>
+   </div>
+
+    <!--==============================row_2=================================-->
+  
+                    <div align="center" class="row" >
+                   
+                    <br><br>
+    <h1 style="color:#000000;">Earn money by listing your boat for FREE!</h1><br>
+    <a href="#"><div style="background-color:#fe595e; padding:5px; width:300px;" align="center"><h2 style="color:#fff;"> List your boat!<br>(Its Free!)</h2></div></a>
+   
+  
+    </div>
+
+    
+    <br><br>
+    <!--==============================row_3=================================-->
+  <div class="full_width" style=" padding:15px 0;" >
+        <div align="center"  class="container">
+          <div class="row" >
+                <div class="col-lg-12 col-md-12 ">
+                <h2>Boat Rentals by State</h2><hr></div></div>
+                 <div class="row">
+                <div class="col-lg-2 col-md-2 " style="size:18px;">
+                
+Alabama<br>
+Alaska<br>
+Arizona<br>
+Arkansas<br>
+California<br>
+Colorado<br>
+Connecticut<br>
+Delaware</div>
+<div class="col-lg-2 col-md-2 " style="size:18px;">
+Florida<br>
+Georgia<br>
+Hawaii<br>
+Idaho<br>
+Illinois<br>
+Indiana<br>
+Iowa<br>
+Kansas</div>
+<div class="col-lg-2 col-md-2 " style="size:18px;">
+Kentucky<br>
+Louisiana<br>
+Maine<br>
+Maryland<br>
+Massachusetts<br>
+Michigan<br>
+Minnesota<br>
+Mississippi</div>
+ <div class="col-lg-2 col-md-2 " style="size:18px;">
+Missouri<br>
+Montana<br>
+Nebraska<br>
+Nevada<br>
+New Hampshire<br>
+New Jersey<br>
+New York<br>
+North Carolina<br>
+North Dakota</div>
+<div class="col-lg-2 col-md-2 " style="size:18px;">
+Ohio<br>
+Oklahoma<br>
+Oregon<br>
+Pennsylvania<br>
+Rhode Island<br>
+South Carolina<br>
+South Dakota<br>
+Tennessee</div>
+<div class="col-lg-2 col-md-2 " style="size:18px;">
+Texas<br>
+Utah<br>
+Vermont<br>
+Virginia<br>
+Washington<br>
+West<br>
+Virginia<br>
+Wisconsin<br>
+Wyoming</div>
+                </div>
+            </div>
+        </div>
+ 
+
+</div>
+<!-- FOOTER -->
+
+
+				<footer class="full_width footer_block">
+                <div class="container">
+					<div class="row" >
+						<div class="col-lg-3 col-sm-3 padbot20">
+							<h2>Get in touch</h2>
+							1-888-610-BOAT<br />
+                            631-286-7816<br />
+                            <a href="mailto:info@boatrenting.com">info@boatrenting.com</a><br>
+                             <ul class="social">
+							<li class="icon1"><a href="javascript:void(0);" alt=""></a></li>
+							<li class="icon2"><a href="javascript:void(0);" alt=""></a></li>
+							
+							<li class="icon4"><a href="javascript:void(0);" alt=""></a></li>
+							<li class="icon5"><a href="javascript:void(0);" alt=""></a></li>
+							<li class="icon6"><a href="javascript:void(0);" alt=""></a></li>
+						</ul><!-- //SOCIAL ICONS -->
+						</div>
+                        
+						<div class="col-lg-3 col-sm-3">
+							<h2>Learn More</h2>
+							<a href="list-your-boat.html">How To List</a><br />
+							<a href="how-to-rent-a-boat.html">How To Rent</a><br />
+							<a href="owners-faqs.html">Owners FAQ's</a><br />
+							<a href="renters-faqs.html">Renters FAQ's</a><br /> 							
+						</div>
+                        
+						<div class="col-lg-3 col-sm-3">
+							<h2>Company</h2>
+							<a href="about-us.html">About</a><br />
+							<a href="#">Press</a><br />
+							<a href="#">Testimonials</a><br />
+							<a href="#">Policies</a><br />							
+						</div>
+                        
+                        <div class="col-lg-3 col-sm-3">
+							<h2>Articles</h2>
+							<a href="renting-vs-owning.html">Renting vs Owning</a><br />
+							<a href="rental-tips.html">Rental Tips</a><br />
+							<a href="marine-liability-insurance.html">Marine Liability Insurance</a><br />							
+						</div>
+					</div>
+                    <div style="width:65%; margin-left:auto; margin-right:auto"><hr /></div>
+                    <div class="row" >
+                    	<div align="center">&copy; Copyright 2015 Rent a Boat RentABoat.com  | <a href="#">Privacy Policy</a><br>
+                        631-286-7816  |  320 South Counrty Rd<br>Brookhaven NY 11719<br>
+
+                    </div></div></div>
+				</footer><!-- //FOOTER -->
+				
+
+
+</body>
+</html>

@@ -1,0 +1,343 @@
+<%@ Page language="C#" CodeFile="facilities_save.aspx.cs" Inherits="BoatRenting.facilities_save_aspx_cs" %>
+<%@ Import Namespace = "nce.adosql" %>
+<!--#include file="includes/__dbconnection.aspx"-->
+<!--#include file="__functions.aspx"-->
+<%
+    cmd2 = new Command();
+    rs2 = new Recordset();
+    cmd2.ActiveConnection = oConn;
+    cmd2.CommandText = "SP_BR_CLIENT_USERNAME_EXISTS";
+    cmd2.CommandType = adCmdStoredProc;
+    cmd2.Parameters[1] = Request.Form["txt_usser"];
+    rs2.Open(cmd2);
+    if (Convert.ToString(rs2.Fields[0].Value) == "0")
+    {
+        txt_ContactName = NVL(Request.Form["txt_ContactName"], "");
+        txt_BusinessName = NVL(Request.Form["txt_BusinessName"], "");
+        txt_marinaName = NVL(Request.Form["txt_marinaName"], "");
+        txt_addressLine1 = NVL(Request.Form["txt_addressLine1"], "");
+        txt_addressLine2 = NVL(Request.Form["txt_addressLine2"], "");
+        txt_city = NVL(Request.Form["txt_city"], "");
+        cbo_State = NVL(Request.Form["cbo_State"], "0");
+        txt_zip = NVL(Request.Form["txt_zip"], "");
+        cbo_Country = NVL(Request.Form["cbo_Country"], "0");
+        cbo_BodyWater = NVL(Request.Form["cbo_BodyWater"], "");
+        txt_phone = NVL(Request.Form["txt_phone"], "");
+        txt_fax = NVL(Request.Form["txt_fax"], "");
+        txt_email = NVL(Request.Form["txt_email"], "");
+        txt_tax = NVL(Request.Form["txt_tax"], "0");
+        cbo_multipleLocations = NVL(Request.Form["cbo_multipleLocations"], "");
+        cbo_accomodations = NVL(Request.Form["cbo_accomodations"], "");
+        txt_usser = NVL(Request.Form["txt_usser"], "");
+        txt_pass = NVL(Request.Form["txt_pass"], "");
+        cbo_captain = NVL(Request.Form["cbo_captain"], "0");
+        txta_depositPolicy = NVL(Request.Form["txta_depositPolicy"], "");
+        txta_facilityDirections = NVL(Request.Form["txta_facilityDirections"], "");
+        txta_facilityArea = NVL(Request.Form["txta_facilityArea"], "");
+        txt_start = NVL(Request.Form["txt_start"], "");
+        txt_end = NVL(Request.Form["txt_end"], "");
+        cmd = new Command();
+        cmd.ActiveConnection = oConn;
+        cmd.CommandText = "SP_BR_MARINA_CLIENT_SAVE";
+        cmd.CommandType = adCmdStoredProc;
+        cmd.Parameters[1] = "N";
+        cmd.Parameters[2] = 0;
+        cmd.Parameters[3] = txt_ContactName;
+        cmd.Parameters[4] = txt_BusinessName;
+        cmd.Parameters[5] = txt_marinaName;
+        cmd.Parameters[6] = txt_addressLine1;
+        cmd.Parameters[7] = txt_addressLine2;
+        cmd.Parameters[8] = txt_city;
+        cmd.Parameters[9] = Convert.ToInt32(cbo_State);
+        cmd.Parameters[10] = txt_zip;
+        cmd.Parameters[11] = Convert.ToInt32(cbo_Country);
+        cmd.Parameters[12] = cbo_BodyWater;
+        cmd.Parameters[13] = txt_phone;
+        cmd.Parameters[14] = txt_fax;
+        cmd.Parameters[15] = cbo_multipleLocations;
+        cmd.Parameters[16] = cbo_accomodations;
+        cmd.Parameters[17] = cbo_captain;
+        //.Parameters(18)=txt_explain
+        cmd.Parameters[18] = 1;
+        //Session("UserID")
+        //.Parameters(20)=cbo_securityDeposit
+        cmd.Parameters[19] = txta_depositPolicy.Substring(0, 1000);
+        cmd.Parameters[20] = txta_facilityDirections.Substring(0, 1000);
+        cmd.Parameters[21] = txta_facilityArea.Substring(0, 1000);
+        cmd.Parameters[22] = txt_tax;
+        cmd.Parameters[23] = txt_email;
+        cmd.Parameters[24] = txt_start;
+        cmd.Parameters[25] = txt_end;
+        cmd.Execute();
+        txt_marinaID = cmd.Parameters[2].Value;
+        txt_UserID = 0;
+        cmd = new Command();
+        cmd.ActiveConnection = oConn;
+        cmd.CommandText = "SP_BR_USER_SAVE";
+        cmd.CommandType = adCmdStoredProc;
+        cmd.Parameters[1] = "N";
+        cmd.Parameters[2] = txt_marinaID;
+        cmd.Parameters[3] = txt_UserID;
+        cmd.Parameters[4] = txt_usser;
+        cmd.Parameters[5] = txt_pass;
+        cmd.Parameters[6] = 3;
+        //User level
+        cmd.Parameters[7] = Convert.ToInt32(Session["userID"]);
+        cmd.Execute();
+        //sends email
+        strBody = "<html>";
+        strBody = strBody + "<head>";
+        strBody = strBody + "<title>Welcome to BoatRenting.com!</title>";
+        //strBody = strBody +"<link href='http://69.18.177.23/client/br.css' rel='stylesheet' type='text/css'>"
+        strBody = strBody + "<style type='text/css'>";
+        strBody = strBody + "	#forgotten_password {";
+        strBody = strBody + "	width: 500px;";
+        strBody = strBody + "	margin-top: 20px;";
+        strBody = strBody + "	text-align: center;";
+        strBody = strBody + "	padding-bottom: 10px;";
+        strBody = strBody + "	margin-left: auto;";
+        strBody = strBody + "	margin-right: auto;";
+        strBody = strBody + "	border: 1px solid #CCCCCC;";
+        strBody = strBody + "	}";
+        strBody = strBody + "#forgotten_password_title {";
+        strBody = strBody + "	width: 100%;";
+        strBody = strBody + "	clear: none;";
+        strBody = strBody + "	background-color: #E9EDF1;";
+        strBody = strBody + "	padding-top: 10px;";
+        strBody = strBody + "	padding-bottom: 10px;";
+        strBody = strBody + "	text-indent: 10px;";
+        strBody = strBody + "	font-size: 10pt;";
+        strBody = strBody + "	font-weight: bold;";
+        strBody = strBody + "	color: #333;";
+        strBody = strBody + "	}";
+        strBody = strBody + "#forgotten_password_form {";
+        strBody = strBody + "	width: 100%;";
+        strBody = strBody + "	height: 20px;";
+        strBody = strBody + "	margin-top: 10px;";
+        strBody = strBody + "	margin-bottom: 20px;";
+        strBody = strBody + "	}";
+        strBody = strBody + "#forgotten_password a.button {";
+        strBody = strBody + "	width: 100px;";
+        strBody = strBody + "	text-decoration: none;";
+        strBody = strBody + "	color: white;";
+        strBody = strBody + "	display: block;";
+        strBody = strBody + "	background-color: #FF9933;";
+        strBody = strBody + "	padding-top: 1px;";
+        strBody = strBody + "	padding-bottom: 1px;";
+        strBody = strBody + "	padding-left: 10px;";
+        strBody = strBody + "	padding-right: 10px;";
+        strBody = strBody + "	font-weight: bold;";
+        strBody = strBody + "	text-align: center;";
+        strBody = strBody + "	margin: auto;";
+        strBody = strBody + "	margin-bottom: 10px;}";
+        strBody = strBody + "#forgotten_password a.button:hover {";
+        strBody = strBody + "	text-decoration: underline;";
+        strBody = strBody + "	}";
+        strBody = strBody + "#footer_details {";
+        strBody = strBody + "	padding-left: 8px;";
+        strBody = strBody + "	font-size: 7pt;";
+        strBody = strBody + "	color: white;";
+        strBody = strBody + "	height: 10px;";
+        strBody = strBody + "	line-height: 8px;";
+        strBody = strBody + "	}";
+        strBody = strBody + "#footer_details a{";
+        strBody = strBody + "	font-size: 8pt;";
+        strBody = strBody + "	color: #ccc;";
+        strBody = strBody + "	text-decoration: none;";
+        strBody = strBody + "	}";
+        strBody = strBody + "#footer_details a:hover {";
+        strBody = strBody + "	font-size: 8pt;";
+        strBody = strBody + "	color: white;";
+        strBody = strBody + "	font-weight: normal;";
+        strBody = strBody + "	}";
+        strBody = strBody + "</style>";
+        strBody = strBody + "</head>";
+        strBody = strBody + "<body>";
+        strBody = strBody + "<table cellpadding='0' cellspacing='0' border='0'>";
+        strBody = strBody + "<tr>";
+        strBody = strBody + "	<td width='550' height='78' valign='middle' align='left' bgcolor='#4D8DD5'><img src='http://www.boatrenting.com/images/banner.gif'></td>";
+        strBody = strBody + "</tr>";
+        strBody = strBody + "<tr>";
+        strBody = strBody + "	<td width='550' height='12' background='http://www.boatrenting.com/images/sub_menu_bg.gif'>&nbsp;</td>";
+        strBody = strBody + "</tr>";
+        strBody = strBody + "<tr>";
+        strBody = strBody + "	<td width='550' align='center'>";
+        strBody = strBody + "		<div id='forgotten_password'>";
+        strBody = strBody + "			<div id='forgotten_password_title'>New Facility Registration</div>";
+        strBody = strBody + "			<div style='padding-top: 30px; height: 30px; margin-bottom: 20px;'>There is a new Facility registered at the website:<br>";
+        strBody = strBody + "				<b>Contact Name</b>:&nbsp;" + txt_ContactName + "<br>";
+        strBody = strBody + "				<b>Business Name</b>:&nbsp;" + txt_BusinessName + "<br>";
+        strBody = strBody + "				<b>Marina Name</b>:&nbsp;" + txt_marinaName + "<br>";
+        strBody = strBody + "				<b>Address 1</b>:&nbsp;" + txt_addressLine1 + "<br>";
+        strBody = strBody + "				<b>Email</b>:&nbsp;" + txt_email + "<br>";
+        strBody = strBody + "				<b>Phone</b>:&nbsp;" + txt_phone + "</div>";
+        strBody = strBody + "			<div class='link'>";
+        strBody = strBody + "				In order to view the full information <a class='button' href='http://www.boatrenting.com/admin/login.aspx' style='width:200px'>Click here &raquo;</a>";
+        strBody = strBody + "			</div>";
+        strBody = strBody + "		</div>	";
+        strBody = strBody + "	</td>";
+        strBody = strBody + "</tr>";
+        strBody = strBody + "<tr>";
+        strBody = strBody + "	<td width='550' height='40' background='http://www.boatrenting.com/images/footer_bg.gif'>";
+        strBody = strBody + "		<div id='footer_details'>";
+        strBody = strBody + "			<br><br><br>BoatRenting.com &middot; 320 South Country Road &middot; Brookhaven/Bellport NY 11719 &middot; 631-286-7816 &middot; <a href='mailto:info@boatrenting.com'>info@boatrenting.com</a>";
+        strBody = strBody + "		</div>	";
+        strBody = strBody + "	</td>";
+        strBody = strBody + "</tr>";
+        strBody = strBody + "</table>";
+        strBody = strBody + "</body>";
+        strBody = strBody + "</html>";
+        oNewMail = new CDO.Message();
+        oNewMail.To = "Enngines@aol.com,info@boatrenting.com,ken@boatrenting.com";
+        oNewMail.From = "info@boatrenting.com";
+        oNewMail.Subject = "http://www.boatrenting.com - New Facility registration";
+        oNewMail.HTMLBody = strBody;
+        oNewMail.send;
+        oNewMail = null;
+    }
+%>
+
+<html>
+<head>
+<title>Welcome to BoatRenting.com!</title>
+<style type="text/css" media="screen">@import "br_admin.css";</style>
+<meta http-equiv="Content-type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Language" content="en-us" />
+<meta name="ROBOTS" content="ALL" />
+</head>
+
+<script language="javascript">
+function redirect()
+{
+//alert("The information was saved ");
+//document.frm.action="members.aspx";
+document.frm.action="facilities_successful.aspx";
+
+//history.go(-2);
+document.frm.submit();
+}
+
+function LogOut() {
+	document.frm_facilities_mant.action="logout.aspx";
+	document.frm_facilities_mant.submit();
+}
+
+</script>
+<body>
+<form name="frm" method="post">
+<input type="hidden" name="TxtContactName" value="<%= txt_ContactName %>">
+<script language="javascript"><%
+    if (Convert.ToString(rs2.Fields[0].Value) == "0")
+    {
+%>
+   redirect();
+<%
+    }
+%>
+</script>
+</form>
+
+<FORM name="frm_facilities_mant" method=POST>
+<input type="hidden" name="hdnPag" value="<%= nPag %>">
+<input type="hidden" name="hdn_Action" value="<%= hdn_Action %>">
+<input type="hidden" name="hdn_MarinaID" value="<%= txt_marinaID %>">
+<input type="hidden" name="cmb_boat">
+<input type="hidden" name="cmb_country">
+<input type="hidden" name="cmb_body">
+<input type="hidden" name="cmb_facility">
+<input type="hidden" name="cmb_state">
+	<div id="container">
+		<div id="banner"></div>
+		<div id="menu">
+			<ul>
+				<li id="current"><a href="default.aspx">Home</a></li>
+				<li><a href="javascript:QuickSearch(3)">Boating Clubs</a></li>
+				<li><a href="javascript:QuickSearch(12)">Cabin</a></li>
+				<li><a href="javascript:QuickSearch(8)">Charters</a></li>
+				<li><a href="javascript:QuickSearch(10)">Dinner</a></li>
+				<li><a href="javascript:QuickSearch(9)">Excursions</a></li>
+				<li><a href="javascript:QuickSearch(1)">Fishing</a></li>
+				<li><a href="javascript:QuickSearch(7)">Jet Ski</a></li>
+				<li><a href="javascript:QuickSearch(4)">Paddle</a></li>
+				<li><a href="javascript:QuickSearch(11)">Pontoon</a></li>
+				<li><a href="javascript:QuickSearch(2)">Sailing</a></li>
+				<li><a href="javascript:QuickSearch(6)">Speed</a></li>
+				<li><a href="javascript:QuickSearch(5)">Yachts</a></li>
+				<!--li><a href="javascript:QuickSearch(8)">Houseboat</a></li-->
+			</ul>
+		</div>
+		<div id="sub_menu">
+			<a href="default.aspx">Home</a>&nbsp;|&nbsp;<a href="rentwithus.aspx">Rent With Us</a>&nbsp;|&nbsp;<a href="contactus.aspx">Contact Us</a>&nbsp;|&nbsp;<a href="members.aspx">Members</a>
+		</div>
+			<div id="table_div">
+				<table id="facility_table" cellpadding="0" cellspacing="0">
+					<tr>
+						<th colspan="4"><br>
+<%
+    if (Convert.ToString(hdn_Action) == "N")
+    {
+%>
+							Edit Facility
+<%
+    }
+    else
+    {
+%>
+							New Facility
+<%
+    }
+%>
+						</th>
+					</tr>
+					<tr>
+						<td class="align_right" height="15"></td>
+						<td colspan="3"></td>
+					</tr>
+					<tr>
+						<td class="align_right"></td>
+
+          <td colspan="3">&nbsp;<font size="2">The User Name <b><%= Request.Form["txt_usser"] %></b>
+            is already registered in the system<br>
+            &nbsp;- Please, press <b>Go Back</b>, to register using a different
+            User Name.</font></td>
+					</tr>
+					<tr>
+					  <td class="align_top_right">&nbsp;</td>
+					  <td colspan="3" align="center"></td>
+				  </tr>
+				</table>
+				<a href="javascript:goBack()" class="button"> &laquo; Go back </a>
+	  </div>
+		<div id="footer">
+			<div id="footer_details">
+				BoatRenting.com &middot; 320 South Country Road &middot; Brookhaven/Bellport NY 11719 &middot; 631-286-7816 &middot; <a href="mailto:info@boatrenting.com">info@boatrenting.com</a>
+			</div>
+		</div>
+	</div>
+	</form>
+</body>
+<script language="JavaScript" type="text/javascript">
+function goBack(){
+	window.history.back();
+}
+
+function QuickSearch(x){
+	document.frm_facilities_mant.cmb_boat.value = x;
+	document.frm_facilities_mant.cmb_country.value = 0;
+	document.frm_facilities_mant.cmb_body.value = 0;
+	document.frm_facilities_mant.cmb_facility.value = 0;
+	document.frm_facilities_mant.cmb_state.value = 0;
+	document.frm_facilities_mant.action = "results.aspx";
+	document.frm_facilities_mant.submit();
+}
+</script>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/java_script">
+</script>
+<script type="text/java_script">
+_uacct = "UA-872206-1";
+urchinTracker();
+</script>
+
+</html>
+

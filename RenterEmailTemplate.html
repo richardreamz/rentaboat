@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <div style="width:599px; font-family:Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size:16px;">
+        <div style="background-color:#248992; padding:20px; "><a href="http://www.rentaboat.com/"><img src="http://www.rentaboat.com//img/logo.png" alt="Rent A Boat" /></a></div>
+
+        <br>
+
+        <h2 style="color:#248992">
+            Dear {RenterFullname}, </h2>
+            
+            <br /><br />
+
+
+            Thank you for choosing <a href="http://rentaboat.com" target="_blank">
+    RentABoat.com</a><br>
+        You can access and manage your information at <a href="">http://www.rentaboat.com</a>.
+        <br>
+        <strong>UserName: <span style="color:#248992">{Username}</span></strong><br>
+        <strong>Password Hint: <span style="color:#248992">{Password}</span></strong><br>
+        <br><br> You have requested to book the following boat.
+    Please note this is NOT a confirmed reservation, it is a booking request. 
+    You MUST contact the boat owner after receiving this email. This booking fee WILL be deducted from the total rental price by the boat owner. If for some reason the boat is not available, there will be no charge to your credit card, your booking fee will be refunded.
+    This booking fee is not a deposit. The boat owner will contact you to collect the remaining balance.
+    <br />
+    <br />
+
+        Thank you for renting with us<br>
+        <a href="http://www.rentaboat.com" target="_blank">RentABoat.com</a>
+        <br>
+        <a href="tel:631-286-7816" value="+16312867816" target="_blank">631-286-7816</a>
+        <br>
+        <a href="mailto:Info@rentaboat.com" target="_blank">Info@RentABoat.com</a>
+      
+    <br />
+    <br />
+
+    <table cellpadding="10" width="100%" border="1" cellspacing="0" style="border-color:#989595;">
+        <thead style="background-color:#248992;color:white">
+            <tr>
+            
+            
+                <th>Rent Details</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr style="border: 1px solid grey;">
+                <td valign="top" style="border: 1px solid grey;">
+                
+                    <b>Pick Up Date:</b>&nbsp; {RentalStartDate}<br />
+
+                    <br />
+
+
+                    <b>Drop Off Date:</b>&nbsp;{RentalEndDate}
+                    <br />
+                    <br />
+
+                    <b>Rental Price:</b>&nbsp;{TotalPrice}
+                    <br />
+                    <br />
+                    <b>Paid Now:</b>&nbsp;{RentalOnlineFee}
+                    <br />
+                    <br />
+                    <b>Due at Dock: </b>{DueAtDock} <span style="color:red">*Price does not include tax, security deposit, or reservation deposit. (Locate tax + deposits under "Boat Details" or on the boat owners listing page) </span>
+                    <br />
+                    <br />
+
+                     
+
+                   
+
+
+
+
+
+</td>
+            </tr>
+
+            <tr>
+                <th style="background-color:#248992;color:white" colspan="2">Owners Contact Information</th>
+            </tr>
+            <tr>
+                <td valign="top" colspan="2">
+                    <b>Contact  Name:</b>&nbsp;{OwnerName}<br /><br />
+
+               
+
+                    <b>Marina Name:</b>&nbsp;{MarinaName}<br /><br />
+
+                    <b> Boat Address:</b>&nbsp;{BoatAddress}<br /><br />
+                    <b>Owner Phone:</b>&nbsp;{OwnerPhone}<br /><br />
+
+                    <b>Email:</b>&nbsp;{OwnerEmail}
+                    <br /><br />
+                    <b> Website:</b>&nbsp;{OwnerWebsite}
+                    <br /><br />
+                    <b>Cancellation Policy:</b>&nbsp;{CancellationPolicy}
+                    <br /><br />
+                   
+
+                </td>
+             </tr>
+
+            <tr>
+                <th style="background-color:#248992;color:white" colspan="2">Boat Details</th>
+            </tr>
+            <tr>
+                <td>
+                    <b>Facility #:</b> {FacilityNumber}
+                    <br /><br />
+                    <b>Boat #:</b>  {BoatID}
+                    <br /><br />
+                    
+                    <b>Boat Name:</b>   {BoatName}
+                    <br /><br />
+                    <b>Year:</b>   {BoatYear}
+                    <br /><br />
+                    <b>Make:</b>   {BoatMake}
+                    <br /><br />
+                    <b>Model:</b>   {BoatModel}
+                    <br /><br />
+
+                    <b>Size:</b>    {BoatSize}
+                    <br /><br />
+
+                    <b>Passengers:</b>   {MaximumPassengers}
+                    <br /><br />
+
+                    <b>Description:</b>  {BoatDescription}
+                    <br /><br />
+
+                    <b>Requirements:</b>   {Requirement}
+                    <br /><br />
+
+                    <b>Tax Rate:</b>&nbsp;{TaxRate}   
+                    <br /><br />
+
+                    <b>Reservation Deposit:</b> {ReservationDeposit}  
+                    <br /><br />
+
+                    <b>Security Deposit:</b> {SecurityDeposit}
+                    <br /><br />
+
+                    <b>Location Address:</b> {MarinaAddress}
+                    <br /><br />
+
+                    
+                    <br />
+                    <br />
+
+                   
+                 
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+       
+
+
+</div>
+
+</body>
+</html>

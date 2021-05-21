@@ -1,0 +1,534 @@
+using nce.adosql;
+using Microsoft.VisualBasic;
+using System;
+using System.Collections;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Web;
+using System.Web.SessionState;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
+namespace BoatRenting {
+
+  public partial class advancesearchresult_aspx_cs : System.Web.UI.Page
+  {
+    public string con = "";
+    public Connection oConn = null;
+    //------Constantes----'
+    //---- DataTypeEnum Values ----'
+    public const int adEmpty = 0;
+    public const int adTinyInt = 16;
+    public const int adSmallInt = 2;
+    public const int adInteger = 3;
+    public const int adBigInt = 20;
+    public const int adUnsignedTinyInt = 17;
+    public const int adUnsignedSmallInt = 18;
+    public const int adUnsignedInt = 19;
+    public const int adUnsignedBigInt = 21;
+    public const int adSingle = 4;
+    public const int adDouble = 5;
+    public const int adCurrency = 6;
+    public const int adDecimal = 14;
+    public const int adNumeric = 131;
+    public const int adBoolean = 11;
+    public const int adError = 10;
+    public const int adUserDefined = 132;
+    public const int adVariant = 12;
+    public const int adIDispatch = 9;
+    public const int adIUnknown = 13;
+    public const int adGUID = 72;
+    public const int adDate = 7;
+    public const int adDBDate = 133;
+    public const int adDBTime = 134;
+    public const int adDBTimeStamp = 135;
+    public const int adBSTR = 8;
+    public const int adChar = 129;
+    public const int adVarChar = 200;
+    public const int adLongVarChar = 201;
+    public const int adWChar = 130;
+    public const int adVarWChar = 202;
+    public const int adLongVarWChar = 203;
+    public const int adBinary = 128;
+    public const int adVarBinary = 204;
+    public const int adLongVarBinary = 205;
+    public const int adChapter = 136;
+    public const int adFileTime = 64;
+    public const int adPropVariant = 138;
+    public const int adVarNumeric = 139;
+    public const int adArray = 0x2000;
+    //---- CommandTypeEnum Values ------------'
+    public const int adCmdStoredProc = 0x0004;
+    //---- ParameterDirectionEnum Values ----'
+    public const int adParamInput = 0x0001;
+    public const int adParamOutput = 0x0002;
+    public string sMes = "";
+    public string sCadena = "";
+    public string sCheck = "";
+    public object countryID = null;
+    public object facilityID = null;
+    public object boatID = null;
+    public object bodyID = null;
+    public string cityVAL = "";
+    public string zipVAL = "";
+    public string cmb_country = "";
+    public string cmb_body = "";
+    public string cmb_facility = "";
+    public string cmb_state = "";
+    public string cmb_boat = "";
+    public int chk_Is_boat_sale = 0;
+    public int IntRegistros = 0;
+    public int IntMostrados = 0;
+    public string sMenu = "";
+    public string c1 = "";
+    public string c2 = "";
+    public string c3 = "";
+    public string c4 = "";
+    public string c5 = "";
+    public string c6 = "";
+    public string c7 = "";
+    public string c8 = "";
+    public string c9 = "";
+    public string c10 = "";
+    public string c11 = "";
+    public string c12 = "";
+    public string c13 = "";
+    public string c14 = "";
+    public string c16 = "";
+    public string cHome = "";
+    public string flgID = "";
+    public int i = 0;
+    //'response.write("country " & request.Form("cmb_country") & "<BR>")
+    //'response.write("state  " & request.Form("cmb_state") & "<BR>")
+    //'response.write("zip code " &request.Form("txt_zip") & "<BR>")
+    //'response.write("cmb_body " &request.Form("cmb_body") & "<BR>")
+    //'response.write("cmb_facility" & request.Form("cmb_facility") & "<BR>")
+    //'response.write("cmb_boat" &request.Form("cmb_boat") & "<BR>")
+    //'response.write("cmb_state" &request.Form("cmb_state") & "<BR>")
+    //'response.write("city " & trim(request.Form("txt_city")) & "<BR>")
+    //'response.write("hdn_subboat" &NVL(request.Form("hdn_subboat"),0) & "<BR>")
+    //'response.write("within zip " & request.Form("cmb_zip") & "<BR>")
+    //'response.write("facility " & request.Form("cmb_facility") & "<BR>")
+    //'response.write("body of water " & request.Form("cmb_body") & "<BR>")
+    //'response.write("Category  " & request.Form("cbo_boattype") & "<BR>")
+    //'response.write("model " & request.Form("txt_model") & "<BR>")
+    //'response.write("year from " & request.Form("cmb_boat_year_from")  & "to " & request.Form("cmb_boat_year_to")   &  "<BR>")
+    //'response.write("within zip " & request.Form("cmb_zip") & "<BR>")
+    //'response.write("size from " & request.Form("txt_size_from") & "to " & request.Form("txt_size_to")   &  "<BR>")
+    //'response.write("price from " & request.Form("txt_price_from") & "to " & request.Form("txt_price_to")   &  "<BR>")
+    //'if (  request.Form("chk_Is_boat_sale") = "1") then
+    //response.write("Boat for sale " & request.Form("chk_Is_boat_sale") & "<BR>")
+    //'else
+    //'response.write("Boat for sale " & "0" & "<BR>")
+    //'end if
+    //'response.write("boat id " & request.Form("txt_boat_id") & "<BR>")
+    //'response.write("facility id " & request.Form("txt_facility_id") & "<BR>")
+    public Command cmd = null;
+    public Recordset rs = null;
+    public Recordset rs2 = null;
+    public Command cmd2 = null;
+    public string NVL(string InputValue, object NullReplaceValue) 
+    {
+        string NVL = "";
+        if (Convert.IsDBNull(InputValue) || InputValue == null)
+        {
+            NVL = Convert.ToString(NullReplaceValue);
+        }
+        else
+        {
+            if ((InputValue.Trim()).Length == 0)
+            {
+                NVL = Convert.ToString(NullReplaceValue);
+            }
+            else
+            {
+                NVL = InputValue;
+            }
+        }
+        return NVL;
+    }
+
+    public string ConvierteFecha(ref string sStartDate) 
+    {
+        string ConvierteFecha = "";
+        object sPaola = null;
+        if (Convert.IsDBNull(sStartDate))
+        {
+            ConvierteFecha = "";
+        }
+        else
+        {
+            if (sStartDate == "")
+            {
+                ConvierteFecha = "";
+            }
+            else
+            {
+                if (sStartDate.Length != 11)
+                {
+                    ConvierteFecha = "";
+                }
+                else
+                {
+                    sStartDate = sStartDate.ToUpper();
+                    sMes = sStartDate.Substring(4 - 1, 3);
+                    if (sMes == "JAN")
+                    {
+                        sMes = "01";
+                    }
+                    if (sMes == "FEB")
+                    {
+                        sMes = "02";
+                    }
+                    if (sMes == "MAR")
+                    {
+                        sMes = "03";
+                    }
+                    if (sMes == "APR")
+                    {
+                        sMes = "04";
+                    }
+                    if (sMes == "MAY")
+                    {
+                        sMes = "05";
+                    }
+                    if (sMes == "JUN")
+                    {
+                        sMes = "06";
+                    }
+                    if (sMes == "JUL")
+                    {
+                        sMes = "07";
+                    }
+                    if (sMes == "AUG")
+                    {
+                        sMes = "08";
+                    }
+                    if (sMes == "SEP")
+                    {
+                        sMes = "09";
+                    }
+                    if (sMes == "OCT")
+                    {
+                        sMes = "10";
+                    }
+                    if (sMes == "NOV")
+                    {
+                        sMes = "11";
+                    }
+                    if (sMes == "DEC")
+                    {
+                        sMes = "12";
+                    }
+                    ConvierteFecha = sStartDate.Substring(1 - 1, 2) + "/" + sMes + "/" + sStartDate.Substring(8 - 1, 4);
+                }
+            }
+        }
+        return ConvierteFecha;
+    }
+
+    public object Country() 
+    {
+        Recordset rs = null;
+        Command cmd = null;
+        cmd = new Command();
+        cmd.ActiveConnection = oConn;
+        cmd.CommandText = "SP_BR_COUNTRY_LIST";
+        rs = cmd.Execute();
+        Response.Write("	<select name=\"cmb_country\" class=\"water\" tabindex=\"1\" onchange=\"javascript:LoadStates()\">\r\n");
+        Response.Write("	<option value=\"0\">- All Countries -</option>\r\n");
+        while(!(rs.Eof))
+        {
+            Response.Write("	         <option value=\"");
+            Response.Write(rs.Fields["in_countryID"].Value);
+            Response.Write("\" >");
+            Response.Write(rs.Fields["vc_name"].Value);
+            Response.Write("</option>\r\n");
+            rs.MoveNext();
+        }
+        Response.Write("  	</select>\r\n");
+        Response.Write("	<script> document.frm_search.cmb_country.selectedIndex = ");
+        Response.Write(cmb_country);
+        Response.Write(" </script>\r\n");
+        return null;
+    }
+
+    public object States() 
+    {
+        Recordset rs = null;
+        Command cmd = null;
+        cmd = new Command();
+        cmd.ActiveConnection = oConn;
+        cmd.CommandText = "SP_BR_STATE_LIST";
+        cmd.CommandType = adCmdStoredProc;
+        cmd.Parameters.Refresh();
+        cmd.Parameters["@CountryID"].Value = Convert.ToInt32(cmb_country);
+        rs = cmd.Execute();
+        Response.Write("	<select name=\"cmb_state\" class=\"state1\" tabindex=\"6\" style=\"width:113px\" >\r\n");
+        Response.Write("	<option value=\"0\">* State Required -</option>\r\n");
+        while(!(rs.Eof))
+        {
+            if (Convert.ToInt32(NVL(Convert.ToString(rs.Fields["in_stateID"].Value), 0)) == Convert.ToInt32(NVL(Request.Form["cmb_state"], 0)))
+            {
+                sCadena = "selected";
+            }
+            else
+            {
+                sCadena = "";
+            }
+            Response.Write("	\r\n");
+            Response.Write("	\r\n");
+            Response.Write("	         <option value=\"");
+            Response.Write(rs.Fields["in_stateID"].Value);
+            Response.Write("\"  ");
+            Response.Write(sCadena);
+            Response.Write("  >");
+            Response.Write(rs.Fields["vc_name"].Value);
+            Response.Write("</option>\r\n");
+            rs.MoveNext();
+        }
+        Response.Write("  	</select>\r\n");
+        return null;
+    }
+
+    public object Facility() 
+    {
+        Recordset rs = null;
+        Command cmd = null;
+        cmd = new Command();
+        cmd.ActiveConnection = oConn;
+        cmd.CommandText = "SP_BR_MARINA_LIST";
+        rs = cmd.Execute();
+        Response.Write("	<select name=\"cmb_facility\" class=\"water\" tabindex=\"4\" >\r\n");
+        Response.Write("	<option value=\"0\">- Optional -</option>\r\n");
+        while(!(rs.Eof))
+        {
+            if (Convert.ToInt32(NVL(Convert.ToString(rs.Fields["in_marinaID"].Value), 0)) == Convert.ToInt32(NVL(Request.Form["cmb_facility"], 0)))
+            {
+                sCadena = "selected";
+            }
+            else
+            {
+                sCadena = "";
+            }
+            Response.Write("	         <option value=\"");
+            Response.Write(rs.Fields["in_marinaID"].Value);
+            Response.Write("\"  ");
+            Response.Write(sCadena);
+            Response.Write("  >");
+            Response.Write(rs.Fields["vc_businessName"].Value);
+            Response.Write("</option>\r\n");
+            rs.MoveNext();
+        }
+        Response.Write("  	</select>\r\n");
+        Response.Write("<!--	<script> document.frm_search.cmb_facility.selectedIndex = ");
+        Response.Write(facilityID);
+        Response.Write(" </script>\r\n");
+        Response.Write("-->\r\n");
+        return null;
+    }
+
+    public object BoatType() 
+    {
+        Recordset rs = null;
+        Command cmd = null;
+        cmd = new Command();
+        cmd.ActiveConnection = oConn;
+        cmd.CommandText = "SP_BR_BOATTYPE_LIST";
+        rs = cmd.Execute();
+        Response.Write("	<select name=\"cmb_boat\" class=\"water\" tabindex=\"5\">\r\n");
+        Response.Write("	<option value=\"0\">- Any Boat Types -</option>\r\n");
+        while(!(rs.Eof))
+        {
+            Response.Write("	         <option value=\"");
+            Response.Write(rs.Fields["in_boatTypeID"].Value);
+            Response.Write("\">");
+            Response.Write(rs.Fields["vc_description"].Value);
+            Response.Write("</option>\r\n");
+            rs.MoveNext();
+        }
+        Response.Write("  	</select>\r\n");
+        Response.Write("	<script> document.frm_search.cmb_boat.selectedIndex = ");
+        Response.Write(boatID);
+        Response.Write(" </script>\r\n");
+        return null;
+    }
+
+    public object MainCategory() 
+    {
+        Recordset rs = null;
+        Command cmd = null;
+        cmd = new Command();
+        cmd.ActiveConnection = oConn;
+        cmd.CommandText = "SP_BR_BOATTYPE_LIST";
+        rs = cmd.Execute();
+        Response.Write("	<select name=\"cbo_BoatType\" class=\"boat_type\"  tabindex=\"5\"   >\r\n");
+        Response.Write("	<option value=\"0\">Any</option>\r\n");
+        while(!(rs.Eof))
+        {
+            if (Convert.ToInt32(rs.Fields["in_BoatTypeID"].Value) == Convert.ToInt32(Request.Form["cbo_BoatType"]))
+            {
+                sCadena = "selected";
+            }
+            else
+            {
+                sCadena = "";
+            }
+            Response.Write("	         <option value=\"");
+            Response.Write(rs.Fields["in_BoatTypeID"].Value);
+            Response.Write("\" ");
+            Response.Write(sCadena);
+            Response.Write(" >");
+            Response.Write(rs.Fields["vc_Description"].Value);
+            Response.Write("</option>\r\n");
+            rs.MoveNext();
+        }
+        Response.Write("  	</select>\r\n");
+        return null;
+    }
+
+    public object BoatMake() 
+    {
+        Recordset rs = null;
+        Command cmd = null;
+        cmd = new Command();
+        cmd.ActiveConnection = oConn;
+        cmd.CommandText = "SP_BR_BOAT_MAKE";
+        cmd.CommandType = adCmdStoredProc;
+        //cmd.Parameters["@in_marinaID"] = 0;
+        cmd.Parameters.Append(cmd.CreateParameter("@in_marinaID", adInteger, adParamInput, 4, 0));
+        cmd.Parameters["@in_marinaID"].Value = Convert.ToInt32(NVL(Request.Form["in_marinaID"], 0));
+        rs = cmd.Execute();
+        Response.Write("	<select name=\"cmb_boat_make\" class=\"water\" tabindex=\"5\">\r\n");
+        Response.Write("	<option value=\"0\">- [Select] -</option>\r\n");
+        while(!(rs.Eof))
+        {
+            if (Convert.ToString(rs.Fields["vc_make"].Value) == Request.Form["cmb_boat_make"])
+            {
+                sCheck = "selected";
+            }
+            else
+            {
+                sCheck = "";
+            }
+            Response.Write(" \r\n");
+            Response.Write("	\r\n");
+            Response.Write("	\r\n");
+            Response.Write("	\r\n");
+            Response.Write("	\r\n");
+            Response.Write("	         <option value=\"");
+            Response.Write(rs.Fields["vc_make"].Value);
+            Response.Write("\" ");
+            Response.Write(sCheck);
+            Response.Write(" >");
+            Response.Write(rs.Fields["vc_make"].Value);
+            Response.Write("</option>\r\n");
+            rs.MoveNext();
+        }
+        Response.Write("  	</select>\r\n");
+        Response.Write("	\r\n");
+        return null;
+    }
+
+    public object FillFromYear() 
+    {
+        int vc_from_year = 0;
+        int current_year = 0;
+        Response.Write("	<select name=\"cmb_boat_year_from\" class=\"water\" style=\"width:70px\">\r\n");
+        Response.Write("	<option value=\"0\">- [Optional] -</option>\r\n");
+        current_year = Convert.ToInt32(DateAndTime.DatePart("yyyy", DateTime.Now, Microsoft.VisualBasic.FirstDayOfWeek.Sunday, (Microsoft.VisualBasic.FirstWeekOfYear)1));
+        for(vc_from_year = 1980; vc_from_year <= current_year; vc_from_year += 1)
+        {
+            if (vc_from_year == Convert.ToInt32(Request.Form["cmb_boat_year_from"]))
+            {
+                sCheck = "selected";
+            }
+            else
+            {
+                sCheck = "";
+            }
+            Response.Write(" \r\n");
+            Response.Write("	\r\n");
+            Response.Write("	         <option value=\"");
+            Response.Write(vc_from_year);
+            Response.Write("\" ");
+            Response.Write(sCheck);
+            Response.Write("  >");
+            Response.Write(vc_from_year);
+            Response.Write("</option>\r\n");
+        }
+        Response.Write("  	</select>\r\n");
+        Response.Write("	\r\n");
+        return null;
+    }
+
+    public object FillToYear() 
+    {
+        int vc_to_year = 0;
+        int current_year = 0;
+        Response.Write("	<select name=\"cmb_boat_year_to\" class=\"water\" tabindex=\"5\" style=\"width:70px\">\r\n");
+        Response.Write("	<option value=\"0\">- [Optional] -</option>\r\n");
+        current_year = Convert.ToInt32(DateAndTime.DatePart("yyyy", DateTime.Now, Microsoft.VisualBasic.FirstDayOfWeek.Sunday, (Microsoft.VisualBasic.FirstWeekOfYear)1));
+        for(vc_to_year = 1980; vc_to_year <= current_year; vc_to_year += 1)
+        {
+            if (vc_to_year == Convert.ToInt32(Request.Form["cmb_boat_year_To"]))
+            {
+                sCheck = "selected";
+            }
+            else
+            {
+                sCheck = "";
+            }
+            Response.Write("	        \r\n");
+            Response.Write("	        \r\n");
+            Response.Write("	         <option value=\"");
+            Response.Write(vc_to_year);
+            Response.Write("\" ");
+            Response.Write(sCheck);
+            Response.Write(" >");
+            Response.Write(vc_to_year);
+            Response.Write("</option>\r\n");
+        }
+        Response.Write("  	</select>\r\n");
+        Response.Write("	\r\n");
+        return null;
+    }
+
+    public object BodyWater() 
+    {
+        Recordset rs = null;
+        Command cmd = null;
+        cmd = new Command();
+        cmd.ActiveConnection = oConn;
+        cmd.CommandText = "SP_BR_BODYWATER_LIST";
+        rs = cmd.Execute();
+        Response.Write("	<select name=\"cmb_body\" class=\"water\" tabindex=\"3\" onchange=\"javascript:ClearFileds(2)\">\r\n");
+        Response.Write("	<option value=\"0\">- Any Body of Water -</option>\r\n");
+        while(!(rs.Eof))
+        {
+            if (Convert.ToString(rs.Fields["vc_bodywater"].Value) == Request.Form["cmb_body"])
+            {
+                sCadena = "selected";
+            }
+            else
+            {
+                sCadena = "";
+            }
+            Response.Write("	         <option value=\"");
+            Response.Write(rs.Fields["vc_bodywater"].Value);
+            Response.Write("\" ");
+            Response.Write(sCadena);
+            Response.Write(">");
+            Response.Write(rs.Fields["vc_bodywater"].Value);
+            Response.Write("</option>\r\n");
+            rs.MoveNext();
+        }
+        Response.Write("  	</select>\r\n");
+        return null;
+    }
+
+
+  }
+
+} 

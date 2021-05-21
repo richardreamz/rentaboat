@@ -1,0 +1,421 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40"><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<head>
+<title>Welcome to BoatRenting.com!</title>
+<style type="text/css" media="screen">@import "br_admin.css";</style>
+<meta http-equiv="Content-type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Language" content="en-us" />
+<meta name="ROBOTS" content="ALL" />
+<link rel="File-List" href="displaycalendar_files/filelist.xml">
+</head>
+<script language="javascript">
+function SomeMonth() {
+document.frmGTS.hdnMonth.value=document.frmGTS.cboMonth.value;
+ 	document.frmGTS.action="calendar.asp";
+ 	document.frmGTS.submit();
+}
+function SomeYear() {
+document.frmGTS.hdnYear.value=document.frmGTS.cboYear.value;
+ 	document.frmGTS.action="calendar.asp";
+ 	document.frmGTS.submit();
+}
+function Back2() {
+   if (eval(document.frmGTS.hdnMonth.value)==1 )
+{	document.frmGTS.hdnMonth.value=12;
+	document.frmGTS.hdnYear.value=eval(document.frmGTS.hdnYear.value)-1;
+}
+else
+{
+document.frmGTS.hdnMonth.value=eval(document.frmGTS.hdnMonth.value)-1;
+}
+ 	document.frmGTS.action="calendar.asp";
+ 	document.frmGTS.submit();
+}
+function Next2() {
+	if (eval(document.frmGTS.hdnMonth.value)==12 )
+{	document.frmGTS.hdnMonth.value=1;
+	document.frmGTS.hdnYear.value=eval(document.frmGTS.hdnYear.value)+1;
+}
+else
+{
+document.frmGTS.hdnMonth.value=eval(document.frmGTS.hdnMonth.value)+1;
+}
+ 	document.frmGTS.action="calendar.asp";
+ 	document.frmGTS.submit();
+}
+function LogOut() {
+ 	document.frmGTS.action="logout.asp";
+ 	document.frmGTS.submit();
+}
+function Edit(BoatID) {
+ 	document.frmGTS.action="boats_mant.asp?BoatID=" + BoatID ;
+ 	document.frmGTS.submit();
+}
+function Recall() {
+ 	document.frmGTS.action="calendar.asp";
+ 	document.frmGTS.submit();
+}
+</script>
+<!--[if !mso]>
+<style>
+v\:*         { behavior: url(#default#VML) }
+o\:*         { behavior: url(#default#VML) }
+.shape       { behavior: url(#default#VML) }
+</style>
+<![endif]--><!--[if gte mso 9]>
+<xml><o:shapedefaults v:ext="edit" spidmax="1027"/>
+</xml><![endif]-->
+
+
+<body>
+
+<FORM style="border: 1px dotted red; padding: 2px"  name=frmGTS method=post><INPUT type=hidden value=1 name=hdnPag> <INPUT type=hidden value=7 name=hdnMonth> <INPUT type=hidden value=2007 name=hdnYear> <INPUT type=hidden value=E name=hdn_Action> 
+<DIV id=container>
+<a href="http://www.boatrenting.com/client/default.asp"><DIV id=banner></DIV><!--div id="admin_menu">
+		<span class="floatright"><a href="javascript:LogOut();">Log Out</a></span>
+		<a href="boats_list.ASP">Boat</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="calendar.ASP">Calendar</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="boats_list_reservation.ASP">New Reservation</a>
+	</div-->
+<DIV id=menu>
+<UL>
+<LI>Facility Edit</LI>
+<LI><a href="adduser.htm">Add User</a></LI>
+<LI><a href="boatlist.htm">Boat List</a></LI>
+<LI id=current><A href="http://0185eff.netsolhost.com/calendar.ASP">Calendar</A></LI>
+<LI>New Reservation</LI>
+<LI>Reports</LI>
+<LI> <a href="http://www.boatrenting.com/client/default.asp"> Log Out</a></LI></UL></DIV>
+<DIV id=sub_menu>
+<H1 style="FONT-SIZE: 8pt">Facility Calendar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <B><FONT face="Verdana, Arial, Helvetica, sans-serif" size=2>Welcome Boat Rentals Marina</FONT></B> </H1></DIV>
+<DIV id=cal_menu_div>
+<TABLE id=cal_menu>
+<TBODY>
+<TR>
+<TD align=left>
+<DIV style="COLOR: blue">Blue Hourly </DIV>
+<DIV style="COLOR: red">Red 1/2 Day AM </DIV>
+<DIV style="COLOR: green">Green 1/2 Day PM </DIV>
+<DIV style="COLOR: black">Black Full Day </DIV></TD><!--td >	
+				</td-->
+<TD align=middle colSpan=4><FONT size=+1>Facility Calendar</FONT> <!--/td>
+				<td class="cal_year_td">
+				</td>
+				<td class="cal_next_button_td"--></TD>
+<TD>
+<H1>Calendar View</H1></TD></TR>
+<TR><!--
+			<td align="left">
+				<font size="2"  face="Verdana, Arial, Helvetica, sans-serif">To see days rental list<br>press the date in upper left corner</font></td>
+			
+			-->
+<TD></TD>
+<TD class=cal_next_button_td>&nbsp;&lt;&nbsp;</TD>
+<TD class=cal_month_td>&nbsp;</TD>
+<TD class=cal_year_td>&nbsp;</TD>
+<TD class=cal_next_button_td>&nbsp;&gt;&nbsp;</TD>
+<TD class=cal_boat_select_td>
+<H1><INPUT onclick=javascript:Recall(); type=radio value=1 name=rdCalView> View Available Boats</H1>
+<H1><INPUT onclick=javascript:Recall(); type=radio value=2 name=rdCalView> View Reserved Boats</H1>
+<p><!--[if gte vml 1]><v:shapetype id="_x0000_t120"
+ coordsize="21600,21600" o:spt="120" path="m10800,qx,10800,10800,21600,21600,10800,10800,xe">
+ <v:path gradientshapeok="t" o:connecttype="custom" o:connectlocs="10800,0;3163,3163;0,10800;3163,18437;10800,21600;18437,18437;21600,10800;18437,3163"
+  textboxrect="3163,3163,18437,18437"/>
+</v:shapetype><v:shape id="_x0000_s1029" type="#_x0000_t120" style='position:absolute;
+ left:367.5pt;top:227.25pt;width:7.5pt;height:9pt;z-index:1'/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:absolute;z-index:1;left:489px;top:302px;
+width:12px;height:14px'><img width=12 height=14
+src="displaycalendar_files/image001.gif" v:shapes="_x0000_s1029"></span><![endif]><font size="4" color="#336699"><b>&nbsp; 
+Spread Sheet View</b></font></p>
+<p>&nbsp;</TD></TR></TBODY></TABLE></DIV>
+<DIV id=table_div>
+<TABLE id=calendar cellSpacing=0 cellPadding=0>
+<TBODY>
+<TR>
+<TH>Sunday</TH>
+<TH>Monday</TH>
+<TH>Tuesday</TH>
+<TH>Wednesday</TH>
+<TH>Thursday</TH>
+<TH>Friday</TH>
+<TH>Saturday</TH></TR>
+<TR>
+<TD>
+<P class=calday>1 </P>&nbsp;&nbsp; 
+<P>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=1&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/1/2007&amp;txtTo=7/1/2007&amp;BoatID=0"></A></P></TD>
+<TD>
+<P class=calday><A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=2&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/2/2007&amp;txtTo=7/2/2007&amp;BoatID=0">2</A> </P>&nbsp;&nbsp; 
+<P><A style="COLOR: black" href="http://0185eff.netsolhost.com/log_calendar.asp?dd=2&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/2/2007&amp;txtTo=7/2/2007&amp;BoatID=24">04 21' 200 </A>&nbsp;&nbsp; <A style="COLOR: black" href="http://0185eff.netsolhost.com/log_calendar.asp?dd=2&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/2/2007&amp;txtTo=7/2/2007&amp;BoatID=356">06 26' Walkaround </A>&nbsp;&nbsp; <A style="COLOR: black" href="http://0185eff.netsolhost.com/log_calendar.asp?dd=2&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/2/2007&amp;txtTo=7/2/2007&amp;BoatID=359">01 19 Bowrider </A>&nbsp;&nbsp;
+<a href="dailycustomerlist.htm"></a></P></TD>
+<TD>
+<P class=calday><A href="http://0185eff.netsolhost.com/#">3</A> </P>&nbsp;&nbsp; 
+<P>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <a href="dailycustomerlist.htm"></a></P></TD>
+<TD>
+<P class=calday>4 </P>&nbsp;&nbsp; 
+<P><a style="COLOR: black" href="dailycustomerlist.htm">05 Deck </a>&nbsp;&nbsp;&nbsp;
+<a style="COLOR: black" href="dailycustomerlist.htm">05 Deck </a>&nbsp;&nbsp; 01 19 Bowrider &nbsp;&nbsp;
+<a href="dailycustomerlist.htm"></a></P></TD>
+<TD>
+<P class=calday>5 </P>&nbsp;&nbsp; 
+<P>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <a href="dailycustomerlist.htm"></a></P></TD>
+<TD>
+<P class=calday>6 </P>&nbsp;&nbsp; 
+<P>05 Deck &nbsp;&nbsp; 06 26' Walkaround &nbsp;&nbsp; &nbsp;&nbsp;
+<a href="dailycustomerlist.htm"></a></P></TD>
+<TD>
+<P class=calday>7 </P>&nbsp;&nbsp; 
+<P>05 Deck &nbsp;&nbsp; 06 26' Walkaround &nbsp;&nbsp; &nbsp;&nbsp;
+<a href="dailycustomerlist.htm"></a></P></TD><!--td class="sat_sun_td"><p class="calday"><a href="#">4</a></p></td--></TR>
+<TR><!--
+					<td class="sat_sun_td">
+					-->
+<TD>
+<P class=calday><a href="dailycustomerlist.htm">8</a> </P>&nbsp;&nbsp; 
+<P><a style="COLOR: black" href="dailycustomerlist.htm">05 Deck </a>&nbsp;&nbsp;
+<a style="COLOR: black" href="dailycustomerlist.htm">06 26' Walkaround </a>&nbsp;&nbsp; <A style="COLOR: black" href="http://0185eff.netsolhost.com/log_calendar.asp?dd=8&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/8/2007&amp;txtTo=7/8/2007&amp;BoatID=359">01 19 Bowrider </A>&nbsp;&nbsp;
+<a href="dailycustomerlist.htm"></a></P></TD>
+<TD>
+<P class=calday>9 </P>&nbsp;&nbsp; 
+<P>04 21' 200 &nbsp;&nbsp; 05 Deck &nbsp;&nbsp; 06 26' Walkaround &nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=9&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/9/2007&amp;txtTo=7/9/2007&amp;BoatID=0">... </A></P></TD>
+<TD>
+<P class=calday>10 </P>&nbsp;&nbsp; 
+<P>01 19 Bowrider &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=10&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/10/2007&amp;txtTo=7/10/2007&amp;BoatID=0"></A></P></TD>
+<TD>
+<P class=calday>11 </P>&nbsp;&nbsp; 
+<P>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=11&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/11/2007&amp;txtTo=7/11/2007&amp;BoatID=0"></A></P></TD>
+<TD>
+<P class=calday>12 </P><!--[if gte vml 1]><v:shapetype
+ id="_x0000_t62" coordsize="21600,21600" o:spt="62" adj="1350,25920" path="m3600,qx,3600l0@8@12@24,0@9,,18000qy3600,21600l@6,21600@15@27@7,21600,18000,21600qx21600,18000l21600@9@18@30,21600@8,21600,3600qy18000,l@7,0@21@33@6,xe">
+ <v:stroke joinstyle="miter"/>
+ <v:formulas>
+  <v:f eqn="sum 10800 0 #0"/>
+  <v:f eqn="sum 10800 0 #1"/>
+  <v:f eqn="sum #0 0 #1"/>
+  <v:f eqn="sum @0 @1 0"/>
+  <v:f eqn="sum 21600 0 #0"/>
+  <v:f eqn="sum 21600 0 #1"/>
+  <v:f eqn="if @0 3600 12600"/>
+  <v:f eqn="if @0 9000 18000"/>
+  <v:f eqn="if @1 3600 12600"/>
+  <v:f eqn="if @1 9000 18000"/>
+  <v:f eqn="if @2 0 #0"/>
+  <v:f eqn="if @3 @10 0"/>
+  <v:f eqn="if #0 0 @11"/>
+  <v:f eqn="if @2 @6 #0"/>
+  <v:f eqn="if @3 @6 @13"/>
+  <v:f eqn="if @5 @6 @14"/>
+  <v:f eqn="if @2 #0 21600"/>
+  <v:f eqn="if @3 21600 @16"/>
+  <v:f eqn="if @4 21600 @17"/>
+  <v:f eqn="if @2 #0 @6"/>
+  <v:f eqn="if @3 @19 @6"/>
+  <v:f eqn="if #1 @6 @20"/>
+  <v:f eqn="if @2 @8 #1"/>
+  <v:f eqn="if @3 @22 @8"/>
+  <v:f eqn="if #0 @8 @23"/>
+  <v:f eqn="if @2 21600 #1"/>
+  <v:f eqn="if @3 21600 @25"/>
+  <v:f eqn="if @5 21600 @26"/>
+  <v:f eqn="if @2 #1 @8"/>
+  <v:f eqn="if @3 @8 @28"/>
+  <v:f eqn="if @4 @8 @29"/>
+  <v:f eqn="if @2 #1 0"/>
+  <v:f eqn="if @3 @31 0"/>
+  <v:f eqn="if #1 0 @32"/>
+  <v:f eqn="val #0"/>
+  <v:f eqn="val #1"/>
+ </v:formulas>
+ <v:path o:connecttype="custom" o:connectlocs="10800,0;0,10800;10800,21600;21600,10800;@34,@35"
+  textboxrect="791,791,20809,20809"/>
+ <v:handles>
+  <v:h position="#0,#1"/>
+ </v:handles>
+</v:shapetype><v:shape id="_x0000_s1027" type="#_x0000_t62" style='position:absolute;
+ left:37.5pt;top:356.25pt;width:211.5pt;height:133.5pt;z-index:1' adj="22060,-5461">
+ <v:textbox>
+<table cellspacing="0" cellpadding="0" width="249" height="100%">
+  <tr>
+    <td align="center" style="background-color: #FFFFFF" width="242">
+    <font face="Arial" size="4">Click on the date to pull up that days rental 
+    list;</font><ol>
+      <li>
+      <p align="left"><font face="Arial" size="4">Customer info</font></li>
+      <li>
+      <p align="left"><font face="Arial" size="4">Boat info</font></li>
+      <li>
+      <p align="left"><font face="Arial" size="4">Rental period</font></li>
+    </ol>
+    </td>
+  </tr>
+</table>
+ </v:textbox>
+</v:shape><![endif]--><![if !vml]><span style='mso-ignore:vglayout;position:
+absolute;z-index:1;left:49px;top:428px;width:296px;height:230px'><img
+width=296 height=230 src="displaycalendar_files/image002.gif"
+alt="Rounded Rectangular Callout: Click on the date to pull up that days rental list;&#13;&#10;Customer info&#13;&#10;Boat info&#13;&#10;Rental period&#13;&#10;"
+v:shapes="_x0000_s1027"></span><![endif]>&nbsp;&nbsp; 
+<P>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=12&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/12/2007&amp;txtTo=7/12/2007&amp;BoatID=0"></A></P></TD>
+<TD>
+<P class=calday>13 </P>&nbsp;&nbsp; 
+<P>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=13&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/13/2007&amp;txtTo=7/13/2007&amp;BoatID=0"></A></P></TD><!--
+					<td class="sat_sun_td">
+					-->
+<TD>
+<P class=calday>14 </P>&nbsp;&nbsp; 
+<P>05 Deck &nbsp;&nbsp;
+<a style="COLOR: black" href="http://0185eff.netsolhost.com/log_calendar.asp?dd=14&mm=7&aaaa=2007&txtFrom=7/14/2007&txtTo=7/14/2007&BoatID=356">06 26' Walkaround
+</a>&nbsp;&nbsp; &nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=14&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/14/2007&amp;txtTo=7/14/2007&amp;BoatID=0"></A></P></TD><!--td class="sat_sun_td"><p class="calday"><a href="#">4</a></p></td--></TR>
+<TR><!--
+					<td class="sat_sun_td">
+					-->
+<TD>
+<P class=calday>15 </P>&nbsp;&nbsp; 
+<P><A style="COLOR: black" href="http://0185eff.netsolhost.com/log_calendar.asp?dd=15&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/15/2007&amp;txtTo=7/15/2007&amp;BoatID=359">01 19 Bowrider </A>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=15&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/15/2007&amp;txtTo=7/15/2007&amp;BoatID=0"></A></P></TD>
+<TD>
+<P class=calday><a href="dailycustomerlist.htm">16</a> </P>&nbsp;&nbsp; 
+<P><a style="COLOR: black" href="dailycustomerlist.htm">04 21' 200 </a>&nbsp;&nbsp;
+<a style="COLOR: black" href="dailycustomerlist.htm">05 Deck </a>&nbsp;&nbsp;
+<a style="COLOR: black" href="dailycustomerlist.htm">06 26' Walkaround </a>&nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=16&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/16/2007&amp;txtTo=7/16/2007&amp;BoatID=0">... </A></P></TD>
+<TD>
+<P class=calday><a href="dailycustomerlist.htm">17</a> </P>&nbsp;&nbsp; 
+<P>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <a href="dailycustomerlist.htm"></a></P></TD>
+<TD>
+<P class=calday><a href="dailycustomerlist.htm">18</a> </P>&nbsp;&nbsp; 
+<P><!--[if gte vml 1]><v:shape id="_x0000_s1026"
+ type="#_x0000_t62" style='position:absolute;left:330pt;top:498.75pt;width:225.75pt;
+ height:133.5pt;z-index:1' adj="-1435,-6796">
+ <v:textbox>
+<table cellspacing="0" cellpadding="0" width="100%" height="100%">
+  <tr>
+    <td align="center" style="background-color: #FFFFFF">
+    <font face="Arial" size="4">Click on the boat to pull up that boats detailed 
+    rental&nbsp; info;</font><ol>
+      <li>
+      <p align="left"><font face="Arial" size="4">Customer info</font></li>
+      <li>
+      <p align="left"><font face="Arial" size="4">Boat info</font></li>
+      <li>
+      <p align="left"><font face="Arial" size="4">Rental period</font></li>
+    </ol>
+    </td>
+  </tr>
+</table>
+ </v:textbox>
+</v:shape><![endif]--><![if !vml]><span style='mso-ignore:vglayout;position:
+absolute;z-index:1;left:416px;top:606px;width:330px;height:242px'><img
+width=330 height=242 src="displaycalendar_files/image003.gif"
+alt="Rounded Rectangular Callout: Click on the boat to pull up that boats detailed rental&nbsp; info;&#13;&#10;Customer info&#13;&#10;Boat info&#13;&#10;Rental period&#13;&#10;"
+v:shapes="_x0000_s1026"></span><![endif]><!--[if gte vml 1]><v:shape id="_x0000_s1030"
+ type="#_x0000_t62" style='position:absolute;left:138.75pt;top:682.5pt;width:225.75pt;
+ height:51.75pt;z-index:1' adj="26264,30991">
+ <v:textbox>
+<table cellspacing="0" cellpadding="0" width="100%" height="100%">
+  <tr>
+    <td align="center" style="background-color: #FFFFFF">
+    <font face="Arial" size="4">Choose to see all of you boat or individually.
+    </font></td>
+  </tr>
+</table>
+ </v:textbox>
+</v:shape><![endif]--><![if !vml]><span style='mso-ignore:vglayout;position:
+absolute;z-index:1;left:184px;top:909px;width:372px;height:107px'><img
+width=372 height=107 src="displaycalendar_files/image004.gif"
+alt="Rounded Rectangular Callout: Choose to see all of you boat or individually. &#13;&#10;"
+v:shapes="_x0000_s1030"></span><![endif]><!--[if gte vml 1]><v:shape id="_x0000_s1028"
+ type="#_x0000_t62" style='position:absolute;left:155.25pt;top:78pt;width:210pt;
+ height:70.5pt;z-index:1' adj="20597,36077">
+ <v:textbox>
+<table cellspacing="0" cellpadding="0" width="100%" height="100%">
+  <tr>
+    <td align="center" style="background-color: #FFFFFF">
+    <p align="left"><font face="Arial" size="4">Change page View from Wall 
+    Calendar to Spread Sheet View.</font></td>
+  </tr>
+</table>
+ </v:textbox>
+</v:shape><![endif]--><![if !vml]><span style='mso-ignore:vglayout;position:
+absolute;z-index:1;left:206px;top:103px;width:286px;height:164px'><img
+width=286 height=164 src="displaycalendar_files/image005.gif"
+alt="Rounded Rectangular Callout: Change page View from Wall Calendar to Spread Sheet View.&#13;&#10;"
+v:shapes="_x0000_s1028"></span><![endif]><a style="COLOR: black" href="dailycustomerlist.htm">06 26' Walkaround
+</a>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <a href="dailycustomerlist.htm"></a></P></TD>
+<TD>
+<P class=calday><a href="dailycustomerlist.htm">19</a> </P>&nbsp;&nbsp; 
+<P><a style="COLOR: black" href="dailycustomerlist.htm">05 Deck </a>&nbsp;&nbsp;
+<a style="COLOR: black" href="dailycustomerlist.htm">06 26' Walkaround </a>&nbsp;&nbsp; &nbsp;&nbsp;
+<a href="dailycustomerlist.htm"></a></P></TD>
+<TD>
+<P class=calday><a href="dailycustomerlist.htm">20</a> </P>&nbsp;&nbsp; 
+<P>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <a href="dailycustomerlist.htm"></a></P></TD><!--
+					<td class="sat_sun_td">
+					-->
+<TD>
+<P class=calday><a href="dailycustomerlist.htm">21</a> </P>&nbsp;&nbsp; 
+<P><a style="COLOR: black" href="dailycustomerlist.htm">05 Deck </a>&nbsp;&nbsp;
+<a style="COLOR: black" href="dailycustomerlist.htm">01 19 Bowrider </a>&nbsp;&nbsp; &nbsp;&nbsp;
+<a href="dailycustomerlist.htm"></a></P></TD><!--td class="sat_sun_td"><p class="calday"><a href="#">4</a></p></td--></TR>
+<TR><!--
+					<td class="sat_sun_td">
+					-->
+<TD>
+<P class=calday><a href="dailycustomerlist.htm">22</a> </P>&nbsp;&nbsp; 
+<P><A style="COLOR: black" href="http://0185eff.netsolhost.com/log_calendar.asp?dd=22&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/22/2007&amp;txtTo=7/22/2007&amp;BoatID=359">01 19 Bowrider </A>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=22&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/22/2007&amp;txtTo=7/22/2007&amp;BoatID=0"></A></P></TD>
+<TD>
+<P class=calday><a href="dailycustomerlist.htm">23</a> </P>&nbsp;&nbsp; 
+<P><a style="COLOR: black" href="dailycustomerlist.htm">04 21' 200 </a>&nbsp;&nbsp;
+<a style="COLOR: black" href="dailycustomerlist.htm">05 Deck </a>&nbsp;&nbsp;
+<a style="COLOR: black" href="dailycustomerlist.htm">06 26' Walkaround </a>&nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=23&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/23/2007&amp;txtTo=7/23/2007&amp;BoatID=0">... </A></P></TD>
+<TD>
+<P class=calday><a href="dailycustomerlist.htm">24</a> </P>&nbsp;&nbsp; 
+<P><a style="COLOR: black" href="dailycustomerlist.htm">01 19 Bowrider </a>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=24&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/24/2007&amp;txtTo=7/24/2007&amp;BoatID=0"></A></P></TD>
+<TD>
+<P class=calday><a href="dailycustomerlist.htm">25</a> </P>&nbsp;&nbsp; 
+<P><a style="COLOR: black" href="dailycustomerlist.htm">01 19 Bowrider </a>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=25&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/25/2007&amp;txtTo=7/25/2007&amp;BoatID=0"></A></P></TD>
+<TD>
+<P class=calday><a href="dailycustomerlist.htm">26</a> </P>&nbsp;&nbsp; 
+<P><a style="COLOR: black" href="dailycustomerlist.htm">06 26' Walkaround </a>&nbsp;&nbsp;
+<a style="COLOR: black" href="dailycustomerlist.htm">01 19 Bowrider </a>&nbsp;&nbsp; &nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=26&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/26/2007&amp;txtTo=7/26/2007&amp;BoatID=0"></A></P></TD>
+<TD>
+<P class=calday><a href="dailycustomerlist.htm">27</a> </P>&nbsp;&nbsp; 
+<P><a style="COLOR: black" href="dailycustomerlist.htm">06 26' Walkaround </a>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=27&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/27/2007&amp;txtTo=7/27/2007&amp;BoatID=0"></A></P></TD><!--
+					<td class="sat_sun_td">
+					-->
+<TD>
+<P class=calday><a href="dailycustomerlist.htm">28</a> </P>&nbsp;&nbsp; 
+<P><a style="COLOR: black" href="dailycustomerlist.htm">06 26' Walkaround </a>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=28&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/28/2007&amp;txtTo=7/28/2007&amp;BoatID=0"></A></P></TD><!--td class="sat_sun_td"><p class="calday"><a href="#">4</a></p></td--></TR>
+<TR>
+<TD>
+<P class=calday><a href="dailycustomerlist.htm">29</a> </P>&nbsp;&nbsp; 
+<P><a style="COLOR: black" href="dailycustomerlist.htm">06 26' Walkaround </a>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=29&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/29/2007&amp;txtTo=7/29/2007&amp;BoatID=0"></A></P></TD>
+<TD>
+<P class=calday><a href="dailycustomerlist.htm">30</a> </P>&nbsp;&nbsp; 
+<P><a style="COLOR: black" href="dailycustomerlist.htm">04 21' 200 </a>&nbsp;&nbsp;
+<a style="COLOR: black" href="dailycustomerlist.htm">05 Deck </a>&nbsp;&nbsp;
+<a style="COLOR: black" href="dailycustomerlist.htm">06 26' Walkaround </a>&nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=30&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/30/2007&amp;txtTo=7/30/2007&amp;BoatID=0">... </A></P></TD>
+<TD>
+<P class=calday><a href="dailycustomerlist.htm">31</a> </P>&nbsp;&nbsp; 
+<P><a style="COLOR: black" href="dailycustomerlist.htm">05 Deck </a>&nbsp;&nbsp;
+<a style="COLOR: black" href="dailycustomerlist.htm">06 26' Walkaround </a>&nbsp;&nbsp; &nbsp;&nbsp; <A href="http://0185eff.netsolhost.com/log_calendar.asp?dd=31&amp;mm=7&amp;aaaa=2007&amp;txtFrom=7/31/2007&amp;txtTo=7/31/2007&amp;BoatID=0"></A></P></TD>
+<TD class=next_prev_month_td>
+<P class=calday>1</P></TD>
+<TD class=next_prev_month_td>
+<P class=calday>2</P></TD>
+<TD class=next_prev_month_td>
+<P class=calday>3</P></TD>
+<TD class=next_prev_month_td>
+<P class=calday>4</P></TD></TR></TBODY></TABLE>
+<DIV><SPAN class=hilite>*</SPAN> <SPAN class=hilite_explain>Legend</SPAN></DIV><A class=button href="http://0185eff.netsolhost.com/boats_list.asp">Cancel</A> 
+<TABLE width="80%" align=right>
+<TBODY>
+<TR>
+<TD><FONT face="Verdana, Arial, Helvetica, sans-serif" size=2>To see days rental list<BR>press the date in upper left corner</FONT> </TD>
+<TD class=cal_boat_select_td><FONT size=+1>Select Boat</FONT></TD>
+<TD class=cal_boat_select_td>&nbsp;</TD></TR></TBODY></TABLE></DIV>
+<DIV id=footer>
+<DIV id=footer_details>BoatRenting.com · 320 South Country Road · Brookhaven/Bellport NY 11719 · 631-286-7816 · <A href="mailto:info@boatrenting.com">info@boatrenting.com</A> </DIV></DIV></DIV></FORM>
+
+</body>
+</html>
